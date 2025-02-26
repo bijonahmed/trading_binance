@@ -27,6 +27,7 @@ const Wallet = () => {
   const [de_dateForm, setDateFormDeposit] = useState("");
   const [de_dateTo, setDateToDeposit] = useState("");
   const [depositData, setDepositData] = useState([]);
+  const [bankInfo, setBankDetails] = useState("");
 
   const getMoneyReceipt = async (depositId) => {
     const params = {
@@ -43,7 +44,8 @@ const Wallet = () => {
         params: params,
       }
     );
-    //console.log("depsoit_images:", response.data.depsoit_images);
+    console.log("Deposit Data:", response.data);
+    setBankDetails(response.data);
     setDepositImages(response.data.depsoit_images);
   };
 
@@ -78,6 +80,7 @@ const Wallet = () => {
     try {
       // Get the current date
       const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 2); // Add 2 days
       const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
       // Get the date 30 days ago
       const pastDate = new Date();
@@ -124,6 +127,7 @@ const Wallet = () => {
     try {
       // Get the current date
       const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 2); // Add 2 days
       const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
       // Get the date 30 days ago
       const pastDate = new Date();
@@ -504,6 +508,7 @@ const Wallet = () => {
                                 <th className="text-center">Date</th>
                                 <th className="text-center">Amount</th>
                                 <th className="text-center">Status</th>
+                                <th className="text-center">Type</th>
                                 <th className="text-center">Action</th>
                               </tr>
                             </thead>
@@ -536,6 +541,9 @@ const Wallet = () => {
                                         : "Rejected"}
                                     </span>
                                   </td>
+                                  <td className="text-center">
+                                    {deposit.payment_method}
+                                  </td>
                                   <td>
                                     <center>
                                       <button
@@ -547,7 +555,7 @@ const Wallet = () => {
                                           getMoneyReceipt(deposit.id)
                                         }
                                       >
-                                        Show Money Receipt
+                                        Details
                                       </button>
                                     </center>
                                   </td>
@@ -592,6 +600,96 @@ const Wallet = () => {
                   </div>
                 </div>
                 <div className="modal-body">
+                  <div class="table-responsive">
+                    {bankInfo.payment_method == "BANK" && (
+                      <>
+                        <center className="text-white">
+                          <p>Bank Details</p>
+                        </center>
+                        <table className="table table-hover">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <strong>Currency Symbol</strong>
+                              </td>
+                              <td>{bankInfo.currencySymbol}</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>Bank Name</strong>
+                              </td>
+                              <td>{bankInfo.bank_name}</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>Account Name</strong>
+                              </td>
+                              <td>{bankInfo.account_name}</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <strong>Account Number</strong>
+                              </td>
+                              <td>{bankInfo.account_number}</td>
+                            </tr>
+                            {bankInfo.ific_code && (
+                              <>
+                                <tr>
+                                  <td>
+                                    <strong>IFIC Code</strong>
+                                  </td>
+                                  <td>{bankInfo.ific_code}</td>
+                                </tr>
+                              </>
+                            )}
+
+                            {bankInfo.swift_code && (
+                              <>
+                                <tr>
+                                  <td>
+                                    <strong>SWIFT Code</strong>
+                                  </td>
+                                  <td>{bankInfo.swift_code}</td>
+                                </tr>
+                              </>
+                            )}
+
+                            {bankInfo.others_code && (
+                              <>
+                                <tr>
+                                  <td>
+                                    <strong>Others Code</strong>
+                                  </td>
+                                  <td>{bankInfo.others_code}</td>
+                                </tr>
+                              </>
+                            )}
+
+                            <tr>
+                              <td>
+                                <strong>Input Amount</strong>
+                              </td>
+                              <td>{bankInfo.inputAmount}</td>
+                            </tr>
+
+                            {/* <tr>
+                          <td>
+                            <strong>Country ID</strong>
+                          </td>
+                          <td>18</td>
+                        </tr> */}
+                            {/* <tr>
+                          <td>
+                            <strong>Country Wise Bank ID</strong>
+                          </td>
+                          <td>5</td>
+                        </tr> */}
+                          </tbody>
+                        </table>
+                      </>
+                    )}
+                  </div>
+
                   <div className="form_group">
                     <div className="st_filter">
                       {images ? (

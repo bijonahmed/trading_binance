@@ -100,6 +100,7 @@
                                                 <th class="text-center">Deposit Amount</th>
                                                 <th class="text-center">Receivable Amount</th>
                                                 <th class="text-center">Status</th>
+                                                <th class="text-center">Type</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -132,13 +133,13 @@
                                                     <span class="badge rounded-pill bg-danger w-100"
                                                         v-if="pro.status == 2">{{ pro.statusName }}</span>
                                                 </td>
-
+                                                <td class="text-center">{{ pro.payment_method }}</td>
 
                                                 <td>
                                                     <center>
                                                         <button class="btn btn-default btn-sm btn-flat"
                                                             @click="preview(pro.id)"><i
-                                                                class="fa fa-check"></i>Approved</button>
+                                                                class="fa fa-check"></i>Check</button>
 
                                                         <button class="btn btn-danger btn-sm btn-flat"
                                                             @click="cancelDeposit(pro.id)"><i

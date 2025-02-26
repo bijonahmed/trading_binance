@@ -157,6 +157,7 @@ class DepositController extends Controller
                 'receivable_amount' => $item->receivable_amount,
                 'toAddressWallet'   => $item->to_crypto_wallet_address,
                 'username'          => $userrow->username ?? "",
+                'payment_method'    => $item->payment_method ?? "",
                 'email'             => $userrow->email ?? "",
                 'gamePltName'       => $pltrow->name ?? "",
                 'currencyName'      => $currencyrow->name ?? "",
@@ -775,10 +776,76 @@ class DepositController extends Controller
     }
 
 
-    public function sendDepositRequest(Request $request)
+
+    public function sendDepositRequestBank(Request $request)
     {
         //dd($request->all());
-        //  try {
+        //dd($request->all());
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'inputAmount'     => 'required',
+                'deposit_amount'  => 'required',
+                'file'            => 'required',
+            ],
+            [
+                'inputAmount.required'   => 'The amount field is required. Please enter a valid amount.',
+                'file.required'          => 'Allowed only Images.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $setting = Setting::find(1);
+        $checkSetting = $setting->minimum_deposit_amount;
+        // if ($request->deposit_amount <= $checkSetting) {
+        if ($request->inputAmount <= 0) {
+            return response()->json(['errors' => ['deposit_amount' => ['Your deposit amount is low']]], 422);
+        }
+
+        $uniqueID = 'D.' . $this->generateUnique4DigitNumber();
+        $data = array(
+            'depositID'         => $uniqueID,
+            'depscription'      => $uniqueID,
+            'deposit_amount'    => $request->deposit_amount,
+            'currencySymbol'    => $request->currencySymbol,
+            'bank_name'         => $request->bank_name,
+            'account_name'      => $request->account_name,
+            'account_number'    => $request->account_number,
+            'ific_code'         => $request->ific_code,
+            'swift_code'        => $request->swift_code,
+            'others_code'       => $request->others_code,
+            'inputAmount'       => $request->inputAmount,
+            'countryId'         => $request->countryId,
+            'country_wise_bank_id' => $request->country_wise_bank_id,
+            'payment_method'    => "BANK",
+            'trxId'             => uniqid(),
+            'status'         => 0,
+            'user_id'        => $this->userid
+        );
+
+        if (!empty($request->file('file'))) {
+            $files = $request->file('file');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/deposit_screenshort/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/deposit_screenshort/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $data['depsoit_images'] = $file_url;
+        }
+        //dd($data['depsoit_images']);
+        $last_Id = Deposit::insertGetId($data);
+
+        return response()->json("Last Deposit Id: $last_Id");
+    }
+
+
+    public function sendDepositRequestCrypto(Request $request)
+    {
+        //dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
@@ -803,14 +870,14 @@ class DepositController extends Controller
             return response()->json(['errors' => ['deposit_amount' => ['Your deposit amount is low']]], 422);
         }
 
-        $uniqueID = 'DE.' . $this->generateUnique4DigitNumber();
+        $uniqueID = 'D.' . $this->generateUnique4DigitNumber();
         $data = array(
             'depositID'         => $uniqueID,
             'depscription'      => $uniqueID,
             'deposit_amount'    => $request->amount,
             'gaming_pltform_id' => $request->gamingPltform,
             'cryptoType'        => $request->cryptoType,
-            'payment_method'    => "TRC20",
+            'payment_method'    => "CRYPTO",
             'trxId'             => uniqid(),
             'to_crypto_wallet_address'   => "",
             'frm_wallet_address'         => "",
@@ -833,14 +900,6 @@ class DepositController extends Controller
         $last_Id = Deposit::insertGetId($data);
 
         return response()->json("Last Deposit Id: $last_Id");
-
-        // } catch (QueryException $e) {
-        //     // Log the error or handle it as needed
-        //     return response()->json(['error' => 'Database error occurred.'], 500);
-        // } catch (\Exception $e) {
-        //     // Handle other exceptions
-        //     return response()->json(['error' => 'An unexpected error occurred.'], 500);
-        // }
     }
 
     function generateUnique4DigitNumber($existingNumbers = [])
@@ -1189,7 +1248,9 @@ class DepositController extends Controller
                 ->select('users.name', 'deposit.*')
                 ->leftJoin('users', 'deposit.user_id', '=', 'users.id')
                 ->first();
+
             $user['depsoit_images']  = !empty($user->depsoit_images) ? url($user->depsoit_images) : "";
+
             return response()->json($user);
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -1295,6 +1356,7 @@ class DepositController extends Controller
                 'receivable_amount'     => $item->receivable_amount,
                 'status'                => $item->status,
                 'username'              => $item->username,
+                'payment_method'        => $item->payment_method,
                 'email'                 => $item->email,
                 'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
             ];

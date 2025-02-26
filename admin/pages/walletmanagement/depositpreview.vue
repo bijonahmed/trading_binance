@@ -53,19 +53,19 @@
                                                     <tr>
                                                         <td>Deposit Amount</td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{{ request.currencyName }} {{ request.deposit_amount }}</td>
+                                                        <td>$ {{ request.currencyName }} {{ request.deposit_amount }}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Receivable Amount</td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{{ request.receivable_amount }}</td>
+                                                        <td>$ {{ request.receivable_amount }}</td>
                                                     </tr>
-                                                    <!-- <tr>
+                                                    <tr>
                                                         <td>Payment Method </td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.payment_method }}</td>
-                                                    </tr> -->
+                                                    </tr>
                                                     <tr>
                                                         <td>Created Time</td>
                                                         <td><strong>:</strong></td>
@@ -80,7 +80,67 @@
 
                                                 </table>
                                                 <center>Invoice Images</center>
-                                                <center><img :src="request.deposit_image" alt="Deposit Image" class="img-fluid rounded" width="150" /></center>
+                                                <center><img :src="request.deposit_image" alt="Deposit Image"
+                                                        class="img-fluid rounded" width="150" /></center>
+                                                <!-- Start Bank -->
+
+                                                <center className="">
+                                                    <p>Bank Details</p>
+                                                </center>
+                                                <table class="table table-hover">
+                                                    <tbody>
+                                                        <!-- Currency Symbol -->
+                                                        <tr>
+                                                            <td><strong>Currency Symbol</strong></td>
+                                                            <td>{{ request.currencySymbol }}</td>
+                                                        </tr>
+
+                                                        <!-- Bank Name -->
+                                                        <tr>
+                                                            <td><strong>Bank Name</strong></td>
+                                                            <td>{{ request.bank_name }}</td>
+                                                        </tr>
+
+                                                        <!-- Account Name -->
+                                                        <tr>
+                                                            <td><strong>Account Name</strong></td>
+                                                            <td>{{ request.account_name }}</td>
+                                                        </tr>
+
+                                                        <!-- Account Number -->
+                                                        <tr>
+                                                            <td><strong>Account Number</strong></td>
+                                                            <td>{{ request.account_number }}</td>
+                                                        </tr>
+
+                                                        <!-- IFIC Code (Conditional) -->
+                                                        <tr v-if="request.ific_code">
+                                                            <td><strong>IFIC Code</strong></td>
+                                                            <td>{{ request.ific_code }}</td>
+                                                        </tr>
+
+                                                        <!-- SWIFT Code (Conditional) -->
+                                                        <tr v-if="request.swift_code">
+                                                            <td><strong>SWIFT Code</strong></td>
+                                                            <td>{{ request.swift_code }}</td>
+                                                        </tr>
+
+                                                        <!-- Others Code (Conditional) -->
+                                                        <tr v-if="request.others_code">
+                                                            <td><strong>Others Code</strong></td>
+                                                            <td>{{ request.others_code }}</td>
+                                                        </tr>
+
+                                                        <!-- Input Amount -->
+                                                        <tr>
+                                                            <td><strong>Input Amount</strong></td>
+                                                            <td>{{ request.inputAmount }} {{ request.currencySymbol }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <!-- END Bank -->
+
                                             </div>
 
                                         </div>
@@ -200,9 +260,20 @@ const request = ref({
     approved_by: '',
     created_at: '',
     status: '',
-    deposit_image:''
+    deposit_image: '',
+    //bank
+    bank_name: '',
+    account_name: '',
+    account_number: '',
+    ific_code: '',
+    swift_code: '',
+    others_code: '',
+    inputAmount: '',
 
 });
+
+
+
 
 const notifmsg = ref('');
 const errors = ref({});
@@ -246,9 +317,9 @@ const saveData = () => {
         .then((res) => {
 
             success_noti();
-                router.push({
-                    path: '/walletmanagement/deposit-management',
-                });
+            router.push({
+                path: '/walletmanagement/deposit-management',
+            });
         })
         .catch(error => {
             if (error.response && error.response.status === 422) {
@@ -289,9 +360,6 @@ const getStatus = (status) => {
 const productDetails = () => {
     const id = router.currentRoute.value.query.parameter;
     axios.get(`/deposit/depositrow/${id}`).then(response => {
-
-      
-
         const data = response.data;
         request.value.name = data.name;
         request.value.depositID = data.depositID;
@@ -306,8 +374,17 @@ const productDetails = () => {
         request.value.gamePltformName = data.gamePltformName;
         request.value.frm_wallet_address = data.frm_wallet_address;
         request.value.trxId = data.trxId;
-
         request.value.status = data.status;
+        //Show Bank
+        request.value.currencySymbol = data.currencySymbol;
+        request.value.bank_name = data.bank_name;
+        request.value.account_name = data.account_name;
+        request.value.account_number = data.account_number;
+        request.value.ific_code = data.ific_code;
+        request.value.swift_code = data.swift_code;
+        request.value.others_code = data.others_code;
+        request.value.inputAmount = data.inputAmount;
+
 
     });
 };

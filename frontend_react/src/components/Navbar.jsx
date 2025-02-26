@@ -93,6 +93,11 @@ const Navbar = () => {
               <ul className="navbar-nav ms-auto group_btns mb-2 mb-lg-0 d-none d-lg-flex">
                 {token ? (
                   <>
+                  <li className="nav-item">
+                      <Link className="nav-link " to="/dashboard/profile">
+                        My Profile
+                      </Link>
+                    </li>
                     <li className="nav-item" onClick={logout}>
                       <Link className="nav-link " to="#">
                         Logout

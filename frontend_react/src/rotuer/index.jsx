@@ -16,7 +16,9 @@ import Kyc from "../pages/dashboard/KYC.jsx";
 import Login from "../pages/Login";
 import Register from "../pages/Register.jsx";
 import DepositCrypto from "../pages/dashboard/DepositCrypto.jsx";
+import DepositBank from "../pages/dashboard/DepositBank.jsx";
 import ChangePassword from "../pages/dashboard/ChangePassword.jsx";
+
 //<Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>
 const AppRouter = () => {
   return (
@@ -35,6 +37,7 @@ const AppRouter = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/deposit-crypto/:slug" element={<DepositCrypto />} />
+      <Route path="/deposit-bank/:bankId/:countryId" element={<DepositBank />} />
       <Route path="/change-password" element={<ChangePassword />} />
 
       {/* <Route path="/hoster-profile:slug" element={<HosterProfile />} />

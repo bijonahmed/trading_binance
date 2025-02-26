@@ -329,14 +329,26 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             'prefix' => 'setting',
         ],
         function () {
-            Route::post('insertLanguageAdd', [SettingController::class, 'insertLanguageAdd']);
+            Route::get('countryWiseShowBank', [SettingController::class, 'countryWiseShowBank']);
+            Route::get('getCountryRow', [SettingController::class, 'getCountryRow']);
+            Route::get('getCountryWiseBankRow', [SettingController::class, 'getCountryWiseBankRow']);
+            Route::get('getCountryCurrencyList', [SettingController::class, 'getCountryCurrencyList']);
+            Route::get('getCountryGroupList', [SettingController::class, 'getCountryGroupList']);
+            Route::get('getCountryBankList', [SettingController::class, 'getCountryBankList']);
+            Route::post('addCountryInfo', [SettingController::class, 'addCountryInfo']);
+            Route::post('addCountryWiseBank', [SettingController::class, 'addCountryWiseBank']);
+            Route::get('getAllBankList', [SettingController::class, 'getAllBankList']);
+            Route::get('getSelectedBank', [SettingController::class, 'getSelectedBank']);
+
+            
             Route::post('upateSetting', [SettingController::class, 'upateSetting']);
             Route::get('settingrowSystem', [SettingController::class, 'settingrow']);
             Route::get('getLanguageList', [SettingController::class, 'getLanguageList']);
             Route::get('getLanguageActiveList', [SettingController::class, 'getLanguageActiveList']);
-            Route::get('getTranslationList', [SettingController::class, 'getTranslationList']);
+            Route::get('getBankListAdmin', [SettingController::class, 'getTranslationList']);
             Route::get('languagerow/{id}', [SettingController::class, 'chkLanguagerow']);
             Route::get('updateTransationRow', [SettingController::class, 'updateTransationRow']);
+
         },
     );
 
@@ -388,7 +400,8 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::get('depositrow/{id}', [DepositController::class, 'depositrow']);
             Route::post('checkDepositrow', [DepositController::class, 'checkDepositrow']); //check depsoti image
             Route::get('depositCancel/{id}', [DepositController::class, 'depositCancel']);
-            Route::post('sendDepositRequest', [DepositController::class, 'sendDepositRequest']);
+            Route::post('sendDepositRequestToCrypto', [DepositController::class, 'sendDepositRequestCrypto']);
+            Route::post('sendDepositRequestToBank', [DepositController::class, 'sendDepositRequestBank']);
             Route::get('updateDepositRequestRandomKey', [DepositController::class, 'updateDepositRequestRandomKey']);
             Route::get('checkRandomKey', [DepositController::class, 'checkRandomKey']);
             Route::post('walletAddressUpdate', [DepositController::class, 'walletAddressUpdate']);

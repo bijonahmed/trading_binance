@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Sidebar from "../../components/SidebarAuth";
 import AuthGuard from "../../components/AuthGuard";
@@ -7,16 +7,66 @@ import { Link } from "react-router-dom";
 import axios from "/config/axiosConfig"; // Ensure correct path
 import QRCode from "qrcode";
 import { useParams } from "react-router-dom";
+import AuthUser from "../../components/AuthUser";
+import Loader from "../../components/Loader";
+
+
 
 const Deposit = () => {
   const [hasRequested, setHasRequested] = useState(false);
+  const [allCountry, setCountryName] = useState([]);
+  const { token, logout } = AuthUser();
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [bankList, setBankList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  const showAllBankCountryWise = async (event) => {
+    const country_id = event.target.value;
+    setSelectedCountry(event.target.value);
+    try {
+      setLoading(true);
+      const response = await axios.get(`/setting/getAllBankList`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          country_id: country_id, // First parameter
+        },
+      });
+      // console.log("Response:", response.data.data);
+      setBankList(response.data.data);
+    } catch (error) {
+      console.error("Error Data:", error);
+    } finally{
+      setLoading(false);
+    }
+  };
+
+  const getAddCountry = async () => {
+    try {
+      const response = await axios.get(`/setting/getCountryGroupList`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }, // Removed the extra comma here
+      });
+      setCountryName(response.data.data);
+    } catch (error) {
+      console.error("Error Data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAddCountry();
+  }, []);
+
   // Data array containing deposit methods
   const depositOptions = [
     { slug: "btc", name: "BTC", imgSrc: "/fasttrading/images/btc.png" },
     { slug: "usdt", name: "USDT", imgSrc: "/fasttrading/images/usdt.png" },
     { slug: "eth", name: "Ethereum", imgSrc: "/fasttrading/images/eth.png" },
   ];
- 
 
   return (
     <>
@@ -72,116 +122,49 @@ const Deposit = () => {
                     ))}
                   </div>
                 </div>
+                <center>
+                  {loading ? (
+                    <div>
+                      <Loader />
+                      <center>
+                        {" "}
+                        <span>Loading.....</span>
+                      </center>
+                    </div>
+                  ) : (
+                    <div className="row">
+                      <div className="col-md-6 m-auto"></div>
+                    </div>
+                  )}
+                </center>
                 <div>
                   <div className="details_card">
-                    <h4>Deposit to Card</h4>
-                    <div className="deposit_method">
-                      <div className="deposit_option">
-                        <a href="#">
-                          <img
-                            src="/fasttrading/images/visa-card-100.png"
-                            className="img-fluid"
-                          />
-                          <h4>VISA</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="#">
-                          <img
-                            src="/fasttrading/images/mastercard-100.png"
-                            className="img-fluid"
-                          />
-                          <h4>Mastercard</h4>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="details_card d-none">
                     <h4>Deposit to Bank</h4>
                     <div className="row">
                       <div className="col-md-6 my-3">
-                        <select className="form-control">
-                          <option disabled>Select Country</option>
-                          <option>USA</option>
-                          <option>UK</option>
-                          <option>UAE</option>
-                          <option>Bangladesh</option>
+                        <select
+                          value={selectedCountry}
+                          onChange={showAllBankCountryWise}
+                          className="form-control"
+                        >
+                          <option value="">-- Select --</option>
+                          {allCountry.map((country) => (
+                            <option key={country.id} value={country.country_id}>
+                              {country.country_name} [{country.currency_symbol}]
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
                     <div className="deposit_method">
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
-                      <div className="deposit_option">
-                        <a href="deposit-bank.html">
-                          <img
-                            src="/fasttrading/images/Bank_image.png"
-                            className="img-fluid"
-                          />
-                          <h4>ABC Bank</h4>
-                        </a>
-                      </div>
+                      {bankList.map((bank, index) => (
+                        <div className="deposit_option" key={index}>
+                         <Link to={`/deposit-bank/${bank.id}/${bank.country_id}`}>
+                            <img src="/fasttrading/images/Bank_image.png" className="img-fluid" alt={bank.bank_name} />
+                            <h4>{bank.bank_name}</h4>
+                          </Link>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

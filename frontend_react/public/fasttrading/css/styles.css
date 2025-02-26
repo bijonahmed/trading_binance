@@ -194,7 +194,7 @@ table tbody {
     }
 
     .crypto_table table tbody tr td {
-        padding-left: 5px;
+        padding-left: 10px;
     }
 
     .crypto_table table tbody tr td p {
@@ -3187,13 +3187,28 @@ canvas {
         max-height: 15px;
         margin-right: 5px;
     }
+    .crypto_table table tbody tr td {
+        padding-left: 10px;
+      }
+
 }
+@media only screen and (max-width: 426px) {
+    .crypto_table table tbody tr td {
+      padding-left: 10px;
+    }
+  }
 
 #mbcurrency_list ul {
     padding: 0 !important;
 }
-.tv-embed-widget-wrapper__body a{
+
+.tv-embed-widget-wrapper__body a {
     display: none !important;
-    opacity: 0!important;
+    opacity: 0 !important;
     visibility: hidden !important;
+}
+
+.table thead th:last-child,
+.table tbody td:last-child {
+    text-align: center;
 }

@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Setting;
 
-use DB;
-use Auth;
-use Helper;
-use Validator;
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\AddCountry;
+use App\Models\Countrys;
+use App\Models\CountryWiseBank;
+use App\Models\Currency;
+use App\Models\Language;
 use App\Models\Profile;
 use App\Models\Setting;
 use App\Models\Sliders;
-use App\Models\Language;
 use App\Models\Translation;
-use Illuminate\Support\Str;
+use App\Models\User;
+
+use Auth;
+use DB;
+use Helper;
 use Illuminate\Http\Request;
-use App\Rules\MatchOldPassword;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Validator;
 
 class SettingController extends Controller
 {
@@ -30,570 +34,168 @@ class SettingController extends Controller
             $this->userid = $user->id;
         }
     }
-    public function insertEmployeeType(Request $request)
+
+
+
+    public function getSelectedBank(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'          => !empty($request->name) ? $request->name : "",
-            'status'        => !empty($request->status) ? $request->status : "",
-            'entry_by'      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('employee_type')->insertGetId($data);
-        } else {
-            DB::table('employee_type')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
+
+
+        $id         = $request->countryWiseBankId ?? "";
+        $countryId  = $request->countryId ?? "";
+
+        $row       = CountryWiseBank::select(
+            'country_id',
+            'bank_name',
+            'account_name',
+            'account_number',
+            'ific_code',
+            'swift_code',
+            'others_code'
+        )
+            ->where('country_wise_bank.id', $id)
+            ->where('country_wise_bank.country_id', $countryId)
+            ->where('country_wise_bank.status', 1)->first();
+
+        $chkCountry  =    AddCountry::where('country_id', $row->country_id)->where('status', 1)->first();
+        $chkCurrency =    Currency::where('id', $chkCountry->currency_id)->first();
+
+        $data = [
+            'bank_name'      => $row->bank_name ?? '',
+            'account_name'   => $row->account_name ?? '',
+            'account_number' => $row->account_number ?? '',
+            'ific_code'      => $row->ific_code ?? '',
+            'swift_code'     => $row->swift_code ?? '',
+            'others_code'    => $row->others_code ?? '',
+            'usdt_rate'      => $chkCountry->usdt_rate ?? '',
+            'currencyName'   => $chkCurrency->name ?? '',
+            'currencySymbol' => $chkCurrency->symbol ?? ''
+
         ];
-        return response()->json($response);
-    }
 
-    public function sliderrow($id)
-    {
-        $id = (int) $id;
-        $data = Sliders::find($id);
-        $response = [
-            'id'           => $data->id,
-            'redirect_url' => $data->redirect_url,
-            'status'       => $data->status,
-            'images'       => !empty($data->images) ? url($data->images) : "",
-        ];
-
-        //dd($response);
-        return response()->json($response, 200);
-    }
-
-    public function insertSlider(Request $request)
-    {
-        if (empty($request->id)) {
-            $validator = Validator::make($request->all(), [
-                'files'         => 'required',
-                'redirect_url'  => 'required',
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
-        } else {
-            $validator = Validator::make($request->all(), [
-                //  'files'         => 'required',
-                'redirect_url'  => 'required',
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
-        }
-
-        $data = array(
-            'redirect_url'               => $request->redirect_url,
-            'status'                     => !empty($request->status) ? $request->status : "",
-        );
-
-        // dd($data);
-        if (!empty($request->file('files'))) {
-            $files = $request->file('files');
-            $fileName = Str::random(20);
-            $ext = strtolower($files->getClientOriginalExtension());
-            $path = $fileName . '.' . $ext;
-            $uploadPath = '/backend/slider_imaes/';
-            $upload_url = $uploadPath . $path;
-            $files->move(public_path('/backend/slider_imaes/'), $upload_url);
-            $file_url = $uploadPath . $path;
-            $data['images'] = $file_url;
-        }
-
-        if (empty($request->id)) {
-            Sliders::insert($data);
-        } else {
-            DB::table('sliders')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
-    }
-
-    public function slidersImages(Request $request)
-    {
-
-        //dd($request->all());
-        $page = $request->input('page', 1);
-        $pageSize = $request->input('pageSize', 10);
-
-        // Get search query from the request
-        $searchQuery    = $request->searchQuery;
-        $selectedFilter = (int)$request->selectedFilter;
-        // dd($selectedFilter);
-        $query = Sliders::orderBy('id', 'desc');
-
-        if ($searchQuery !== null) {
-            $query->where('redirect_url', 'like', '%' . $searchQuery . '%');
-        }
-
-        if ($selectedFilter !== null) {
-
-            $query->where('status', $selectedFilter);
-        }
-
-        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
-
-        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
-            return [
-                'id'                 => $item->id,
-                'redirect_url'       => $item->redirect_url,
-                'images'             => !empty($item->images) ? url($item->images) : "",
-                'status'             => $item->status,
-            ];
-        });
-
-        // Return the modified collection along with pagination metadata
         return response()->json([
-            'data' => $modifiedCollection,
-            'current_page' => $paginator->currentPage(),
-            'total_pages' => $paginator->lastPage(),
-            'total_records' => $paginator->total(),
+            'data' => $data,
+            'message' => 'success'
         ], 200);
     }
 
-    public function insertPayGroup(Request $request)
+    public function getAllBankList(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'          => !empty($request->name) ? $request->name : "",
-            'status'        => !empty($request->status) ? $request->status : "",
-            'entry_by'      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('pay_group')->insertGetId($data);
-        } else {
-            DB::table('pay_group')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
+
+        $country_id = $request->country_id ?? "";
+        $rows       = CountryWiseBank::where('country_id', $country_id)->where('status', 1)->get();
+        return response()->json([
+            'data' => $rows,
+            'message' => 'success'
+        ], 200);
     }
-    public function insertAnnualPay(Request $request)
+
+
+    public function getCountryBankList()
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'          => !empty($request->name) ? $request->name : "",
-            'status'        => !empty($request->status) ? $request->status : "",
-            'entry_by'      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('annual_pay')->insertGetId($data);
-        } else {
-            DB::table('annual_pay')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
+
+        $rows = CountryWiseBank::leftJoin('add_country', 'add_country.country_id', '=', 'country_wise_bank.country_id')
+            ->leftJoin('country', 'add_country.country_id', '=', 'country.id')
+            ->leftJoin('currency', 'add_country.currency_id', '=', 'currency.id')
+            ->select(
+                'country_wise_bank.id',
+                'add_country.currency_id',
+                'add_country.country_id',
+                'add_country.usdt_rate',
+                'country_wise_bank.bank_name',
+                'country_wise_bank.account_name',
+                'country_wise_bank.account_number',
+                'country_wise_bank.ific_code',
+                'currency.symbol as currency_symbol',
+                'country_wise_bank.swift_code',
+                'currency.name as currency_name',
+                'country.name as country_name',
+                'country_wise_bank.others_code',
+                'country_wise_bank.status',
+            )
+            ->orderBy('country_wise_bank.id', 'desc') // Sorting in descending order
+            ->get();
+
+        return response()->json([
+            'data' => $rows,
+            'message' => 'success'
+        ], 200);
     }
-    public function insertBankMaster(Request $request)
+
+
+
+    public function getCountryCurrencyList(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'          => !empty($request->name) ? $request->name : "",
-            'status'        => !empty($request->status) ? $request->status : "",
-            'entry_by'      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('bank_master')->insertGetId($data);
-        } else {
-            DB::table('bank_master')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
+        $rows = AddCountry::leftJoin('country', 'add_country.country_id', '=', 'country.id')
+            ->leftJoin('currency', 'add_country.currency_id', '=', 'currency.id')
+            ->select(
+                'add_country.id',
+                'add_country.currency_id',
+                'add_country.country_id',
+                'add_country.usdt_rate',
+                'add_country.status',
+                'country.name as country_name',
+                'currency.name as currency_name',
+                'currency.symbol as currency_symbol'
+            )
+            ->get();
+
+        return response()->json([
+            'data' => $rows,
+            'message' => 'success'
+        ], 200);
     }
-    public function insertWedges(Request $request)
+
+
+    public function getCountryGroupList(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'          => !empty($request->name) ? $request->name : "",
-            'status'        => !empty($request->status) ? $request->status : "",
-            'entry_by'      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('wedges_pay_mode')->insertGetId($data);
-        } else {
-            DB::table('wedges_pay_mode')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
+        $rows = CountryWiseBank::leftJoin('add_country', 'add_country.country_id', '=', 'country_wise_bank.country_id')
+            ->leftJoin('country', 'add_country.country_id', '=', 'country.id')
+            ->leftJoin('currency', 'add_country.currency_id', '=', 'currency.id')
+            ->select(
+                'country_wise_bank.id',
+                'add_country.currency_id',
+                'add_country.country_id',
+                'add_country.usdt_rate',
+                'country_wise_bank.bank_name',
+                'country_wise_bank.account_name',
+                'country_wise_bank.account_number',
+                'country_wise_bank.ific_code',
+                'currency.symbol as currency_symbol',
+                'country_wise_bank.swift_code',
+                'currency.name as currency_name',
+                'country.name as country_name',
+                'country_wise_bank.others_code',
+                'country_wise_bank.status'
+            )
+            ->orderBy('country_wise_bank.id', 'desc') // Sort in descending order
+            ->groupBy('add_country.country_id') // Group by country_id
+            ->get();
+
+
+        return response()->json([
+            'data' => $rows,
+            'message' => 'success'
+        ], 200);
     }
-    public function insertPayItem(Request $request)
+
+
+
+    public function getCountryWiseBankRow(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'              => !empty($request->name) ? $request->name : "",
-            'in_percent'        => !empty($request->in_percent) ? $request->in_percent : "",
-            'in_rupees'         => !empty($request->in_rupees) ? $request->in_rupees : "",
-            'min_value'         => !empty($request->min_value) ? $request->min_value : "",
-            'max_value'         => !empty($request->max_value) ? $request->max_value : "",
-            'effective_frm'     => !empty($request->effective_frm) ? date("Y-m-d", strtotime($request->effective_frm)) : "",
-            'effective_to'      => !empty($request->effective_to) ? date("Y-m-d", strtotime($request->effective_to)) : "",
-            'status'            => !empty($request->status) ? $request->status : "",
-            'entry_by'           => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('payroll_pay_item')->insertGetId($data);
-        } else {
-            DB::table('payroll_pay_item')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
-    }
-    public function insertBankCode(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'bank_id'   => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'          => !empty($request->name) ? $request->name : "",
-            'status'        => !empty($request->status) ? $request->status : "",
-            'bank_id'       => !empty($request->bank_id) ? $request->bank_id : "",
-            'entry_by'      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('bank_short_code')->insertGetId($data);
-        } else {
-            DB::table('bank_short_code')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
-    }
-    public function insertTaxMaster(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'                          => !empty($request->name) ? $request->name : "",
-            'percentage_of_deduction'       => !empty($request->percentage_of_deduction) ? $request->percentage_of_deduction : "",
-            'tax_reference'                 => !empty($request->tax_reference) ? $request->tax_reference : "",
-            'status'                        => !empty($request->status) ? $request->status : "",
-            'entry_by'                      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('tax_master')->insertGetId($data);
-        } else {
-            DB::table('tax_master')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
-    }
-    public function insertPaymentType(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name'              => 'required',
-            'working_hour'      => 'required',
-            'rate'      => 'required',
-            'status'    => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'name'                          => !empty($request->name) ? $request->name : "",
-            'working_hour'                  => !empty($request->working_hour) ? $request->working_hour : "",
-            'rate'                          => !empty($request->rate) ? $request->rate : "",
-            'status'                        => !empty($request->status) ? $request->status : "",
-            'entry_by'                      => $this->userid,
-        );
-        // dd($data);
-        if (empty($request->id)) {
-            DB::table('payment_type')->insertGetId($data);
-        } else {
-            DB::table('payment_type')->where('id', $request->id)->update($data);
-        }
-        $response = [
-            'message' => 'Successfull',
-        ];
-        return response()->json($response);
-    }
-    public function getEmployeeTypeList(Request $request)
-    {
-        try {
-            $rows = Setting::filterEmpList($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getPayGroupList(Request $request)
-    {
-        try {
-            $rows = Setting::filterPayGroupList($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getAnnualPayist(Request $request)
-    {
-        try {
-            $rows = Setting::filterAnnualPay($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getBankMasterlist(Request $request)
-    {
-        try {
-            $rows = Setting::filterbankMaster($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function gettxtMastlist(Request $request)
-    {
-        try {
-            $rows = Setting::filtertaxtMaster($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getWdges(Request $request)
-    {
-        try {
-            $rows = Setting::filterWdges($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getPayItemList(Request $request)
-    {
-        try {
-            $rows = Setting::filterPayItemlist($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getPaymentType(Request $request)
-    {
-        try {
-            $rows = Setting::filterpaymentType($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function getBankShortCodelist(Request $request)
-    {
-        try {
-            $rows = Setting::filterBShortCode($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
-    public function checkrowEmpleeType($id)
-    {
-        $id = (int) $id;
-        $data = Setting::editEmpTypeId($id);
+        $id = (int) $request->id;
+        $data = CountryWiseBank::where('id', $id)->first();
         $response = [
             'data' => $data,
             'message' => 'success'
         ];
         return response()->json($response, 200);
     }
-    public function checkrowPayGroup($id)
+
+    public function getCountryRow(Request $request)
     {
-        $id = (int) $id;
-        $data = Setting::editPayGroupId($id);
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function checkrowAnnualPay($id)
-    {
-        $id = (int) $id;
-        $data = Setting::editAnnualPayId($id);
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function checkrowBankMaster($id)
-    {
-        $id = (int) $id;
-        $data = Setting::editBankMasterId($id);
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function checkrowBankShortCode($id)
-    {
-        $id = (int) $id;
-        $data = Setting::editBankShortCodeId($id);
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function checkrowtxtmaster($id)
-    {
-        $id = (int) $id;
-        $data = Setting::edittxtMasterId($id);
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function checkrowPaymenttype($id)
-    {
-        $id = (int) $id;
-        $data = Setting::editPaymentId($id);
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function checkrowWedges($id)
-    {
-        $id = (int) $id;
-        $data = Setting::editWedgesId($id);
+        $id = (int) $request->id;
+        $data = AddCountry::where('id', $id)->first();
         $response = [
             'data' => $data,
             'message' => 'success'
@@ -611,10 +213,22 @@ class SettingController extends Controller
         ];
         return response()->json($response, 200);
     }
-    public function checkPayItemRow($id)
+    public function countryWiseShowBank()
     {
-        $id = (int) $id;
-        $data = Setting::editPayrowId($id);
+        $countrys =  AddCountry::where('add_country.status', 1)
+            ->leftJoin('country', 'add_country.country_id', '=', 'country.id')
+            ->leftJoin('currency', 'add_country.currency_id', '=', 'currency.id')
+            ->select(
+                'add_country.id',
+                'add_country.currency_id',
+                'add_country.country_id',
+                'country.name as country_name',
+                'currency.name as currency_name',
+                'currency.symbol as currency_symbol'
+            )
+            ->get();
+
+        $data = $countrys;
         $response = [
             'data' => $data,
             'message' => 'success'
@@ -698,110 +312,84 @@ class SettingController extends Controller
 
 
 
-    public function getLanguageActiveList()
+    public function addCountryWiseBank(Request $request)
     {
-
-        $response = Language::where('status',1)->orderBy('id', 'desc')->Get();
-        return response()->json($response);
-    }
-
-
-
-    public function getLanguageList(Request $request)
-    {
-
-        $page = $request->input('page', 1);
-        $pageSize = $request->input('pageSize', 10);
-
-        // Get search query from the request
-        $searchQuery    = $request->searchQuery;
-        $selectedFilter = (int)$request->selectedFilter;
-        // dd($selectedFilter);
-        $query = Language::orderBy('id', 'desc');
-
-        if ($searchQuery !== null) {
-            $query->where('name', 'like', '%' . $searchQuery . '%');
-        }
-
-        if ($selectedFilter !== null) {
-
-            $query->where('status', $selectedFilter);
-        }
-        // $query->whereNotIn('users.role_id', [2]);
-        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
-
-        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
-            return [
-                'id'            => $item->id,
-                'name'          => $item->name,
-                'code'          => $item->code,
-                'created_at'    => date("Y-M-d H:i:s", strtotime($item->created_at)),
-                'updated_at'    => date("Y-M-d H:i:s", strtotime($item->updated_at)),
-                'status'        => $item->status,
-            ];
-        });
-        // Return the modified collection along with pagination metadata
-        return response()->json([
-            'data' => $modifiedCollection,
-            'current_page' => $paginator->currentPage(),
-            'total_pages' => $paginator->lastPage(),
-            'total_records' => $paginator->total(),
-        ], 200);
-    }
-
-    public function chkLanguagerow($id)
-    {
-        $chkpoint = Language::where('id', $id)->first();
-        return response()->json($chkpoint);
-    }
-
-
-    public function insertLanguageAdd(Request $request)
-    {
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
-            'name'                       => 'required',
-            'code'                       => 'required|string|alpha',
-            'status'                     => 'required',
+            'country_id'        => 'required',
+            'bank_name'         => 'required',
+            'account_name'      => 'required',
+            'account_number'    => 'required',
+            'status'            => 'required',
+        ], [
+            'country_id.required'       => 'The country is required.',
+            'bank_name.required'        => 'The Bank Name is required.',
+            'account_name.required'     => 'The Account Name is required.',
+            'account_number.required'   => 'The Account Number is required.',
+            'status.required'           => 'The status is required.',
+
         ]);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        if (empty($request->id)) {
-            // Check if a category with the same name already exists
-            $existing = Language::where('name', $request->input('name'))->first();
-            if ($existing) {
-                return response()->json(['errors_name' => 'Language with this name already exists'], 422);
-            }
-        }
+        $checkPointBank = AddCountry::where('country_id', $request->country_id)->first();
 
         $data = array(
-            'name'                       => $request->name,
-            'code'                       => $request->code,
-            'status'                     => $request->status,
+            'add_country_id'    => $checkPointBank->id ?? "",
+            'country_id'        => $request->country_id,
+            'bank_name'         => $request->bank_name,
+            'account_name'      => $request->account_name,
+            'account_number'    => $request->account_number,
+            'ific_code'         => !empty($request->ific_code) ? $request->ific_code : "",
+            'swift_code'        => !empty($request->swift_code) ? $request->swift_code : "",
+            'others_code'       => !empty($request->others_code) ? $request->others_code : "",
+            'status'            => $request->status,
         );
-
-
-        if (empty($request->id)) {
-            $resdata['id']                   = Language::insertGetId($data);
+        // dd($data);
+        $id = !empty($request->id) ? $request->id : "";
+        if (empty($id)) {
+            $resdata['id']                   = CountryWiseBank::insertGetId($data);
         } else {
-            $resdata['id']                   = Language::where('id', $request->id)->update($data);
+            $resdata['id']                   = CountryWiseBank::where('id', $id)->update($data);
         }
         return response()->json($resdata);
     }
 
-    public function getTranslationList(Request $request)
+    public function addCountryInfo(Request $request)
     {
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'country_id'  => 'required',
+            'currency_id' => 'required',
+            'usdt_rate'   => 'required',
+            'status'      => 'required',
+        ], [
+            'country_id.required'  => 'The country is required.',
+            'currency_id.required' => 'The currency is required.',
+            'usdt_rate.required'   => 'The USDT rate is required.',
+            'status.required'      => 'The status is required.',
+        ]);
 
-        $code    = $request->code;
-        $resdata = Translation::where('language_code', $code)->get();
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $data = array(
+            'country_id'     => $request->country_id,
+            'currency_id'    => $request->currency_id,
+            'usdt_rate'      => $request->usdt_rate,
+            'status'         => $request->status,
+        );
+
+        $id = !empty($request->id) ? $request->id : "";
+        if (empty($id)) {
+            $resdata['id']                   = AddCountry::insertGetId($data);
+        } else {
+            $resdata['id']                   = AddCountry::where('id', $id)->update($data);
+        }
         return response()->json($resdata);
-    }
-
-    public function updateTransationRow(Request $request)
-    {
-        $data['translated_value'] = !empty($request->translated_value) ? $request->translated_value : "";
-        Translation::where('id', $request->id)->update($data);
-        return response()->json($data, 200);
     }
 }

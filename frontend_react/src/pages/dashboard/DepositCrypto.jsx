@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 import Loader from "../../components/Loader";
 
-const Deposit = () => {
+const DepositCrypto = () => {
   const [success, setCopySuccess] = useState(true);
   const { token, logout } = AuthUser();
   const intervalRef = useRef(null); // Reference to the interval
@@ -141,7 +141,7 @@ const Deposit = () => {
 
       // Send request
       const response = await axios.post(
-        `/deposit/sendDepositRequest`,
+        `/deposit/sendDepositRequestToCrypto`,
         formData,
         {
           headers: {
@@ -423,4 +423,4 @@ const Deposit = () => {
   );
 };
 
-export default Deposit;
+export default DepositCrypto;

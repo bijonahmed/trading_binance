@@ -29,6 +29,16 @@ class Deposit extends Authenticatable
     'approved_by',
     'depsoit_images',
     'to_crypto_wallet_address',
+    'currencySymbol',
+    'bank_name',
+    'account_name',
+    'account_number',
+    'ific_code',
+    'swift_code',
+    'others_code',
+    'inputAmount',
+    'countryId',
+    'country_wise_bank_id',
     'status',
   ];
 }

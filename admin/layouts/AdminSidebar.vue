@@ -162,6 +162,7 @@ const menuItems = ref([
       // { label: "Global Wallet Address", icon: "fa-circle", route: "/setting/wallet/globalwalletAddressList" },
       // { label: "Notification", icon: "fa-circle", route: "/setting/notificationlist" },
       { label: "Pre-Setting", icon: "fa-circle", route: "/setting/presetting" },
+      { label: 'Bank', icon: 'fa-circle', route: '/setting/bank/list' },
 
     ],
   },
