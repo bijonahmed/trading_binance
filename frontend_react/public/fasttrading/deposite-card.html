@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- title  -->
+    <title>Welcome to FastTrading</title>
+    <!-- bootstrap 5.3  -->
+     <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+    <!-- fontawsome   -->
+     <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+    <!-- style css  -->
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+    <!-- sidebar start -->
+    <aside class="dashboard_sidebar">
+        <div class="sidbar_close">
+            <button class="btn_sidebar" type="button">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </div>
+        <div class="sidebar_top ">
+            <a href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+        </div>
+        <nav class="nav_sidebar">
+            <ul class="sidebar_list">
+                <li class="sidebar_item active">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="market.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Market</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="future.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-candlestick"></i>
+                        <span>Futures</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="wallet.html" class="sidebar_link">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="payment.html" class="sidebar_link">
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>Payment</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="trade-history.html" class="sidebar_link">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Trade History</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="kyc.html" class="sidebar_link">
+                        <i class="fa-light fa-address-card"></i>
+                        <span>KYC Varification</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- sidebar end  -->
+    <div class="main_dashboard">
+
+        <!-- top navbar  -->
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="d-lg-none">
+                            <button class="btn_sidebar" type="button">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown profile_pic">
+                            <a class="nav-link  dropdown-toggle" href="market.html" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>User</h4>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- top navbar end  -->
+
+
+        <div class="dashboard_content">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="page_title">
+                        <a href="#" class="btn_back" onclick="history.back(); return false;"><i
+                                class="fa-solid fa-arrow-left"></i></a>
+                        <div class="d-flex justify-content-between w-100 align-items-end">
+                            <h4>Deposit to Card</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <div class="deposite_form">
+                                <form action="">
+                                    <div class="">
+                                        <div>
+                                            <h3>Deposit Amount</h3>
+                                            <input type="number" class="form-control" placeholder="00.00">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">50</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">100</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">300</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">500</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">1000</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">All</button>
+                                                </div>
+                                            </div>
+                                            <p class="m_message">Minimum deposit: $10.00</p>
+                                        </div>
+                                    </div>
+                                    <div class="bank_card_details w-100 my-3 card card-body p-4 ">
+                                        <div class="row">
+											<div class="col-12 mb-3">
+												<input type="text" placeholder="Card holder name" class="form-control">
+											</div>
+											<div class="col-12 mb-3">
+												<input type="text" placeholder="Card number" class="form-control">
+											</div>
+											<div class="col-6 mb-3">
+												<input type="text" placeholder="Expiry date" class="form-control">
+											</div>
+											<div class="col-6">
+												<input type="text" placeholder="CVC" class="form-control">
+											</div>	
+										</div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <button class="form-control btn_primary" type="button" data-bs-toggle="modal" data-bs-target="#errorModal">Confirm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h1 class="modal-title fs-5" id="errorModalLabel">Modal title</h1>
+          <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close">
+
+          </button>
+        </div> -->
+        <div class="modal-body">
+          <div class="error_section">
+            <i class="fa-solid fa-x"></i>
+            <h3>Unable to Process Payment</h3>
+            <h6 class="mb-3">We are sorry, We were unable to process your payment. Please try again later.</h6>
+            <a href="deposit.html"   class="btn_primary mt-2 d-block" style="width: fit-content;">Ok</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- title  -->
+    <title>Welcome to FastTrading</title>
+    <!-- bootstrap 5.3  -->
+     <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+    <!-- fontawsome   -->
+     <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+    <!-- style css  -->
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+    <!-- sidebar start -->
+    <aside class="dashboard_sidebar">
+        <div class="sidbar_close">
+            <button class="btn_sidebar" type="button">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </div>
+        <div class="sidebar_top ">
+            <a href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+        </div>
+        <nav class="nav_sidebar">
+            <ul class="sidebar_list">
+                <li class="sidebar_item active">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="market.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Market</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="future.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-candlestick"></i>
+                        <span>Futures</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="wallet.html" class="sidebar_link">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="payment.html" class="sidebar_link">
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>Payment</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="trade-history.html" class="sidebar_link">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Trade History</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="kyc.html" class="sidebar_link">
+                        <i class="fa-light fa-address-card"></i>
+                        <span>KYC Varification</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- sidebar end  -->
+    <div class="main_dashboard">
+
+        <!-- top navbar  -->
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="d-lg-none">
+                            <button class="btn_sidebar" type="button">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown profile_pic">
+                            <a class="nav-link  dropdown-toggle" href="market.html" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>User</h4>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- top navbar end  -->
+
+
+        <div class="dashboard_content">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="page_title">
+                        <a href="#" class="btn_back" onclick="history.back(); return false;"><i
+                                class="fa-solid fa-arrow-left"></i></a>
+                        <div class="d-flex justify-content-between w-100 align-items-end">
+                            <h4>Deposit to Bank</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <div class="qr_box">
+                                <img src="images/Bank_image.png" class="img-fluid" alt="">
+                            </div>
+                            <div class="box_text">
+                                <p>
+                                    Send only USD to this account. This account does not support deposit of other
+                                    currency.
+                                </p>
+                            </div>
+                            <div class="deposite_form">
+                                <form action="">
+                                    <div class="">
+                                        <div>
+                                            <h3>Deposite Ammount</h3>
+                                            <input type="number" class="form-control" placeholder="00.00">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">50</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">100</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">300</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">500</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">1,000</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn_ammount">5,000</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3>Bank Name </h3>
+                                            <h2>ABC BANK</h2>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn_edit"><i class="fa-solid fa-copy"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3>Account Name </h3>
+                                            <h2>ABC DEF</h2>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn_edit"><i class="fa-solid fa-copy"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3>Account Num </h3>
+                                            <h2>123456789</h2>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn_edit"><i class="fa-solid fa-copy"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3>IFIC Code </h3>
+                                            <h2>abc123</h2>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn_edit"><i class="fa-solid fa-copy"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="form_information">
+                                        <div class="d-flex justify-content-between align-items-center my-2">
+                                            <div>
+                                                <h4>Minimum deposit</h4>
+                                            </div>
+                                            <div>
+                                                <p>$1000</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center my-2">
+                                            <div>
+                                                <h4>Maximum deposit</h4>
+                                            </div>
+                                            <div>
+                                                <p>$100,000 </p>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <div class="mb-2">
+                                        <h3>Please Upload Your Deposite ScreenShort Here</h3>
+                                        <input type="file" class="form-control">
+                                    </div>
+                                    <div class="mb-2">
+                                        <button class="form-control btn_primary">Confirm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>

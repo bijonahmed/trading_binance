@@ -1,0 +1,12 @@
+.custom-loader {
+    width: 120px;
+    height: 20px;
+    background: 
+      linear-gradient(90deg, #0000 ,#766DF4) left -50px top 0/50px 20px no-repeat 
+      #E4E4ED;
+    animation: ct2 1s infinite linear;
+  }
+  
+  @keyframes ct2 {
+    100% {background-position: right -50px top 0}
+  }

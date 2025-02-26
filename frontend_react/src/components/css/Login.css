@@ -1,0 +1,55 @@
+/* Style the Progress Bar Container */
+.back-to-home {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .back-to-home {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .btn_secondary {
+    background-color: var(--color_primary); /* Blue background */
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn_secondary:hover {
+    background-color: var(--color_primary); /* Blue background */
+  }
+.progress-container {
+    width: 100%;
+    height: 5px;
+    background-color: #e0e0e0; /* Light grey background */
+    border-radius: 50px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Animate the Progress Bar */
+  .progress-bar {
+    height: 100%;
+    width: 0%; /* Start with 0% width */
+    background-color: #4caf50; /* Green color */
+    animation: loadingAnimation 3s infinite linear; /* Infinite animation */
+  }
+  
+  /* Define the Animation */
+  @keyframes loadingAnimation {
+    0% {
+      width: 0%;
+    }
+    50% {
+      width: 50%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  

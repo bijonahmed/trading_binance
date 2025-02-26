@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- title  -->
+    <title>Welcome to FastTrading</title>
+    <!-- bootstrap 5.3  -->
+    <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+    <!-- fontawsome   -->
+    <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+    <!-- style css  -->
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+    <!-- header part start here  -->
+    <div class="main_navbar">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+                <!-- =========== -->
+                <div class="offcanvas offcanvas-start " data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+                    aria-labelledby="staticBackdropLabel">
+                    <div class="offcanvas-header text-end">
+                        <button type="button" class="btn_close" data-bs-dismiss="offcanvas" aria-label="Close">
+                            <i class="fa-solid fa-x"></i>
+                        </button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="d-flex aligh-items-center w-100 justify-content-between">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="market.html">Markets</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="trade-history.html">Trade History</a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <!-- mobile login register  -->
+                        <ul class="navbar-nav ms-auto mobile_ group_btns mb-2 mb-lg-0  d-sm-none ">
+                            <li class="nav-item w-50">
+                                <a class="nav-link btn_login w-100" href="login.html">Login</a>
+                            </li>
+                            <li class="nav-item w-50">
+                                <a class="nav-link btn_signup w-100" href="register.html">Sign Up</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="d-none d-sm-flex">
+                        <!-- desktop login register               -->
+                        <ul class="navbar-nav ms-auto group_btns mb-2 mb-lg-0 d-none d-lg-flex">
+                            <li class="nav-item">
+                                <a class="nav-link btn_login" href="login.html">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn_signup" href="register.html">Sign Up</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item dropdown profile_pic">
+                            <a class="nav-link  dropdown-toggle" href="market.html" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>User</h4>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="profile.html">
+                                        <i class="fa-solid fa-user"></i>
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="wallet.html">
+                                        <i class="fa-solid fa-wallet"></i>
+                                        Wallet</a></li>
+                                <li><a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <button class="btn btn_menu navbar-toggler text-white" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <!-- header part end here  -->
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 hot_tab pc_view">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="title">
+                            <p class="mb-0 text-white">Currency List</p>
+                        </div>
+                        <!-- favorite tab contnet  -->
+                        <!-- tab content here  -->
+                        <div class="hot_part">
+                            <ul id="currency_list">
+                                <!-- <li>
+                                    <div class="coins">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <div><i class="fa-solid fa-star"></i></div>
+                                            <div><img src="images/bitcoin.png" alt=""></div>
+                                            <div>
+                                                <h2>BTC <span>/usdt</span></h2>
+                                                <p>Volume : 0002320.3343 M</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h2>342734723.343</h2>
+                                            <p class="text-end">NaN</p>
+                                        </div>
+                                    </div>
+                                </li> -->
+
+                            </ul>
+                        </div>
+                        <!-- tab content end here  -->
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- chart part start here  -->
+                    <div class="col-md-12">
+                        <!-- topbar part start here  -->
+                        <div class="top_navbar">
+                            <div class="row ">
+                                <div class="col-10">
+                                    <div class="top_left">
+                                        <div>
+                                            <a class="" data-bs-toggle="offcanvas" href="#offcanvasExample"
+                                                role="button" aria-controls="offcanvasExample">
+                                                <img src="images/arrow.png" alt="">
+                                            </a>
+
+                                            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                                                aria-labelledby="offcanvasExampleLabel">
+                                                <div class="offcanvas-header">
+                                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Markets
+                                                        </h5>
+                                                        <button type="button " class="btn_close"
+                                                            data-bs-dismiss="offcanvas" aria-label="Close"><i
+                                                                class="fa-solid fa-xmark"></i></button>
+                                                    </div>
+
+                                                    <div>
+                                                        <form action="">
+                                                            <input type="text" name="search" placeholder="search"
+                                                                class="form-control">
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                                <div class="offcanvas-body">
+
+
+                                                    <!--tab  main content part start here  -->
+                                                    <div class="tab_function">
+                                                        <!-- Currency part start here  -->
+                                                        <div class="col-md-12 ">
+                                                            <div class="nav flex-column nav-pills" role="tablist" id="mbcurrency_list"
+                                                                aria-orientation="vertical">
+                                                                <!-- <a class="nav-link coin_select d-flex justify-content-between align-items-center active"
+                                                                    data-toggle="pill" href="#coinBTC" role="tab"
+                                                                    aria-selected="true">
+                                                                    <div class="d-flex">
+                                                                        <div class="sidebar_star"><i
+                                                                                class="fa-solid fa-star"></i>
+                                                                        </div>
+                                                                        <img src="images/bitcoin.png" alt="btc">
+                                                                        <div>
+                                                                            <h2>BTC</h2>
+                                                                            <p>Bitcoin</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h3>4.5484254</h3>
+                                                                        <p class="text-end"><i
+                                                                                class="icon ion-md-lock"></i>
+                                                                            0.0000000</p>
+                                                                    </div>
+                                                                </a> -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- Currency part end here  -->
+                                                    </div>
+                                                    <!-- tabs part end here    -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Coin title  -->
+                                        <h1> btc/usdt <span>+0.50%</span></h1>
+                                        <div class="min_btns">
+                                            <button type="button" class="btn btn_time">10min</button>
+                                            <button type="button" class="btn btn_time">30min</button>
+                                            <button type="button" class="btn btn_time">45min</button>
+                                            <button type="button" class="btn btn_time">1Hour</button>
+                                            <button type="button" class="btn btn_time">1day</button>
+                                            <button type="button" class="btn btn_time">1Week</button>
+                                            <button type="button" class="btn btn_time">1Month</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-2 d-flex justify-content-end align-items-center">
+                                    <div class="top_right">
+                                        <div class="candle_icon pc_view">
+                                            <a href="#">
+                                                <img src="images/candle.png" class="candle_light" alt="">
+                                                <img src="images/candle dark.png" class="candle_dark" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="candle_icon mobile_view">
+                                            <a>
+                                                <button
+                                                    class="d-flex justify-content-center align-items-center btn_candle"
+                                                    id="myButton" onclick="toggleButton()">
+                                                    <img src="images/candle-active.png" class=" icn_active" alt="">
+                                                    <img src="images/candle.png" class=" icn_inactive" alt="">
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- topbar part end here  -->
+
+                        <!-- TradingView Widget BEGIN -->
+                        <div class="tradingview-widget-container futures_widgets " id="inactiveDiv">
+                            <div id="tradingview_e223c"></div>
+                            <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/"
+                                    rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on
+                                        TradingView</span></a></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                            <script type="text/javascript">
+                                new TradingView.widget(
+                                    {
+                                        "autosize": true,
+                                        "symbol": "BITSTAMP:BTCUSD",
+                                        "interval": "1",
+                                        "timezone": "Etc/UTC",
+                                        "theme": "dark",
+                                        "style": "1",
+                                        "locale": "en",
+                                        "toolbar_bg": "#f1f3f6",
+                                        "enable_publishing": false,
+                                        "backgroundColor": "rgba(8, 19, 34, 1)",
+                                        "hide_top_toolbar": true,
+                                        "hide_legend": true,
+                                        "save_image": false,
+                                        "container_id": "tradingview_e223c"
+                                    }
+                                );
+                            </script>
+                        </div>
+                        <!-- TradingView Widget END -->
+                    </div>
+                    <!-- chart part end here  -->
+                    <!-- buy part start here  -->
+                    <div class="col-md-12">
+                        <div class="btns_part">
+                            <form action="">
+                                <div class="btns">
+
+                                    <select name="" class=" text-center" id="">
+                                        <option value="" selected><img src="images/i.png" alt="">Limite <i
+                                                class="fa-solid fa-caret-down"></i></option>
+                                        <option value="">Market</option>
+                                    </select>
+
+                                </div>
+                                <div class="btns">
+                                    <div><button><i class="fa-solid fa-minus"></i></button></div>
+                                    <div>
+                                        <h4 class="text-center">24,000.00</h4>
+                                    </div> <!--(Buying Price)-->
+                                    <div><button><i class="fa-solid fa-plus"></i></button></div>
+                                </div>
+                                <div class="btns">
+                                    <div><button><i class="fa-solid fa-minus"></i></button></div>
+                                    <div><input type="text" class="" placeholder="Ammount(BTC)"></div>
+                                    <!--Est BTC ammount-->
+                                    <div><button><i class="fa-solid fa-plus"></i></button></div>
+                                </div>
+                                <div class="btns justify-content-center">
+                                    <div class="">
+                                        <h4 class="text-center">Select Duration</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="duration_btn">
+                                            <div><button type="button">30s</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="duration_btn">
+                                            <div><button type="button">60s</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="duration_btn">
+                                            <div><button type="button">120s</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="duration_btn">
+                                            <div><button type="button">300s</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="percen_btn">
+                                            <div><button type="button"></button></div>
+                                            <div>
+                                                <p>25%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="percen_btn">
+                                            <div><button type="button"></button></div>
+                                            <div>
+                                                <p>50%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="percen_btn">
+                                            <div><button type="button"></button></div>
+                                            <div>
+                                                <p>75%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="percen_btn">
+                                            <div><button type="button"></button></div>
+                                            <div>
+                                                <p>100%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btns justify-content-center">
+                                    <div>
+                                        <h4 class="text-center"> 0.00</h4>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h6 class="text-center avbl_css px-2">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <div>Avbl: &nbsp;</div>
+                                            <div>1,000.00 <span>USDT</span></div>
+                                        </div>
+                                    </h6>
+                                </div>
+                                <div class="d-flex aligh-items-center">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#open_long"
+                                        class="btn btn-success btn_show w-50 m-1">Open Long </button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#open_long"
+                                        class="btn btn_show btn-danger w-50 m-1">Open Short </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- buy part end here  -->
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Confirm modal  -->
+    <div class="modal fade" id="open_long" tabindex="-1" aria-labelledby="open_longLabel" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-0">
+                <div class="modal-header py-0">
+                    <div class="w-10"></div>
+                    <!-- <h5 class="modal-title fs-6" id="open_longLabel"></h5> -->
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn_close text-white" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center p-4 pb-2">
+                        <i class="fa-solid fa-check confirm_icon"></i>
+                        <h5 class="text-light">Your Trade has been started</h5>
+                        <a href="market.html" class="btn_primary m_close my-3">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn_show').click(function () {
+                setTimeout(() => {
+                    $('.modal-backdrop').removeClass('show');
+                    $('.modal-backdrop').fadeOut(); //.css('display', 'none');  
+                    $('.modal').removeClass('show');
+                    $('.modal.fade').fadeOut();
+                }, 2000);
+            });
+        });
+    </script>
+    <script>
+        const cryptos = [
+            { symbol: "BTC", name: "BTC/USDT", image: "images/bitcoin.png" },
+            { symbol: "ETH", name: "ETH/USDT", image: "images/eth.png" },
+            { symbol: "BNB", name: "BNB/USDT", image: "images/bnb.png" },
+            { symbol: "XRP", name: "XRP/USDT", image: "images/xrp.png" },
+            { symbol: "ADA", name: "ADA/USDT", image: "images/ada.png" },
+            { symbol: "SOL", name: "SOL/USDT", image: "images/sol.png" },
+            { symbol: "DOT", name: "DOT/USDT", image: "images/dot.png" },
+            { symbol: "DOGE", name: "DOGE/USDT", image: "images/doge.png" },
+            { symbol: "SHIB", name: "SHIB/USDT", image: "images/shib.png" },
+            { symbol: "LTC", name: "LTC/USDT", image: "images/LTC.png" },
+            { symbol: "LINK", name: "LINK/USDT", image: "images/link.png" },
+            { symbol: "AVAX", name: "AVAX/USDT", image: "images/avax.png" },
+            { symbol: "UNI", name: "UNI/USDT", image: "images/uni.png" },
+            { symbol: "XLM", name: "XLM/USDT", image: "images/xlm.png" },
+            { symbol: "VET", name: "VET/USDT", image: "images/vet.png" },
+            { symbol: "TRX", name: "TRX/USDT", image: "images/trx.png" }
+        ];
+
+        const tableBody = document.getElementById("currency_list");
+        const clist = document.getElementById("mbcurrency_list");
+
+        cryptos.forEach((crypto, index) => {
+            const row = `
+                <li>
+                    <div class="coins">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div><img src="${crypto.image}" alt="${crypto.symbol}"></div>
+                            <div>
+                                <h2>${crypto.symbol} <span>/USDT</span></h2>
+                                <p id="${crypto.symbol.toLowerCase()}-volume">Volume : 0000.000 </p>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 id="${crypto.symbol.toLowerCase()}-price">342734723.343</h2>
+                            <p class="text-end" id="${crypto.symbol.toLowerCase()}-change">NaN</p>
+                        </div>
+                    </div>
+                </li>
+            `;
+            tableBody.innerHTML += row;
+        });
+
+        cryptos.forEach((crypto, index) => {
+            const rowList = `
+                
+                <a class="nav-link coin_select d-flex justify-content-between align-items-center active"
+                    data-toggle="pill" href="#coinBTC" role="tab"
+                    aria-selected="true">
+                    <div class="d-flex">
+                        <img src="${crypto.image}" alt="btc">
+                        <div>
+                            <h2>${crypto.symbol}</h2>
+                            <p>${crypto.name}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3  id="${crypto.symbol.toLowerCase()}-price">4.5484254</h3>
+                        <p id="${crypto.symbol.toLowerCase()}-change" class="text-end"><i
+                                class="icon ion-md-lock"></i>
+                            0.0000000</p>
+                    </div>
+                </a>
+            `;
+            clist.innerHTML += rowList;
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            async function fetchCryptoData(symbol, priceId, volumeId, changeId) {
+                const endTime = Date.now();
+                const startTime = endTime - (30 * 24 * 60 * 60 * 1000); // Last 30 days
+                const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&startTime=${startTime}&endTime=${endTime}&limit=30`;
+
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (!data || data.length === 0) throw new Error("No data received");
+
+                    const prices = data.map(entry => parseFloat(entry[4])); // Closing price
+                    const volume = data.map(entry => parseFloat(entry[5])); // Volume
+
+                    // Calculate change
+                    const firstPrice = prices[0];
+                    const lastPrice = prices[prices.length - 1];
+                    const changePercent = ((lastPrice - firstPrice) / firstPrice) * 100;
+
+                    // Update price & volume
+                    document.getElementById(priceId).innerText = `$${lastPrice.toFixed(2)}`;
+                    document.getElementById(volumeId).innerText = `Volume: ${volume[volume.length - 1].toFixed(2)}`;
+
+                    // Display the percentage change
+                    const changeText = changePercent.toFixed(2) + "%";
+                    const changeButton = document.getElementById(changeId);
+                    changeButton.innerText = changeText;
+                    changeButton.classList.remove("btn-success", "btn-danger");
+                    changeButton.classList.add(changePercent >= 0 ? "btn-success" : "btn-danger");
+
+                } catch (error) {
+                    console.error(`Error fetching ${symbol} data:`, error);
+                }
+            }
+
+            // Fetch data for multiple cryptocurrencies
+            const cryptoList = [
+                ["BTCUSDT", "btc-price", "btc-volume", "btc-change"],
+                ["ETHUSDT", "eth-price", "eth-volume", "eth-change"],
+                ["BNBUSDT", "bnb-price", "bnb-volume", "bnb-change"],
+                ["XRPUSDT", "xrp-price", "xrp-volume", "xrp-change"],
+                ["ADAUSDT", "ada-price", "ada-volume", "ada-change"],
+                ["SOLUSDT", "sol-price", "sol-volume", "sol-change"],
+                ["DOTUSDT", "dot-price", "dot-volume", "dot-change"],
+                ["DOGEUSDT", "doge-price", "doge-volume", "doge-change"],
+                ["SHIBUSDT", "shib-price", "shib-volume", "shib-change"],
+                ["LTCUSDT", "ltc-price", "ltc-volume", "ltc-change"],
+                ["LINKUSDT", "link-price", "link-volume", "link-change"],
+                ["AVAXUSDT", "avax-price", "avax-volume", "avax-change"],
+                ["UNIUSDT", "uni-price", "uni-volume", "uni-change"],
+                ["XLMUSDT", "xlm-price", "xlm-volume", "xlm-change"],
+                ["VETUSDT", "vet-price", "vet-volume", "vet-change"],
+                ["TRXUSDT", "trx-price", "trx-volume", "trx-change"],
+            ];
+
+            cryptoList.forEach(([symbol, priceId, volumeId, changeId]) => {
+                fetchCryptoData(symbol, priceId, volumeId, changeId);
+            });
+        });
+    </script>
+
+    <script src="js/custom.js"></script>
+
+
+    <script src="js/custom.js"></script>
+
+</body>
+
+</html>

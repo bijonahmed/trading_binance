@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- title  -->
+    <title>Welcome to FastTrading</title>
+    <!-- bootstrap 5.3  -->
+     <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+    <!-- fontawsome   -->
+     <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+    <!-- style css  -->
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+    <!-- sidebar start -->
+    <aside class="dashboard_sidebar">
+        <div class="sidbar_close">
+            <button class="btn_sidebar" type="button">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </div>
+        <div class="sidebar_top ">
+            <a href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+        </div>
+        <nav class="nav_sidebar">
+            <ul class="sidebar_list">
+                <li class="sidebar_item active">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="market.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Market</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="future.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-candlestick"></i>
+                        <span>Futures</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="wallet.html" class="sidebar_link">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="payment.html" class="sidebar_link">
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>Payment</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="trade-history.html" class="sidebar_link">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Trade History</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="kyc.html" class="sidebar_link">
+                        <i class="fa-light fa-address-card"></i>
+                        <span>KYC Varification</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- sidebar end  -->
+    <div class="main_dashboard">
+
+        <!-- top navbar  -->
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="d-lg-none">
+                            <button class="btn_sidebar" type="button">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown profile_pic">
+                            <a class="nav-link  dropdown-toggle" href="market.html" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>User</h4>
+                                </div>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="profile.html">
+                                        <i class="fa-solid fa-user"></i>
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="wallet.html">
+                                        <i class="fa-solid fa-wallet"></i>
+                                        Wallet</a></li>
+                                <li><a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        Logout</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- top navbar end  -->
+
+
+        <div class="dashboard_content">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="profile_information">
+                                <!-- <img src="images/eos.png" alt="" class="img-fluid"> -->
+                                 <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>Jhone Doe</h4>
+                                    <p>@username</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ms-auto">
+                            <div class="btns_list">
+                                <a href="#" class="btn_primary">Deposit</a>
+                                <a href="withdraw.html" class="btn_primary">Withdraw</a>
+                                <!-- <a href="" class="btn_primary"></a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_card">
+                        <h4>Personal information</h4>
+                        <ul>
+                            <li>
+                                <p>User name</p>
+                                <p>@jhone123</p>
+                            </li>
+                            <li>
+                                <p>Full name</p>
+                                <p>Jhone Doe</p>
+                            </li>
+                            <li>
+                                <p>Date of birth</p>
+                                <p>2012-06-21</p>
+                            </li>
+                            <li>
+                                <p>Address</p>
+                                <p>Dhaka, Bangladesh</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="details_card">
+                        <h4>Security</h4>
+                        <ul>
+                            <li>
+                                <p>Phone</p>
+                                <p>012****34 <button class="btn_edit" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#paymentModal">Manage</button></p>
+                            </li>
+                            <li>
+                                <p>Email </p>
+                                <p>y****il@**.com <button class="btn_edit">Manage</button></p>
+                            </li>
+                            <li>
+                                <p>Password</p>
+                                <p>********<button class="btn_edit">Manage</button></p>
+                            </li>
+                            <li>
+                                <p>Withdraw Pin</p>
+                                <p>********<button class="btn_edit">Manage</button></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- add new modal start here  -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="boostModalLabel" aria-modal="true"
+        role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-0">
+                <div class="modal-header py-0">
+                    <div class="w-10"> </div>
+                    <h5 class="modal-title fs-6" id="boostModalLabel"></h5>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn_close text-white" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form_group">
+
+                        <div class="st_filter">
+                            <form action="" class="withdraw_form">
+
+                                <div class="form_group">
+                                    <p>Currency type<span class="text-danger">*</span></p>
+                                    <select name="" id="mySelect2" class="form-control">
+                                        <option selected="" value="">USDT-TRC20-TRX</option>
+                                    </select>
+                                </div>
+                                <div id="additionalFields2" style="">
+                                    <div class="form_group mb-2">
+                                        <p>Wallet Address<span class="text-danger">*</span> </p>
+                                        <input type="text" placeholder="Address" class="form-control mb-0">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn_action w-100 mt-2">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>

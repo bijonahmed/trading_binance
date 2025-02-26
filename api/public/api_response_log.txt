@@ -1,0 +1,399 @@
+Date: 2025-02-08 07:41:43
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: f1i5bpgdqfgmsx2u
+    [2] => sign: d076cffe4cba22af7e4ccee67460e5cb
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:43:32
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: soyajg1crz348cm3
+    [2] => sign: 3fe942f7c7930482188bdd2cb774af95
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:47:54
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 2i4t0tvai3tl8qfc
+    [2] => sign: 8ff77d39bd7ef3e37616d27200e5b543
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:49:03
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 6tihm3mslnbe31ip
+    [2] => sign: da321d3f566f1ecc48b9bbb611a4716a
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10000,"msg":"Request succeeded","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:49:51
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: nw7bkdj906mrkyat
+    [2] => sign: 77271d49984389d413c2b8d62c1ae46d
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:52:26
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 8decsknzo0j618b5
+    [2] => sign: db6016b0ecf0e20869e8aed4a9567497
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:52:59
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 5vb1tfipfijki1ro
+    [2] => sign: fe14760493b9a024693c878aec88e9a5
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "ag",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 6
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:53:21
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: duopk2eljvx8odui
+    [2] => sign: 70a69bcb972fe99fd27c386b62e4e2b3
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:53:30
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: idkqw7llf3tw2u9x
+    [2] => sign: 19fffb8d282b4dc4fd5ca7afe8a380c3
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:53:43
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: cm4msotksb6tzhxc
+    [2] => sign: 43b85068fbfbd33f34174006f8dc2d6b
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "USD",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 07:58:42
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 7d4y9bomncvgbypf
+    [2] => sign: 754d00c2cd79329ce2b492fd3a31bc2a
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 08:02:15
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 4vtlhcr956r3o625
+    [2] => sign: 57cd1ea1c601a8dc7ba2fbae22b2437d
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "jdb",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 08:15:12
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: x49smia5p4uquqe4
+    [2] => sign: f3ca1de268a91316edd8f221b5a4fd3a
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "ww",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 7
+}
+HTTP Status Code: 200
+Response: {"code":10407,"msg":"PlatType code error","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 08:15:23
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 453vp4x5y4eurqs9
+    [2] => sign: ad33fd40218400f16c4b1492f2dd3ff6
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "pg",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 2
+}
+HTTP Status Code: 200
+Response: {"code":10000,"msg":"Request succeeded","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 08:22:54
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 5nkh8jvhsbemk5t8
+    [2] => sign: 86362ac761aa8e0c7cf121a9a252223e
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "wl",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 1
+}
+HTTP Status Code: 200
+Response: {"code":10407,"msg":"PlatType code error","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 08:25:28
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 9rnw69z8sc5rzygx
+    [2] => sign: ee969995cc50e65c2a206a982a4a87a9
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "ag",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 6
+}
+HTTP Status Code: 200
+Response: {"code":10002,"msg":"PlayerId already exists","data":null}
+--------------------------------------------------------------------------------
+Date: 2025-02-08 18:24:50
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: iqov12dhv6y9ia0h
+    [2] => sign: 7b07b4162d7d8c174f13ca4885236436
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "ag",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 1
+}
+HTTP Status Code: 200
+Response: 
+--------------------------------------------------------------------------------
+Date: 2025-02-08 18:27:01
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: yjnyytmqd34d9v8x
+    [2] => sign: dc97af3d9f3a30cef277ef94022ac2f2
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "ag",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 1
+}
+HTTP Status Code: 200
+Response: 
+--------------------------------------------------------------------------------
+Date: 2025-02-15 23:58:20
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: nwfxpv760ez3k4aa
+    [2] => sign: 05e96ffde2391cb096d432b6621ab503
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "ag",
+    "playerId": "rana1234",
+    "currency": "INR",
+    "gameType": 1
+}
+HTTP Status Code: 403
+Response: 
+--------------------------------------------------------------------------------
+Date: 2025-02-24 23:37:22
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: 4nduj8abiquqpwpe
+    [2] => sign: 7d1b9686d5b465e03672a8031fd5c360
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "",
+    "playerId": "jannat123456",
+    "currency": "",
+    "gameType": 1
+}
+HTTP Status Code: 403
+Response: 
+--------------------------------------------------------------------------------
+Date: 2025-02-24 23:37:26
+URL: https://ap.api-bet.net/api/server/create
+Headers: Array
+(
+    [0] => Content-Type: application/json
+    [1] => random: y1rn4355rfw4g5p6
+    [2] => sign: 4716d49e540348d363ecd6cd0ce1973e
+    [3] => sn: guw
+)
+
+Payload: {
+    "platType": "",
+    "playerId": "jannat123456",
+    "currency": "",
+    "gameType": 1
+}
+HTTP Status Code: 403
+Response: 
+--------------------------------------------------------------------------------

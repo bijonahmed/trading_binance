@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- title  -->
+  <title>Welcome to FastTrading</title>
+  <!-- bootstrap 5.3  -->
+  <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+  <!-- fontawsome   -->
+  <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+  <!-- style css  -->
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+  <!-- header part start here  -->
+  <div class="main_navbar">
+    <nav class="navbar navbar-expand-lg ">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+        <!-- =========== -->
+        <div class="offcanvas offcanvas-start " data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+          aria-labelledby="staticBackdropLabel">
+          <div class="offcanvas-header text-end">
+            <button type="button" class="btn_close" data-bs-dismiss="offcanvas" aria-label="Close">
+              <i class="fa-solid fa-x"></i>
+            </button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="d-flex aligh-items-center w-100 justify-content-between">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="market.html">Markets</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="future.html">Futures</a>
+                </li>
+              </ul>
+
+            </div>
+
+            <!-- mobile login register  -->
+            <ul class="navbar-nav ms-auto mobile_ group_btns mb-2 mb-lg-0  d-sm-none ">
+              <li class="nav-item w-50">
+                <a class="nav-link btn_login w-100" href="login.html">Login</a>
+              </li>
+              <li class="nav-item w-50">
+                <a class="nav-link btn_signup w-100" href="register.html">Sign Up</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <div class="d-none d-sm-flex">
+            <!-- desktop login register               -->
+            <ul class="navbar-nav ms-auto group_btns mb-2 mb-lg-0 d-none d-lg-flex">
+              <li class="nav-item">
+                <a class="nav-link btn_login" href="login.html">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn_signup" href="register.html">Sign Up</a>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="navbar-nav">
+
+            <li class="nav-item dropdown profile_pic">
+              <a class="nav-link  dropdown-toggle" href="market.html" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-solid fa-user"></i>
+                <div>
+                  <h4>User</h4>
+                </div>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="profile.html">
+                    <i class="fa-solid fa-user"></i>
+                    Profile</a></li>
+                <li><a class="dropdown-item" href="wallet.html">
+                    <i class="fa-solid fa-wallet"></i>
+                    Wallet</a></li>
+                <li><a class="dropdown-item" href="#">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+          <button class="btn btn_menu navbar-toggler text-white" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+      </div>
+    </nav>
+  </div>
+  <!-- header part end here  -->
+
+  <!-- hero part start herer  -->
+  <section class="hero_part">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="hero_content">
+            <h1><span>212,436,053</span>
+              <strong>USERS</strong>
+              <strong>TRUST US</strong>
+            </h1>
+            <div class="row">
+              <div class="col-xl-8 me-auto">
+                <div class="form_group_register">
+                  <input type="text" class="form-control d-none d-md-block" placeholder="Email">
+                  <a href="register.html" class="btn_primary">Sign up</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-12">
+
+              <div class="coin_table">
+                <ul class="coin_list" id="crypto-table">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="m-0">Popular</h6>
+                  </div>
+                  <!-- <li>
+                    <a class="coin_link">
+                      <span class="coin_icon">
+                        <img src="images/bitcoin.png" alt="" class="img-fluid">
+                        <strong>BTC</strong>
+                        <span>BitCoin</span>
+                      </span>
+                      <span class="">$64,908.61</span>
+                      <span class="">-1.81%</span>
+                    </a>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+            <div class="col-12">
+
+              <div class="coin_table">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                  <div class="tradingview-widget-container__widget"></div>
+                  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/"
+                      rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on
+                        TradingView</span></a></div>
+                  <script type="text/javascript"
+                    src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                      {
+                        "feedMode": "all_symbols",
+                          "isTransparent": true,
+                            "displayMode": "regular",
+                              "width": "100%",
+                                "height": "100%",
+                                  "colorTheme": "dark",
+                                    "locale": "en"
+                      }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- hero part end here  -->
+
+  <!-- mobile view image section start here  -->
+  <section class="mobile_img">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img_section">
+            <img src="images/mobile_view.png" alt="" class="img">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="img_sec_title">
+            <h2>Trade on the go. Anywhere, anytime.</h2>
+            <img src="images/desktop_view.png" alt="" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- mobile view image section end herer  -->
+
+  <!-- faq section start here  -->
+  <section class="faq_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="faq_contents">
+            <h1 class="faq_title">Frequently Asked Questions</h1>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    1
+                    What is a cryptocurrency exchange?
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    Cryptocurrency exchanges are digital marketplaces that enable users to buy and sell cryptocurrencies
+                    like Bitcoin, Ethereum, and Tether. The Binance exchange is the largest crypto exchange by trade
+                    volume.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Accordion Item #2
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate
+                    the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine
+                    this being filled with some actual content.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    Accordion Item #3
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate
+                    the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more
+                    exciting happening here in terms of content, but just filling up the space to make it look, at least
+                    at first glance, a bit more representative of how this would look in a real-world application.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- faq section end here  -->
+
+  <!-- sign up section  -->
+  <div class="newslatter_sec">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="signUp_sectin">
+            <h4>Start earning today</h4>
+            <a href="register.html" class="btn_primary">Sign up now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- footer part start here  -->
+  <footer class="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="footer">
+            <p>©Copyright 2024</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- footer part end here  -->
+
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+      const cryptos = [
+          { symbol: "BTC", name: "BTC/USDT", image: "images/btc.png" },
+          { symbol: "ETH", name: "ETH/USDT", image: "images/eth.png" },
+          { symbol: "BNB", name: "BNB/USDT", image: "images/bnb.png" },
+          { symbol: "XRP", name: "XRP/USDT", image: "images/xrp.png" },
+          // { symbol: "ADA", name: "ADA/USDT", image: "images/ada.png" },
+          // { symbol: "SOL", name: "SOL/USDT", image: "images/sol.png" },
+          // { symbol: "DOT", name: "DOT/USDT", image: "images/dot.png" },
+          // { symbol: "DOGE", name: "DOGE/USDT", image: "images/doge.png" },
+          // { symbol: "SHIB", name: "SHIB/USDT", image: "images/shib.png" },
+          // { symbol: "LTC", name: "LTC/USDT", image: "images/LTC.png" },
+          // { symbol: "LINK", name: "LINK/USDT", image: "images/link.png" },
+          // { symbol: "AVAX", name: "AVAX/USDT", image: "images/avax.png" },
+          // { symbol: "UNI", name: "UNI/USDT", image: "images/uni.png" },
+          // { symbol: "XLM", name: "XLM/USDT", image: "images/xlm.png" },
+          // { symbol: "VET", name: "VET/USDT", image: "images/vet.png" },
+          // { symbol: "TRX", name: "TRX/USDT", image: "images/trx.png" }
+      ];
+  
+      const tableBody = document.getElementById("crypto-table");
+  
+      cryptos.forEach((crypto, index) => {
+          const row = `
+          <li>
+                    <a class="coin_link">
+                      <span class="coin_icon">
+                        <img src="${crypto.image}" alt="" class="img-fluid">
+                        <strong>${crypto.symbol}</strong>
+                        <span>${crypto.name}</span>
+                      </span>
+                      <span id="${crypto.symbol.toLowerCase()}-price">looding</span>
+                    </a>
+                  </li>
+          `;
+          tableBody.innerHTML += row;
+      });
+  </script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          async function fetchCryptoData(symbol, priceId, volumeId, chartId, changeId) {
+              const endTime = Date.now();
+              const startTime = endTime - (30 * 24 * 60 * 60 * 1000); // Last 30 days
+              const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&startTime=${startTime}&endTime=${endTime}&limit=30`;
+  
+              try {
+                  const response = await fetch(url);
+                  const data = await response.json();
+  
+                  if (!data || data.length === 0) throw new Error("No data received");
+  
+                  const prices = data.map(entry => parseFloat(entry[4])); // Closing price
+                  const volume = data.map(entry => parseFloat(entry[5])); // Volume
+  
+                  // Calculate change
+                  const firstPrice = prices[0];
+                  const lastPrice = prices[prices.length - 1];
+                  const changePercent = ((lastPrice - firstPrice) / firstPrice) * 100;
+  
+                  // Update price & volume
+                  document.getElementById(priceId).innerText = `$${lastPrice.toFixed(2)}`;
+                  document.getElementById(priceId + "-pc").innerText = `$${lastPrice.toFixed(2)}`;
+                  document.getElementById(volumeId).innerText = `Vol: ${volume[volume.length - 1].toFixed(2)}`;
+                  document.getElementById(volumeId + "-pc").innerText = volume[volume.length - 1].toFixed(2);
+  
+                  // Display the percentage change
+                  const changeText = changePercent.toFixed(2) + "%";
+                  const changeButton = document.getElementById(changeId);
+                  changeButton.innerText = changeText;
+                  changeButton.classList.remove("btn-success", "btn-danger");
+                  changeButton.classList.add(changePercent >= 0 ? "btn-success" : "btn-danger");
+  
+                  // Generate chart
+                  renderChart(chartId, prices);
+              } catch (error) {
+                  console.error(`Error fetching ${symbol} data:`, error);
+              }
+          }
+  
+          function renderChart(chartId, prices) {
+              let ctx = document.getElementById(chartId)?.getContext("2d");
+              if (!ctx) return;
+  
+              new Chart(ctx, {
+                  type: "line",
+                  data: {
+                      labels: prices.map((_, i) => i + 1),
+                      datasets: [{
+                          data: prices,
+                          borderColor: "blue",
+                          backgroundColor: "rgba(0, 0, 255, 0.1)",
+                          borderWidth: 2,
+                          pointRadius: 0,
+                          fill: true,
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: { legend: { display: false } },
+                      scales: { x: { display: false }, y: { display: false } }
+                  }
+              });
+          }
+  
+          // Fetch data for multiple cryptocurrencies
+          const cryptoList = [
+          ];
+  
+          cryptoList.forEach(([symbol, priceId, volumeId, chartId, changeId]) => {
+              fetchCryptoData(symbol, priceId, volumeId, chartId, changeId);
+          });
+  
+      });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- title  -->
+    <title>Welcome to FastTrading</title>
+    <!-- bootstrap 5.3  -->
+    <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+    <!-- fontawsome   -->
+    <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+
+    <!-- style css  -->
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+
+    <!-- header part start here  -->
+    <div class="main_navbar">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+                <!-- =========== -->
+                <div class="offcanvas offcanvas-start " data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+                    aria-labelledby="staticBackdropLabel">
+                    <div class="offcanvas-header text-end">
+                        <button type="button" class="btn_close" data-bs-dismiss="offcanvas" aria-label="Close">
+                            <i class="fa-solid fa-x"></i>
+                        </button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="d-flex aligh-items-center w-100 justify-content-between">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="market.html">Markets</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="trade-history.html">Trade History</a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <!-- mobile login register  -->
+                        <ul class="navbar-nav ms-auto mobile_ group_btns mb-2 mb-lg-0  d-sm-none ">
+                            <li class="nav-item w-50">
+                                <a class="nav-link btn_login w-100" href="login.html">Login</a>
+                            </li>
+                            <li class="nav-item w-50">
+                                <a class="nav-link btn_signup w-100" href="register.html">Sign Up</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="d-none d-sm-flex">
+                        <!-- desktop login register               -->
+                        <ul class="navbar-nav ms-auto group_btns mb-2 mb-lg-0 d-none d-lg-flex">
+                            <li class="nav-item">
+                                <a class="nav-link btn_login" href="login.html">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn_signup" href="register.html">Sign Up</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item dropdown profile_pic">
+                            <a class="nav-link  dropdown-toggle" href="market.html" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>User</h4>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="profile.html">
+                                        <i class="fa-solid fa-user"></i>
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="wallet.html">
+                                        <i class="fa-solid fa-wallet"></i>
+                                        Wallet</a></li>
+                                <li><a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <button class="btn btn_menu navbar-toggler text-white" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <!-- header part end here  -->
+
+
+    <div class="container-fluid">
+        <!-- top rated part start here  -->
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="top_rated">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                                    async>
+                                        {
+                                            "symbol": "BINANCE:BTCUSDT",
+                                                "width": "100%",
+                                                    "height": "100%",
+                                                        "locale": "en",
+                                                            "dateRange": "3M",
+                                                                "colorTheme": "dark",
+                                                                    "isTransparent": false,
+                                                                        "autosize": true,
+                                                                            "largeChartUrl": "",
+                                                                                "chartOnly": false,
+                                                                                    "noTimeScale": false
+                                        }
+                                    </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="top_rated">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                                    async>
+                                        {
+                                            "symbol": "BINANCE:ETHUSDT",
+                                                "width": "100%",
+                                                    "height": "100%",
+                                                        "locale": "en",
+                                                            "dateRange": "3M",
+                                                                "colorTheme": "dark",
+                                                                    "isTransparent": false,
+                                                                        "autosize": true,
+                                                                            "largeChartUrl": "",
+                                                                                "chartOnly": false,
+                                                                                    "noTimeScale": false
+                                        }
+                                    </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="top_rated">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                                    async>
+                                        {
+                                            "symbol": "BINANCE:XRPUSDT",
+                                                "width": "100%",
+                                                    "height": "100%",
+                                                        "locale": "en",
+                                                            "dateRange": "3M",
+                                                                "colorTheme": "dark",
+                                                                    "isTransparent": false,
+                                                                        "autosize": true,
+                                                                            "largeChartUrl": "",
+                                                                                "chartOnly": false,
+                                                                                    "noTimeScale": false
+                                        }
+                                    </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="top_rated">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                                    async>
+                                        {
+                                            "symbol": "BINANCE:BNBUSDT",
+                                                "width": "100%",
+                                                    "height": "100%",
+                                                        "locale": "en",
+                                                            "dateRange": "3M",
+                                                                "colorTheme": "dark",
+                                                                    "isTransparent": false,
+                                                                        "autosize": true,
+                                                                            "largeChartUrl": "",
+                                                                                "chartOnly": false,
+                                                                                    "noTimeScale": false
+                                        }
+                                    </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- top rated part end here   -->
+         
+        <!-- buttons section start here  -->
+        <section class="buttons">
+            <div class="bt_container_home">
+                <a href="deposit.html" class="btn_primary"> <i class="fa-solid fa-download me-md-2"></i> <span class="d-none d-lg-block">Deposit</span> </a>
+                <a href="withdraw.html" class="btn_primary"> <i class="fa-solid fa-upload me-md-2"></i>  <span class="d-none d-lg-block">Withdraw</span></a>
+                <a href="future.html" class="btn_primary"><i class="fa-solid fa-chart-candlestick me-md-2"></i> <span class="d-none d-lg-block">Future</span></a>
+
+                <a href="kyc.html" class="btn_primary"> <i class="fa-solid fa-shield-quartered"></i> <span class="d-none d-lg-block">KYC Verify</span></a>
+            </div>
+        </section>
+        <!-- buttons section end here  -->
+
+        <!-- tape widget part start here  -->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="tape_widget">
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                                {
+                                    "symbols": [
+                                        {
+                                            "proName": "FOREXCOM:SPXUSD",
+                                            "title": "S&P 500"
+                                        },
+                                        {
+                                            "proName": "FOREXCOM:NSXUSD",
+                                            "title": "US 100"
+                                        },
+                                        {
+                                            "proName": "FX_IDC:EURUSD",
+                                            "title": "EUR/USD"
+                                        },
+                                        {
+                                            "proName": "BITSTAMP:BTCUSD",
+                                            "title": "Bitcoin"
+                                        },
+                                        {
+                                            "proName": "BITSTAMP:ETHUSD",
+                                            "title": "Ethereum"
+                                        }
+                                    ],
+                                        "showSymbolLogo": true,
+                                            "colorTheme": "dark",
+                                                "isTransparent": true,
+                                                    "displayMode": "compact",
+                                                        "locale": "en"
+                                }
+                            </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+                </div>
+            </div>
+        </div>
+        <!-- tape widget part end here () -->
+
+        <!-- Coin parice part start here  -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title">
+                    <h3>Top Rated Cryptocurrencies </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="crypto_table">
+                    <!-- crypto market  -->
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center pc_view">Rank</th>
+                                <th>Name</th>
+                                <th class="pc_view text-center">24 Hour Volume</th>
+                                <th class="pc_view text-center">Price</th>
+                                <th>30day</th>
+                                <th>Change(30day)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crypto-table"></tbody>
+                        
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- coin price part end here  -->
+
+        <!-- top 10 gainer part start here  -->
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="title">
+                    <h3>Todays Top Traders</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="top_gainer">
+                    <table class="table  table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">User </th>
+                                <th class="text-center"> Trade Ammount</th>
+                                <th class="text-center"> Todays gain</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user1.jpeg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user2.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user3.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user4.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user5.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user1.jpeg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user2.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user3.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user4.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-flex justify-content-center aligh-items-center">
+                                    <div class="d-flex justify-content-center aligh-items-center">
+                                        <img src="images/user5.jpg" alt="">
+                                    </div>
+                                    <div class="">
+                                        <h2>User123</h2>
+                                        <h3>Jhone Due</h3>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt">$2344234</h2>
+                                </td>
+                                <td class="text-center">
+                                    <h2 class="td_amt text-success">+5.06%</h2>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- top 10 gainer part end here  -->
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const cryptos = [
+            { symbol: "BTC", name: "BTC/USDT", image: "images/btc.png" },
+            { symbol: "ETH", name: "ETH/USDT", image: "images/eth.png" },
+            { symbol: "BNB", name: "BNB/USDT", image: "images/bnb.png" },
+            { symbol: "XRP", name: "XRP/USDT", image: "images/xrp.png" },
+            { symbol: "ADA", name: "ADA/USDT", image: "images/ada.png" },
+            { symbol: "SOL", name: "SOL/USDT", image: "images/sol.png" },
+            { symbol: "DOT", name: "DOT/USDT", image: "images/dot.png" },
+            { symbol: "DOGE", name: "DOGE/USDT", image: "images/doge.png" },
+            { symbol: "SHIB", name: "SHIB/USDT", image: "images/shib.png" },
+            { symbol: "LTC", name: "LTC/USDT", image: "images/LTC.png" },
+            { symbol: "LINK", name: "LINK/USDT", image: "images/link.png" },
+            { symbol: "AVAX", name: "AVAX/USDT", image: "images/avax.png" },
+            { symbol: "UNI", name: "UNI/USDT", image: "images/uni.png" },
+            { symbol: "XLM", name: "XLM/USDT", image: "images/xlm.png" },
+            { symbol: "VET", name: "VET/USDT", image: "images/vet.png" },
+            { symbol: "TRX", name: "TRX/USDT", image: "images/trx.png" }
+        ];
+    
+        const tableBody = document.getElementById("crypto-table");
+    
+        cryptos.forEach((crypto, index) => {
+            const row = `
+                <tr>
+                    <td class="text-center pc_view">${index + 1}</td>
+                    <td>
+                        <div class="d-flex">
+                            <div>
+                                <img src="${crypto.image}" alt="">
+                            </div>
+                            <div>
+                                <h5 class="m-0"> ${crypto.name}</h5>
+                                <p class="mobile_view m-0" id="${crypto.symbol.toLowerCase()}-volume">Volume: Loading...</p>
+                                <p class="mobile_view m-0" id="${crypto.symbol.toLowerCase()}-price">Price: Loading...</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="pc_view text-center" id="${crypto.symbol.toLowerCase()}-volume-pc">Loading...</td>
+                    <td class="pc_view text-center" id="${crypto.symbol.toLowerCase()}-price-pc">Loading...</td>
+                    <td>
+                        <div class="chart-container">
+                            <canvas id="${crypto.symbol.toLowerCase()}Chart"></canvas>
+                        </div>
+                    </td>
+                    <td><a href="future.html" class="btn_charge btn btn-success" id="${crypto.symbol.toLowerCase()}-change">Loading...</a></td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            async function fetchCryptoData(symbol, priceId, volumeId, chartId, changeId) {
+                const endTime = Date.now();
+                const startTime = endTime - (30 * 24 * 60 * 60 * 1000); // Last 30 days
+                const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&startTime=${startTime}&endTime=${endTime}&limit=30`;
+    
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+    
+                    if (!data || data.length === 0) throw new Error("No data received");
+    
+                    const prices = data.map(entry => parseFloat(entry[4])); // Closing price
+                    const volume = data.map(entry => parseFloat(entry[5])); // Volume
+    
+                    // Calculate change
+                    const firstPrice = prices[0];
+                    const lastPrice = prices[prices.length - 1];
+                    const changePercent = ((lastPrice - firstPrice) / firstPrice) * 100;
+    
+                    // Update price & volume
+                    document.getElementById(priceId).innerText = `$${lastPrice.toFixed(2)}`;
+                    document.getElementById(priceId + "-pc").innerText = `$${lastPrice.toFixed(2)}`;
+                    document.getElementById(volumeId).innerText = `Vol: ${volume[volume.length - 1].toFixed(2)}`;
+                    document.getElementById(volumeId + "-pc").innerText = volume[volume.length - 1].toFixed(2);
+    
+                    // Display the percentage change
+                    const changeText = changePercent.toFixed(2) + "%";
+                    const changeButton = document.getElementById(changeId);
+                    changeButton.innerText = changeText;
+                    changeButton.classList.remove("btn-success", "btn-danger");
+                    changeButton.classList.add(changePercent >= 0 ? "btn-success" : "btn-danger");
+    
+                    // Generate chart
+                    renderChart(chartId, prices);
+                } catch (error) {
+                    console.error(`Error fetching ${symbol} data:`, error);
+                }
+            }
+    
+            function renderChart(chartId, prices) {
+                let ctx = document.getElementById(chartId)?.getContext("2d");
+                if (!ctx) return;
+    
+                new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: prices.map((_, i) => i + 1),
+                        datasets: [{
+                            data: prices,
+                            borderColor: "blue",
+                            backgroundColor: "rgba(0, 0, 255, 0.1)",
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: true,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { x: { display: false }, y: { display: false } }
+                    }
+                });
+            }
+    
+            // Fetch data for multiple cryptocurrencies
+            const cryptoList = [
+                ["BTCUSDT", "btc-price", "btc-volume", "btcChart", "btc-change"],
+                ["ETHUSDT", "eth-price", "eth-volume", "ethChart", "eth-change"],
+                ["BNBUSDT", "bnb-price", "bnb-volume", "bnbChart", "bnb-change"],
+                ["XRPUSDT", "xrp-price", "xrp-volume", "xrpChart", "xrp-change"],
+                ["ADAUSDT", "ada-price", "ada-volume", "adaChart", "ada-change"],
+                ["SOLUSDT", "sol-price", "sol-volume", "solChart", "sol-change"],
+                ["DOTUSDT", "dot-price", "dot-volume", "dotChart", "dot-change"],
+                ["DOGEUSDT", "doge-price", "doge-volume", "dogeChart", "doge-change"],
+                ["SHIBUSDT", "shib-price", "shib-volume", "shibChart", "shib-change"],
+                ["LTCUSDT", "ltc-price", "ltc-volume", "ltcChart", "ltc-change"],
+                ["LINKUSDT", "link-price", "link-volume", "linkChart", "link-change"],
+                ["AVAXUSDT", "avax-price", "avax-volume", "avaxChart", "avax-change"],
+                ["UNIUSDT", "uni-price", "uni-volume", "uniChart", "uni-change"],
+                ["XLMUSDT", "xlm-price", "xlm-volume", "xlmChart", "xlm-change"],
+                ["VETUSDT", "vet-price", "vet-volume", "vetChart", "vet-change"],
+                ["TRXUSDT", "trx-price", "trx-volume", "trxChart", "trx-change"],
+            ];
+    
+            cryptoList.forEach(([symbol, priceId, volumeId, chartId, changeId]) => {
+                fetchCryptoData(symbol, priceId, volumeId, chartId, changeId);
+            });
+    
+        });
+    </script>
+    
+</body>
+
+</html>

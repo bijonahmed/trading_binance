@@ -1,0 +1,87 @@
+  .coin_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    flex-wrap: wrap;
+  }
+  
+  .coin_details {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .coin_icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+  }
+  
+  .coin_text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .coin_symbol {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .coin_price,
+  .coin_volume {
+    font-size: 14px;
+    color: #bbb;
+  }
+  
+  .coin_change {
+    padding: 2px 6px;
+    border-radius: 4px;
+    min-width: 50px;
+    text-align: center;
+  }
+  
+  .positive {
+    color: #4caf50;
+  }
+  
+  .negative {
+    color: #f44336;
+  }
+  
+  /* TradingView News Widget */
+  .tradingview-news {
+    margin-top: 15px;
+    padding: 10px;
+    background: #121212;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .tradingview-widget-container {
+    width: 100%;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .coin_row {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .coin_details {
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+  
+    .coin_icon {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .tradingview-news {
+      padding: 15px;
+    }
+  }
+  

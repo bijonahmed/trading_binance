@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Table with Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        td, th {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .chart-container {
+            width: 150px;
+            height: 80px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Pair</th>
+                <th>Volume</th>
+                <th>Price</th>
+                <th>Chart</th>
+                <th>Change</th>
+            </tr>
+        </thead>
+        <tbody id="crypto-table">
+            <tr>
+                <td class="text-center">1</td>
+                <td>
+                    <div class="d-flex">
+                        <div>
+                            <img src="images/btc.png" alt="BTC">
+                        </div>
+                        <div>
+                            <h5 class="m-0">BTC/USDT</h5>
+                            <p class="mobile_view m-0" id="btc-volume">Volume: Loading...</p>
+                            <p class="mobile_view m-0" id="btc-price">Price: Loading...</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center" id="btc-volume-pc">Loading...</td>
+                <td class="text-center" id="btc-price-pc">Loading...</td>
+                <td>
+                    <div class="chart-container">
+                        <canvas id="btcChart"></canvas>
+                    </div>
+                </td>
+                <td><button class="btn_charge btn btn-success" id="btc-change">Loading...</button></td>
+            </tr>
+
+            <tr>
+                <td class="text-center">2</td>
+                <td>
+                    <div class="d-flex">
+                        <div>
+                            <img src="images/eth.png" alt="ETH">
+                        </div>
+                        <div>
+                            <h5 class="m-0">ETH/USDT</h5>
+                            <p class="mobile_view m-0" id="eth-volume">Volume: Loading...</p>
+                            <p class="mobile_view m-0" id="eth-price">Price: Loading...</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center" id="eth-volume-pc">Loading...</td>
+                <td class="text-center" id="eth-price-pc">Loading...</td>
+                <td>
+                    <div class="chart-container">
+                        <canvas id="ethChart"></canvas>
+                    </div>
+                </td>
+                <td><button class="btn_charge btn btn-success" id="eth-change">Loading...</button></td>
+            </tr>
+
+            <tr>
+                <td class="text-center">3</td>
+                <td>
+                    <div class="d-flex">
+                        <div>
+                            <img src="images/xrp.png" alt="XRP">
+                        </div>
+                        <div>
+                            <h5 class="m-0">XRP/USDT</h5>
+                            <p class="mobile_view m-0" id="xrp-volume">Volume: Loading...</p>
+                            <p class="mobile_view m-0" id="xrp-price">Price: Loading...</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center" id="xrp-volume-pc">Loading...</td>
+                <td class="text-center" id="xrp-price-pc">Loading...</td>
+                <td>
+                    <div class="chart-container">
+                        <canvas id="xrpChart"></canvas>
+                    </div>
+                </td>
+                <td><button class="btn_charge btn btn-success" id="xrp-change">Loading...</button></td>
+            </tr>
+
+            <tr>
+                <td class="text-center">4</td>
+                <td>
+                    <div class="d-flex">
+                        <div>
+                            <img src="images/bnb.png" alt="BNB">
+                        </div>
+                        <div>
+                            <h5 class="m-0">BNB/USDT</h5>
+                            <p class="mobile_view m-0" id="bnb-volume">Volume: Loading...</p>
+                            <p class="mobile_view m-0" id="bnb-price">Price: Loading...</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center" id="bnb-volume-pc">Loading...</td>
+                <td class="text-center" id="bnb-price-pc">Loading...</td>
+                <td>
+                    <div class="chart-container">
+                        <canvas id="bnbChart"></canvas>
+                    </div>
+                </td>
+                <td><button class="btn_charge btn btn-success" id="bnb-change">Loading...</button></td>
+            </tr>
+        </tbody>
+    </table>
+<!-- Add Chart.js & Financial Plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<script>
+    async function fetchCryptoData(symbol, priceId, volumeId, chartContainer, changeId) {
+        const endTime = Date.now();
+        const startTime = endTime - (30 * 24 * 60 * 60 * 1000); // Last 1 month
+        const apiUrl = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&startTime=${startTime}&endTime=${endTime}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.length < 2) {
+            console.log("Not enough data for", symbol);
+            return;
+        }
+
+        // Extract relevant price & volume data
+        const prices = data.map(entry => parseFloat(entry[4])); // Closing prices
+        const prevClose = prices[prices.length - 2]; // Closing price from the previous day
+        const lastClose = prices[prices.length - 1]; // Closing price from today
+        const volume = parseFloat(data[data.length - 1][5]); // Today's volume
+
+        // Calculate 1-day percentage change
+        const changePercent = ((lastClose - prevClose) / prevClose) * 100;
+
+        // Update price & volume
+        document.getElementById(priceId).innerText = `$${lastClose.toFixed(2)}`;
+        document.getElementById(priceId + "-pc").innerText = `$${lastClose.toFixed(2)}`;
+        document.getElementById(volumeId).innerText = `Vol: ${volume.toFixed(2)}`;
+        document.getElementById(volumeId + "-pc").innerText = volume.toFixed(2);
+
+        // Update change percentage button
+        document.getElementById(changeId).innerText = `${changePercent.toFixed(2)}%`;
+        document.getElementById(changeId).classList.remove("btn-success", "btn-danger");
+        document.getElementById(changeId).classList.add(changePercent >= 0 ? "btn-success" : "btn-danger");
+
+        // Format data for Chart.js
+        const chartData = data.map(entry => ({
+            x: new Date(entry[0]), // Timestamp
+            y: [parseFloat(entry[1]), parseFloat(entry[2]), parseFloat(entry[3]), parseFloat(entry[4])] // OHLC
+        }));
+
+        // Load Chart.js
+        loadCustomChart(chartContainer, chartData, symbol);
+    }
+
+    function loadCustomChart(containerId, chartData) {
+        const ctx = document.getElementById(containerId).getContext("2d");
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: chartData.map(d => d.x),
+                datasets: [{
+                    data: chartData.map(d => d.y), // Only closing prices
+                    borderColor: "blue",
+                    backgroundColor: "rgba(0, 0, 255, 0.2)",
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false } // Hide chart header
+                },
+                scales: {
+                    x: { display: false }, // Hide x-axis (date)
+                    y: { display: false }  // Hide y-axis (price)
+                }
+            }
+        });
+    }
+
+    fetchCryptoData("BTCUSDT", "btc-price", "btc-volume", "btcChart", "btc-change");
+    fetchCryptoData("ETHUSDT", "eth-price", "eth-volume", "ethChart", "eth-change");
+    fetchCryptoData("XRPUSDT", "xrp-price", "xrp-volume", "xrpChart", "xrp-change");
+    fetchCryptoData("BNBUSDT", "bnb-price", "bnb-volume", "bnbChart", "bnb-change");
+</script>
+
+
+</body>
+</html>

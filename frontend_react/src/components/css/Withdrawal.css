@@ -1,0 +1,36 @@
+.custom-danger-modal {
+    background-color: #dc3545; /* Bootstrap 'danger' red */
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+  
+  .custom-danger-modal .modal-header {
+    background-color: #b52a37; /* Darker red */
+    color: white;
+    border-bottom: none;
+  }
+  
+  .custom-danger-modal .modal-body {
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .custom-danger-modal .modal-footer {
+    border-top: none;
+    justify-content: center;
+    background-color: #b52a37;
+  }
+  
+  .custom-danger-modal .btn-secondary {
+    background-color: white;
+    color: #dc3545;
+    border: none;
+    font-weight: bold;
+  }
+  
+  .custom-danger-modal .btn-secondary:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  

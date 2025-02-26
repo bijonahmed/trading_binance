@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- title  -->
+    <title>Welcome to FastTrading</title>
+    <!-- bootstrap 5.3  -->
+    <link rel="stylesheet" href="assets/bootstrap-5.3.2/css/bootstrap.min.css">
+    <!-- fontawsome   -->
+    <link rel="stylesheet" href="assets/Font-Awesome-Pro-6.2.1/css/all.min.css">
+
+    <!-- style css  -->
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+    <!-- sidebar start -->
+    <aside class="dashboard_sidebar">
+        <div class="sidbar_close">
+            <button class="btn_sidebar" type="button">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </div>
+        <div class="sidebar_top ">
+            <a href="index.html"><img src="images/logo.png" alt="" class="img-fluid"></a>
+        </div>
+        <nav class="nav_sidebar">
+            <ul class="sidebar_list">
+                <li class="sidebar_item active">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="market.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Market</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="future.html" class="sidebar_link">
+                        <i class="fa-solid fa-chart-candlestick"></i>
+                        <span>Futures</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="wallet.html" class="sidebar_link">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="payment.html" class="sidebar_link">
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>Payment</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="trade-history.html" class="sidebar_link">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Trade History</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="kyc.html" class="sidebar_link">
+                        <i class="fa-light fa-address-card"></i>
+                        <span>KYC Varification</span>
+                    </a>
+                </li>
+                <li class="sidebar_item">
+                    <a href="profile.html" class="sidebar_link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- sidebar end  -->
+    <div class="main_dashboard">
+
+        <!-- top navbar  -->
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="d-lg-none">
+                            <button class="btn_sidebar" type="button">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="" id="">
+                    <ul class="navbar_secondary ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown profile_pic">
+                            <a class="nav-link  dropdown-toggle" href="market.html" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <div>
+                                    <h4>User</h4>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- top navbar end  -->
+
+
+        <div class="dashboard_content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="payment_section">
+                        <div class="page_title">
+                            <a href="#" class="btn_back" onclick="history.back(); return false;"><i
+                                    class="fa-solid fa-arrow-left"></i></a>
+                            <div class="d-flex justify-content-between w-100 align-items-end">
+                                <h4>Withdraw</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- withdraw form  -->
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+
+
+                            <form action="" class="withdrawal_form but_token_form">
+                                <p class="badge_"><i class="fa-solid fa-circle-exclamation"></i> &nbsp; Minimum withdraw
+                                    20 USDT</p>
+                                <div class="form_group">
+                                    <p>Withdrawal Amount(max-withdraw: 3690.00 USDT)</p>
+                                    <div class="input_group">
+                                        <input type="text" class="form-control" placeholder="00.00">
+                                    </div>
+                                    <span>Current amount : 3690.00 USDT</span>
+                                </div>
+                                <div class="form_group">
+                                    <p>Withdrawal address</p>
+                                    <div class="input_group">
+                                        <select name="" id="" disabled="" class="form-control rounded-0 mb-0">
+                                            <option value="" selected="">Select Bank Card</option>
+                                            <option value="" selected="">16546444644</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form_group">
+                                    <p>Please Enter Withdrawal Pin</p>
+                                    <div class="input_group">
+                                        <input type="text" class="form-control" placeholder="00.00">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn_primary w-100 mt-3">Confirm Withdraw </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- add new modal start here  -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="boostModalLabel" aria-modal="true"
+        role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-0">
+                <div class="modal-header py-0">
+                    <div class="w-10"> </div>
+                    <h5 class="modal-title fs-6" id="boostModalLabel"></h5>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn_close text-white" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form_group">
+                        <!-- Crypto tab  -->
+                        <div class="st_filter">
+                            <form action="" class="withdraw_form">
+
+                                <div class="form_group">
+                                    <p>Currency type<span class="text-danger">*</span></p>
+                                    <select name="" id="mySelect2" class="form-control">
+                                        <option selected="" value="">USDT-TRC20-TRX</option>
+                                    </select>
+                                </div>
+                                <div id="additionalFields2" style="">
+                                    <div class="form_group mb-2">
+                                        <p>Wallet Address<span class="text-danger">*</span> </p>
+                                        <input type="text" placeholder="Address" class="form-control mb-0">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn_action w-100 mt-2">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>
