@@ -12,9 +12,10 @@ import Loader from "../../components/Loader";
 const Wallet = () => {
   //const [hasRequested, setHasRequested] = useState(false);
   const { token, logout } = AuthUser();
-  //const [walletAddress, setWalletAddress] = useState("");
+  const [images, setDepositImages] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentBalance, setCurrentBalance] = useState("");
+
   //Withdraw
   const [witdrawTxt, setWithdrawTxt] = useState("");
   const [dateForm, setDateForm] = useState("");
@@ -26,6 +27,25 @@ const Wallet = () => {
   const [de_dateForm, setDateFormDeposit] = useState("");
   const [de_dateTo, setDateToDeposit] = useState("");
   const [depositData, setDepositData] = useState([]);
+
+  const getMoneyReceipt = async (depositId) => {
+    const params = {
+      depositId: depositId,
+    };
+    const response = await axios.post(
+      "/deposit/checkDepositrow",
+      {}, // Empty request body since params are sent in headers
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        params: params,
+      }
+    );
+    //console.log("depsoit_images:", response.data.depsoit_images);
+    setDepositImages(response.data.depsoit_images);
+  };
 
   // ============================= get balance =======================
   const getCurrentBalance = async () => {
@@ -56,7 +76,6 @@ const Wallet = () => {
   const getDepositList = async () => {
     setLoading(true);
     try {
-
       // Get the current date
       const currentDate = new Date();
       const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
@@ -64,7 +83,6 @@ const Wallet = () => {
       const pastDate = new Date();
       pastDate.setDate(currentDate.getDate() - 30);
       const startDate = pastDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
-
 
       const params = {
         filterFrmDate: de_dateForm || startDate,
@@ -486,6 +504,7 @@ const Wallet = () => {
                                 <th className="text-center">Date</th>
                                 <th className="text-center">Amount</th>
                                 <th className="text-center">Status</th>
+                                <th className="text-center">Action</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -516,6 +535,21 @@ const Wallet = () => {
                                         ? "Approve"
                                         : "Rejected"}
                                     </span>
+                                  </td>
+                                  <td>
+                                    <center>
+                                      <button
+                                        className="btn_primary text-center"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#paymentModal"
+                                        onClick={() =>
+                                          getMoneyReceipt(deposit.id)
+                                        }
+                                      >
+                                        Show Money Receipt
+                                      </button>
+                                    </center>
                                   </td>
                                 </tr>
                               ))}
@@ -560,32 +594,18 @@ const Wallet = () => {
                 <div className="modal-body">
                   <div className="form_group">
                     <div className="st_filter">
-                      <form action="" className="withdraw_form">
-                        <div className="form_group">
-                          <p>
-                            Currency type<span className="text-danger">*</span>
-                          </p>
-                          <select id="mySelect2" className="form-control">
-                            <option>USDT-TRC20-TRX</option>
-                          </select>
-                        </div>
-                        <div id="additionalFields2" style={{}}>
-                          <div className="form_group mb-2">
-                            <p>
-                              Wallet Address
-                              <span className="text-danger">*</span>{" "}
-                            </p>
-                            <input
-                              type="text"
-                              placeholder="Address"
-                              className="form-control mb-0"
-                            />
-                          </div>
-                        </div>
-                        <button type="submit" className="btn_action w-100 mt-2">
-                          Save
-                        </button>
-                      </form>
+                      {images ? (
+                        <center>
+                          <img
+                            src={images}
+                            className="img-fluid rounded"
+                            width="100%"
+                            alt="Deposit"
+                          />
+                        </center>
+                      ) : (
+                        <p>No image available</p>
+                      )}
                     </div>
                   </div>
                 </div>

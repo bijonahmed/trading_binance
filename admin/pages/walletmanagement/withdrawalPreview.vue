@@ -46,23 +46,12 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Request By (Player)</td>
+                                                        <td>Request By</td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.name }}</td>
                                                     </tr>
 
-                                                    <tr style="background-color: rgb(32, 77, 32); color: white;">
-                                                        <td width="40%">Gaming Paltform</td>
-                                                        <td width="1%"><strong>:</strong></td>
-                                                        <td width="50%">{{ request.gamePltformName }}</td>
-                                                    </tr>
-
-                                                    <tr style="background-color: green; color: white;">
-                                                        <td width="40%">Currency</td>
-                                                        <td width="1%"><strong>:</strong></td>
-                                                        <td width="50%">{{ request.currencyName }}</td>
-                                                    </tr>
-
+                                                  
 
                                                     <tr>
                                                         <td>Amount</td>
@@ -78,7 +67,7 @@
                                                     <tr>
                                                         <td>Request Wallet Address </td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{{ request.withdrwal_wallet_address }}</td>
+                                                        <td>{{ request.wallet_address }}</td>
                                                     </tr>
 
                                                     <tr>
@@ -169,7 +158,7 @@ const request = ref({
     payment_method: '',
     wallet_address: '',
     currency_type_name: '',
-    withdrwal_wallet_address: '',
+    wallet_address: '',
     remarks: '',
     approved_by: '',
     apiError: '',
@@ -282,7 +271,7 @@ const productDetails = () => {
         request.value.currencyName = response.data.currencyName;
         request.value.withdrawal_amount = response.data.withdrawal_amount;
         request.value.payment_method = response.data.payment_method;
-        request.value.withdrwal_wallet_address = response.data.withdrwal_wallet_address;
+        request.value.wallet_address = response.data.wallet_address;
         request.value.created_at = response.data.createdate;
         request.value.status = response.data.status;
 

@@ -383,8 +383,10 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             'prefix' => 'deposit',
         ],
         function () {
+
             Route::post('userDepositHistoryList', [DepositController::class, 'userDepositHistory']);
             Route::get('depositrow/{id}', [DepositController::class, 'depositrow']);
+            Route::post('checkDepositrow', [DepositController::class, 'checkDepositrow']); //check depsoti image
             Route::get('depositCancel/{id}', [DepositController::class, 'depositCancel']);
             Route::post('sendDepositRequest', [DepositController::class, 'sendDepositRequest']);
             Route::get('updateDepositRequestRandomKey', [DepositController::class, 'updateDepositRequestRandomKey']);

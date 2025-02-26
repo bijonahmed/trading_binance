@@ -1178,6 +1178,26 @@ class DepositController extends Controller
         ]);
     }
 
+
+
+    public function checkDepositrow(Request $request)
+    {
+
+        $id = $request->depositId ?? "";
+        try {
+            $user = Deposit::where('deposit.id', $id)
+                ->select('users.name', 'deposit.*')
+                ->leftJoin('users', 'deposit.user_id', '=', 'users.id')
+                ->first();
+            $user['depsoit_images']  = !empty($user->depsoit_images) ? url($user->depsoit_images) : "";
+            return response()->json($user);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+            $error = $e->getMessage();
+            return response()->json($error);
+        }
+    }
+
     public function depositrow($id)
     {
         try {
@@ -1187,8 +1207,8 @@ class DepositController extends Controller
                 ->first();
 
             $depsoitamount = !empty($user->deposit_amount) ? number_format($user->deposit_amount, 2) : 0;
+            $user['depositimage']  = !empty($user->depsoit_images) ? url($user->depsoit_images) : "";
             $user['deposit_amount'] = $depsoitamount;
-
 
             return response()->json($user);
         } catch (\Exception $e) {
