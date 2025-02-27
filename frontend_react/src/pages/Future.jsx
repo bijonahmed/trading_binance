@@ -6,16 +6,157 @@ import CryptoList from "../components/CryptoList";
 import TradingViewMarket from "../components/TradingViewMarket";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import AuthUser from "../components/AuthUser";
 import axios from "/config/axiosConfig";
 
 const Future = () => {
-  //const [getQrcode, setQrCode] = useState("");
-  const [hasRequested, setHasRequested] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const { token, logout } = AuthUser();
+  const durations = [30, 60, 120, 300];
+  const percentages = [25, 50, 75, 100];
 
-  useEffect(() => {}, []);
+  const { slug } = useParams();
+  const upperCaseCurrency = slug.toUpperCase();
+  const marketSymbol = `BINANCE:${upperCaseCurrency}USDT`;
+  //console.log(marketSymbol);
+  const [currentBalance, setCurrentBalance] = useState("");
+  const [marketpriceAmount, setMarketPriceAmount] = useState("");
+  const [tradeAmount, setTradeAmount] = useState("");
+  const [selectedDuration, setSelectedDuration] = useState(null);
+  const [selectedPercentage, setSelectedPercentage] = useState(null);
+  const [marketPrice, setMarketPrice] = useState("");
+  const [amount, setAmount] = useState("");
+  const [actionType, setActionType] = useState(null); // To track if Long or Short is selected
+  //
+  const getCurrentBalance = async () => {
+    try {
+      const response = await axios.get(`/balance/getCurrentBalance`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const balance = response.data.balance;
+      setCurrentBalance(balance);
+    } catch (error) {
+      console.error("Error Data:", error);
+    }
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      localStorage.setItem("selected_duration", selectedDuration);
+      const formData = {
+        market_price: marketpriceAmount,
+        trade_amount: tradeAmount,
+        selected_duration: selectedDuration,
+        selected_percentage: selectedPercentage,
+        action_type: actionType,
+        selectedCurrency: slug,
+      };
+      
+  
+      const response = await axios.post("/trade/insertTrade",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Your trade has been successfully started.",
+      });
+ 
+      navigate(`/future-trading`)
+      // closeModal();
+    } catch (error) {
+      if (error.response.data.errors.invalid_amount) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Request",
+          html: `<div>${error.response.data.errors.invalid_amount.join("<br>")}</div>`,
+        });
+      } else {
+        // Handle other validation errors
+        Swal.fire({
+          icon: "error",
+          title: "Validation Errors",
+          html: Object.values(error.response.data.errors)
+            .map((err) => `<div>${err.join("<br>")}</div>`)
+            .join(""),
+        });
+      }
+    }
+
+  };
+
+  const handleDurationClick = (duration) => {
+    setSelectedDuration(duration);
+    const index = durations.indexOf(duration);
+    if (index !== -1) {
+      setSelectedPercentage(percentages[index]);
+    }
+  };
+
+  const handlePercentageClick = (percentage) => {
+    setSelectedPercentage(percentage);
+  };
+
+  //Trade Amount
+  const handleMinusTradeAmount = () => {
+    setTradeAmount((prev) => (prev ? Math.max(0, Number(prev) - 1) : 0));
+  };
+
+  const handlePlusTradeAmount = () => {
+    setTradeAmount((prev) => (prev ? Number(prev) + 1 : 1));
+  };
+  const onlyTradeAmount = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setTradeAmount(value);
+    }
+  };
+  //Market Price
+  const handleMinusMarketPrice = () => {
+    setMarketPriceAmount((prev) => (prev ? Math.max(0, Number(prev) - 1) : 0));
+  };
+  const handlePlusMarketPrice = () => {
+    setMarketPriceAmount((prev) => (prev ? Number(prev) + 1 : 1));
+  };
+  const marketPriceAmount = (e) => {
+    const value = e.target.value;
+    if (/^\d*\.?\d*$/.test(value)) {
+      setMarketPriceAmount(value);
+    }
+  };
+  //Login
+  const checkLogin = () => {
+    $.notify("You can start trading after logging in!", "error");
+    navigate("/login-trade");
+  };
+  useEffect(() => {
+    getCurrentBalance();
+    if (slug) {
+      localStorage.setItem("currency_", slug);
+    }
+  }, [slug]);
   return (
     <>
       <Helmet>
@@ -120,71 +261,7 @@ const Future = () => {
                             </div>
                           </div>
                           {/* Coin title  */}
-                          <h1>
-                            {" "}
-                            btc/usdt <span>+0.50%</span>
-                          </h1>
-                          <div className="min_btns">
-                            <button type="button" className="btn btn_time">
-                              10min
-                            </button>
-                            <button type="button" className="btn btn_time">
-                              30min
-                            </button>
-                            <button type="button" className="btn btn_time">
-                              45min
-                            </button>
-                            <button type="button" className="btn btn_time">
-                              1Hour
-                            </button>
-                            <button type="button" className="btn btn_time">
-                              1day
-                            </button>
-                            <button type="button" className="btn btn_time">
-                              1Week
-                            </button>
-                            <button type="button" className="btn btn_time">
-                              1Month
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-2 d-flex justify-content-end align-items-center">
-                        <div className="top_right">
-                          <div className="candle_icon pc_view">
-                            <a href="#">
-                              <img
-                                src="/fasttrading/images/candle.png"
-                                className="candle_light"
-                                alt="Images"
-                              />
-                              <img
-                                src="/fasttrading/images/candle dark.png"
-                                className="candle_dark"
-                                alt="Images"
-                              />
-                            </a>
-                          </div>
-                          <div className="candle_icon mobile_view">
-                            <a>
-                              <button
-                                className="d-flex justify-content-center align-items-center btn_candle"
-                                id="myButton"
-                                click="toggleButton"
-                              >
-                                <img
-                                  src="/fasttrading/images/candle-active.png"
-                                  className=" icn_active"
-                                  alt="Images"
-                                />
-                                <img
-                                  src="/fasttrading/images/candle.png"
-                                  className=" icn_inactive"
-                                  alt="Images"
-                                />
-                              </button>
-                            </a>
-                          </div>
+                          <h1> {slug}/usdt</h1>
                         </div>
                       </div>
                     </div>
@@ -192,171 +269,317 @@ const Future = () => {
                   {/* topbar part end here  */}
 
                   {/* TradingView Widget BEGIN */}
-                  <TradingViewMarket />
+                  <TradingViewMarket slug={marketSymbol} />
                   {/* TradingView Widget END */}
                 </div>
                 {/* chart part end here  */}
+
                 {/* buy part start here  */}
-                <div className="col-md-12">
-                  <div className="btns_part">
-                    <form action="">
-                      <div className="btns">
-                        <select className="text-center">
-                          <option>Limite </option>
-                          <option>Market</option>
-                        </select>
-                      </div>
-                      <div className="btns">
-                        <div>
-                          <button>
-                            <i className="fa-solid fa-minus" />
-                          </button>
-                        </div>
-                        <div>
-                          <h4 className="text-center">24,000.00</h4>
-                        </div>{" "}
-                        {/*(Buying Price)*/}
-                        <div>
-                          <button>
-                            <i className="fa-solid fa-plus" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="btns">
-                        <div>
-                          <button>
-                            <i className="fa-solid fa-minus" />
-                          </button>
-                        </div>
-                        <div>
-                          <input type="text" placeholder="Ammount(BTC)" />
-                        </div>
-                        {/*Est BTC ammount*/}
-                        <div>
-                          <button>
-                            <i className="fa-solid fa-plus" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="btns justify-content-center">
-                        <div>
-                          <h4 className="text-center">Select Duration</h4>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-3">
-                          <div className="duration_btn">
+
+                {token ? (
+                  <>
+                    <div className="col-md-12">
+                      <div className="btns_part">
+                        <form onSubmit={handleSubmit}>
+                          {/* Start Market Price */}
+                          <div className="btns">
                             <div>
-                              <button type="button">30s</button>
+                              <button
+                                type="button"
+                                onClick={handleMinusMarketPrice}>
+                                <i className="fa-solid fa-minus" />
+                              </button>
+                            </div>
+                            <div>
+                              <input
+                                type="text"
+                                placeholder="Market Price"
+                                value={marketpriceAmount}
+                                onChange={marketPriceAmount}
+                              />
+                    {errors.marketpriceAmount && (
+                      <div className="error text-danger">{errors.marketpriceAmount}</div>
+                    )}
+ 
+
+                            </div>
+                            <div>
+                              <button
+                                type="button"
+                                onClick={handlePlusMarketPrice}
+                              >
+                                <i className="fa-solid fa-plus" />
+                              </button>
                             </div>
                           </div>
-                        </div>
-                        <div className="col-3">
-                          <div className="duration_btn">
+                          {/* End Market Price */}
+
+                          {/*Start Trade Amount*/}
+                          <div className="btns">
                             <div>
-                              <button type="button">60s</button>
+                              <button
+                                type="button"
+                                onClick={handleMinusTradeAmount}
+                              >
+                                <i className="fa-solid fa-minus" />
+                              </button>
+                            </div>
+                            <div>
+                              <input
+                                type="text"
+                                placeholder="Trade Amount"
+                                value={tradeAmount}
+                                onChange={onlyTradeAmount}
+                              />
+                            </div>
+
+                            <div>
+                              <button
+                                type="button"
+                                onClick={handlePlusTradeAmount}
+                              >
+                                <i className="fa-solid fa-plus" />
+                              </button>
                             </div>
                           </div>
-                        </div>
-                        <div className="col-3">
-                          <div className="duration_btn">
+                          {/*End Trade Amount*/}
+                          <div className="btns justify-content-center">
                             <div>
-                              <button type="button">120s</button>
+                              <h4 className="text-center">Select Duration</h4>
                             </div>
                           </div>
-                        </div>
-                        <div className="col-3">
-                          <div className="duration_btn">
-                            <div>
-                              <button type="button">300s</button>
-                            </div>
+
+                          <div className="row">
+                            {durations.map((duration) => (
+                              <div key={duration} className="col-3">
+                                <div className="duration_btn">
+                                  <button
+                                    type="button"
+                                    style={{
+                                      backgroundColor:
+                                        selectedDuration === duration
+                                          ? "#007bff"
+                                          : "#fff",
+                                      color:
+                                        selectedDuration === duration
+                                          ? "#fff"
+                                          : "#000",
+                                      border: "1px solid #007bff",
+                                      padding: "10px 15px",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() =>
+                                      handleDurationClick(duration)
+                                    }
+                                  >
+                                    {duration}s
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        </div>
+                          <div className="row">
+                            {percentages.map((percentage) => (
+                              <div key={percentage} className="col-3">
+                                <div className="percen_btn">
+                                  <button
+                                    type="button"
+                                    style={{
+                                      backgroundColor:
+                                        selectedPercentage === percentage
+                                          ? "#007bff"
+                                          : "#fff",
+                                      color:
+                                        selectedPercentage === percentage
+                                          ? "#fff"
+                                          : "#000",
+                                      border: "1px solid #007bff",
+                                      padding: "10px 15px",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() =>
+                                      handlePercentageClick(percentage)
+                                    }
+                                  />
+                                  <p>{percentage}%</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div>
+                            <h6 className="text-center avbl_css px-2">
+                              <div className="d-flex justify-content-start align-items-center">
+                                <div>Available Balance: &nbsp;</div>
+                                <div className="mt-1">
+                                  {currentBalance}<span>&nbsp;USDT</span>
+                                </div>
+                              </div>
+                            </h6>
+                          </div>
+                          <div className="d-flex aligh-items-center">
+                            <button
+                              type="submit"
+                              onClick={() => setActionType("long")}
+                              className="btn btn-success btn_show w-50 m-1"
+                            >
+                              Open Long{" "}
+                            </button>
+                            <button
+                              type="submit"
+                              onClick={() => setActionType("short")}
+                              className="btn btn_show btn-danger w-50 m-1"
+                            >
+                              Open Short{" "}
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <div className="row">
-                        <div className="col-3">
-                          <div className="percen_btn">
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="col-md-12" onClick={checkLogin}>
+                      <div className="btns_part">
+                        <form action="">
+                          {/* Start Market Price */}
+                          <div className="btns">
                             <div>
-                              <button type="button" />
+                              <button type="button">
+                                <i className="fa-solid fa-minus" />
+                              </button>
                             </div>
                             <div>
-                              <p>25%</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-3">
-                          <div className="percen_btn">
-                            <div>
-                              <button type="button" />
+                              <input type="text" placeholder="Market Price" />
                             </div>
                             <div>
-                              <p>50%</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-3">
-                          <div className="percen_btn">
-                            <div>
-                              <button type="button" />
-                            </div>
-                            <div>
-                              <p>75%</p>
+                              <button type="button">
+                                <i className="fa-solid fa-plus" />
+                              </button>
                             </div>
                           </div>
-                        </div>
-                        <div className="col-3">
-                          <div className="percen_btn">
+                          {/* End Market Price */}
+
+                          {/*Start Trade Amount*/}
+                          <div className="btns">
                             <div>
-                              <button type="button" />
+                              <button type="button">
+                                <i className="fa-solid fa-minus" />
+                              </button>
                             </div>
                             <div>
-                              <p>100%</p>
+                              <input type="text" placeholder="Trade Amount" />
+                            </div>
+
+                            <div>
+                              <button type="button">
+                                <i className="fa-solid fa-plus" />
+                              </button>
                             </div>
                           </div>
-                        </div>
+                          {/*End Trade Amount*/}
+                          <div className="btns justify-content-center">
+                            <div>
+                              <h4 className="text-center">Select Duration</h4>
+                            </div>
+                          </div>
+
+                          <div className="row">
+                            {durations.map((duration) => (
+                              <div key={duration} className="col-3">
+                                <div className="duration_btn">
+                                  <button
+                                    type="button"
+                                    style={{
+                                      backgroundColor:
+                                        selectedDuration === duration
+                                          ? "#007bff"
+                                          : "#fff",
+                                      color:
+                                        selectedDuration === duration
+                                          ? "#fff"
+                                          : "#000",
+                                      border: "1px solid #007bff",
+                                      padding: "10px 15px",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() =>
+                                      handleDurationClick(duration)
+                                    }
+                                  >
+                                    {duration}s
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="row">
+                            {percentages.map((percentage) => (
+                              <div key={percentage} className="col-3">
+                                <div className="percen_btn">
+                                  <button
+                                    type="button"
+                                    style={{
+                                      backgroundColor:
+                                        selectedPercentage === percentage
+                                          ? "#007bff"
+                                          : "#fff",
+                                      color:
+                                        selectedPercentage === percentage
+                                          ? "#fff"
+                                          : "#000",
+                                      border: "1px solid #007bff",
+                                      padding: "10px 15px",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() =>
+                                      handlePercentageClick(percentage)
+                                    }
+                                  />
+                                  <p>{percentage}%</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div>
+                            <h6 className="text-center avbl_css px-2">
+                              <div className="d-flex justify-content-start align-items-center">
+                                <div>Avbl: &nbsp;</div>
+                                <div>
+                                  1,000.00 <span>USDT</span>
+                                </div>
+                              </div>
+                            </h6>
+                          </div>
+                          <div className="d-flex aligh-items-center">
+                            <button
+                              type="button"
+                              className="btn btn-success btn_show w-50 m-1"
+                            >
+                              Open Long{" "}
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn_show btn-danger w-50 m-1"
+                            >
+                              Open Short{" "}
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <div className="btns justify-content-center">
-                        <div>
-                          <h4 className="text-center"> 0.00</h4>
-                        </div>
-                      </div>
-                      <div>
-                        <h6 className="text-center avbl_css px-2">
-                          <div className="d-flex justify-content-start align-items-center">
-                            <div>Avbl: &nbsp;</div>
-                            <div>
-                              1,000.00 <span>USDT</span>
-                            </div>
-                          </div>
-                        </h6>
-                      </div>
-                      <div className="d-flex aligh-items-center">
-                        <button
-                          type="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#open_long"
-                          className="btn btn-success btn_show w-50 m-1"
-                        >
-                          Open Long{" "}
-                        </button>
-                        <button
-                          type="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#open_long"
-                          className="btn btn_show btn-danger w-50 m-1"
-                        >
-                          Open Short{" "}
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+                    </div>
+                  </>
+                )}
+
                 {/* buy part end here  */}
               </div>
             </div>
           </div>
         </div>
         {/* Confirm modal  */}
+
+
         <div
           className="modal fade"
           id="open_long"

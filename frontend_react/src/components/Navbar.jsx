@@ -5,20 +5,16 @@ import AuthUser from "../components/AuthUser";
 const Navbar = () => {
   const navigate = useNavigate();
   const { token, logout } = AuthUser();
-
   // Function to remove inline styles from body
   const removeBodyStyles = () => {
     document.body.removeAttribute("style");
   };
-
   useEffect(() => {
     // Attach event listener to all nav-links
     const navLinks = document.querySelectorAll(".nav-link");
-
     navLinks.forEach((link) => {
       link.addEventListener("click", removeBodyStyles);
     });
-
     // Cleanup event listeners when the component unmounts
     return () => {
       navLinks.forEach((link) => {
@@ -152,7 +148,7 @@ const Navbar = () => {
                       </li>
                       <li>
                         <button className="dropdown-item" onClick={logout}>
-                          <i className="fa-solid fa-right-from-bracket" />
+                          <i className="fa-solid fa-right-from-bracket" />&nbsp;
                           Logout
                         </button>
                       </li>

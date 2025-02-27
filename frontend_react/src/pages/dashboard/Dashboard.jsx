@@ -6,7 +6,7 @@ import GuestNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import LeftSideBarComponent from "../components/LeftSideBarComponent";
-
+import AuthGuard from "../../components/AuthGuard";
 const Dashboard = () => {
   const { getToken, token, logout } = AuthUser();
   const { user } = AuthUser();
@@ -24,6 +24,7 @@ const Dashboard = () => {
       </Helmet>
 
      <GuestNavbar />
+     <AuthGuard/>
       <LeftSideBarComponent />
       <div className="main_section">
         {/*main section start here  */}

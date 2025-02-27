@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const cryptos = [
   { symbol: "BTC", name: "BTC/USDT", image: "/fasttrading/images/bitcoin.png" },
   { symbol: "ETH", name: "ETH/USDT", image: "/fasttrading/images/eth.png" },
@@ -20,9 +20,16 @@ const cryptos = [
 ];
 
 const CryptoList = () => {
+  const navigate = useNavigate();
   const [prices, setPrices] = useState({});
   const [volumes, setVolumes] = useState({});
   const [changes, setChanges] = useState({});
+
+  const setCurrencySymbol = (symbol) => {
+    const currencySymbol = symbol.toLowerCase();
+    console.log(currencySymbol);
+    navigate(`/future/${currencySymbol}`);
+  };
 
   useEffect(() => {
     const fetchCryptoData = async (symbol) => {
@@ -43,7 +50,10 @@ const CryptoList = () => {
         const changePercent = ((lastPrice - firstPrice) / firstPrice) * 100;
 
         setPrices((prev) => ({ ...prev, [symbol]: lastPrice.toFixed(2) }));
-        setVolumes((prev) => ({ ...prev, [symbol]: volumesArray[volumesArray.length - 1].toFixed(2) }));
+        setVolumes((prev) => ({
+          ...prev,
+          [symbol]: volumesArray[volumesArray.length - 1].toFixed(2),
+        }));
         setChanges((prev) => ({ ...prev, [symbol]: changePercent.toFixed(2) }));
       } catch (error) {
         console.error(`Error fetching ${symbol} data:`, error);
@@ -56,7 +66,10 @@ const CryptoList = () => {
   return (
     <ul id="currency_list">
       {cryptos.map((crypto) => (
-        <li key={crypto.symbol}>
+        <li
+          key={crypto.symbol}
+          onClick={() => setCurrencySymbol(crypto.symbol)}
+        >
           <div className="coins">
             <div className="d-flex justify-content-center align-items-center">
               <div>
@@ -71,7 +84,11 @@ const CryptoList = () => {
             </div>
             <div>
               <h2>${prices[crypto.symbol] || "Loading..."}</h2>
-              <p className={`text-end ${changes[crypto.symbol] >= 0 ? "text-success" : "text-danger"}`}>
+              <p
+                className={`text-end ${
+                  changes[crypto.symbol] >= 0 ? "text-success" : "text-danger"
+                }`}
+              >
                 {changes[crypto.symbol] ? `${changes[crypto.symbol]}%` : "NaN"}
               </p>
             </div>

@@ -28,6 +28,8 @@ use App\Http\Controllers\UnauthenticatedController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Deposits\DepositController;
 use App\Http\Controllers\Withdrawal\WithdrawalController;
+use App\Http\Controllers\Trading\TradingController;
+
 use App\Http\Controllers\Game\GameController as Gcontroller;
 
 Route::get('/clear-cache', function () {
@@ -339,8 +341,6 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::post('addCountryWiseBank', [SettingController::class, 'addCountryWiseBank']);
             Route::get('getAllBankList', [SettingController::class, 'getAllBankList']);
             Route::get('getSelectedBank', [SettingController::class, 'getSelectedBank']);
-
-            
             Route::post('upateSetting', [SettingController::class, 'upateSetting']);
             Route::get('settingrowSystem', [SettingController::class, 'settingrow']);
             Route::get('getLanguageList', [SettingController::class, 'getLanguageList']);
@@ -377,6 +377,20 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
 
     Route::group(
         [
+            'prefix' => 'trade',
+        ],
+        function () {
+           // Route::get('checkBalanceAdmin/{id}', [BalanceController::class, 'checkBalanceAdmin']);
+            Route::post('insertTrade', [TradingController::class, 'insertTrading']);
+            Route::get('filterTradeHistory', [TradingController::class, 'filterTradeHistory']);
+        },
+    );
+
+
+
+
+    Route::group(
+        [
             'prefix' => 'withdrawal',
         ],
         function () {
@@ -395,7 +409,6 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             'prefix' => 'deposit',
         ],
         function () {
-
             Route::post('userDepositHistoryList', [DepositController::class, 'userDepositHistory']);
             Route::get('depositrow/{id}', [DepositController::class, 'depositrow']);
             Route::post('checkDepositrow', [DepositController::class, 'checkDepositrow']); //check depsoti image

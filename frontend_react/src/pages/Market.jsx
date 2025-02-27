@@ -136,7 +136,7 @@ const Market = () => {
             <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Withdraw</span>
           </div>
           <div className="text-center ">
-            <Link to="/future" className="btn_primary">
+            <Link to="/future/btc" className="btn_primary">
               <i className="fa-solid fa-chart-candlestick me-md-2"></i>
               <span className="d-none d-lg-block">Future</span>
             </Link>
@@ -145,7 +145,7 @@ const Market = () => {
           <div className="text-center">
             <Link to="/kyc" className="btn_primary">
               <i className="fa-solid fa-shield-quartered"></i>
-              <span className="d-none d-lg-block">KYC Verify</span>
+              <span className="d-none d-lg-block">&nbsp;KYC Verify</span>
             </Link>
             <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Sequrity</span>
           </div>
@@ -176,8 +176,8 @@ const Market = () => {
                 <th>Name</th>
                 <th className="pc_view text-center">24 Hour Volume</th>
                 <th className="pc_view text-center">Price</th>
-                <th>30day</th>
-                <th>Change(30day)</th>
+                <th>30 Day</th>
+                <th>Change(30 Day)</th>
               </tr>
             </thead>
 

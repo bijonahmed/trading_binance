@@ -11,7 +11,6 @@ import AuthUser from "../../components/AuthUser";
 import Loader from "../../components/Loader";
 
 
-
 const Deposit = () => {
   const [hasRequested, setHasRequested] = useState(false);
   const [allCountry, setCountryName] = useState([]);

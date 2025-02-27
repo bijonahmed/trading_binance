@@ -1,0 +1,148 @@
+
+/* Style for the larger button */
+.btn-btn-large {
+    padding: 15px 30px;        /* Larger padding for height and width */
+    font-size: 20px;           /* Bigger text size */
+    width: auto;               /* Adjust width according to content */
+    min-width: 250px;          /* Ensure minimum width for large button */
+    border-radius: 10px;       /* Rounded corners */
+    cursor: pointer;
+  }
+  
+  .btn_secondary {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+  }
+  
+  .btn_secondary:hover {
+    background-color: #45a049;
+  }
+  /* Style for the back-to-home button */
+.back-to-home {
+    margin-top: 20px;
+  }
+  
+  .btn_secondary {
+    padding: 10px 20px;
+   
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  
+/* Make the btns_part container fill the screen */
+.btns_part2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; Full viewport height */
+  }
+  
+  /* Style for the countdown container */
+  .countdown-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Countdown text styling */
+  .countdown-text {
+    font-size: 2rem;
+    color: white;
+  }
+  
+ 
+  /* Container for countdown */
+.countdown-container {
+    text-align: center;
+    display: inline-block;
+    margin-top: 50px;
+    position: relative;
+  }
+  
+  /* Box styling for countdown */
+  .countdown-box {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 1) 0%, rgba(0, 118, 255, 1) 100%);
+    border-radius: 15px;
+    padding: 40px 60px;
+    box-shadow: 0px 10px 30px rgba(0, 118, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 1s ease-in-out;
+  }
+  
+  /* Countdown text style */
+  .countdown-text {
+    font-size: 4rem;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6); /* Glow effect */
+    animation: glow 1.5s infinite alternate; /* Pulse glow effect */
+    transition: color 0.5s ease;
+  }
+  
+  /* Glow animation for countdown text */
+  @keyframes glow {
+    0% {
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6);
+      color: #00d4ff;
+    }
+    100% {
+      text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.7);
+      color: #ffffff;
+    }
+  }
+  
+  /* Animation for the box */
+  @keyframes slideUp {
+    0% {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Time's up message styling */
+  .time-up-text {
+    font-size: 2.5rem;
+    color: red;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeIn 1.5s ease-out;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  /* Fade-in effect for Time's up message */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Added gradient effect on hover for the countdown box */
+  .countdown-box:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 1) 0%, rgba(0, 118, 255, 1) 100%);
+    box-shadow: 0px 15px 40px rgba(0, 118, 255, 0.4);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
+  

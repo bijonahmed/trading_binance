@@ -63,10 +63,7 @@ const KYC = () => {
       const formData = new FormData();
       formData.append("frontFile_nid", frontFile);
       formData.append("backFile_nid", backFile);
-      const response = await axios.post(
-        "/user/upload-kyc-national_id_card",
-        formData,
-        {
+      const response = await axios.post("/user/upload-kyc-national_id_card",formData,{
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

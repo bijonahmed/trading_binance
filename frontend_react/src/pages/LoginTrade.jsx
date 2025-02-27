@@ -7,7 +7,7 @@ import AuthUser from "../components/AuthUser";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../components/css/Login.css"; // Import your CSS file
-const Login = () => {
+const LoginTrade = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,11 +35,9 @@ const Login = () => {
         password,
       });
       setToken(response.data.user, response.data.access_token);
-
       $.notify("Login successfully!", "success");
-
-
-      setTimeout(() => navigate("/dashboard/profile"), 1000);
+      const currency = localStorage.getItem("currency_");
+      navigate(`/future/${currency}`)
     } catch (error) {
       const fieldErrors = error.response?.data.errors || {};
       setErrors({
@@ -147,4 +145,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginTrade;

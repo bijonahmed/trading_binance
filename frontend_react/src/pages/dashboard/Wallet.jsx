@@ -206,7 +206,7 @@ const Wallet = () => {
                     <h4>
                       {currentBalance}&nbsp;<span>USDT</span>{" "}
                     </h4>
-                    <h6>$0.00</h6>
+                    {/* <h6>$0.00</h6> */}
                   </div>
                   <div className="row">
                     <div className="col-md-8 ms-auto">

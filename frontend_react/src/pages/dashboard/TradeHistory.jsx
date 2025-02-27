@@ -1,16 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import Sidebar from "../../components/SidebarAuth";
 import NavbarAuth from "../../components/NavbarAuth";
 import { Link } from "react-router-dom";
 import axios from "/config/axiosConfig"; // Ensure correct path
-import QRCode from "qrcode";
-import { useParams } from "react-router-dom";
 import AuthGuard from "../../components/AuthGuard";
+import AuthUser from "../../components/AuthUser";
+import Loader from "../../components/Loader";
 const TradeHistory = () => {
-  const [hasRequested, setHasRequested] = useState(false);
+  const { token, logout } = AuthUser();
+  const [loading, setLoading] = useState(false);
+  const [currentBalance, setCurrentBalance] = useState("");
+  const [findTrns, searchTrxno] = useState("");
+  const [dateForm, setDateForm] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [tradeData, setTradeData] = useState([]);
+  const [type, setSelectType] = useState("");
+  const [currency, setCurrency] = useState("");
+
+  // ============================= get balance =======================
+  const getCurrentBalance = async () => {
+    try {
+      const response = await axios.get(`/balance/getCurrentBalance`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const balance = response.data.balance;
+      setCurrentBalance(balance);
+    } catch (error) {
+      console.error("Error Data:", error);
+    }
+  };
+
+  const handleTxt = (event) => {
+    searchTrxno(event.target.value);
+  };
+  const handleFrnDate = (event) => {
+    setDateForm(event.target.value);
+  };
+  const handleType = (event) => {
+    setSelectType(event.target.value);
+  };
+
+  const handleToDate = (event) => {
+    setDateTo(event.target.value);
+  };
+  const getTradeList = async () => {
+    setLoading(true);
+    try {
+      // Get the current date
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 2); // Add 2 days
+      const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
+      // Get the date 30 days ago
+      const pastDate = new Date();
+      pastDate.setDate(currentDate.getDate() - 30);
+      const startDate = pastDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
+      const params = {
+        filterFrmDate: dateForm || startDate,
+        filterToDate: dateTo || EnDate,
+        searchtxt: findTrns,
+        type: type,
+      };
+      const response = await axios.get("/trade/filterTradeHistory", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        params: params,
+      });
+      //console.log("Response received:", response.data.data);
+      setTradeData(response.data.data);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentBalance();
+    getTradeList();
+  }, []);
 
   return (
     <>
@@ -26,7 +99,7 @@ const TradeHistory = () => {
         <div className="main_dashboard">
           {/* Top Navbar */}
           <NavbarAuth />
-          <AuthGuard/>
+          <AuthGuard />
           {/* Top Navbar End */}
 
           {/* Start */}
@@ -49,9 +122,10 @@ const TradeHistory = () => {
                   <div className="balance_box">
                     <h5>Estimated Balance</h5>
                     <h4>
-                      0.00 <span>USDT</span>{" "}
+                      {currentBalance}
+                      <span>USDT</span>{" "}
                     </h4>
-                    <h6>$0.00</h6>
+                    {/* <h6>$0.00</h6> */}
                   </div>
                   <div className="row">
                     <div className="col-md-8 ms-auto">
@@ -78,6 +152,21 @@ const TradeHistory = () => {
                     <h4>Trade History</h4>
                   </div>
                 </div>
+                <center>
+                  {loading ? (
+                    <div>
+                      <Loader />
+                      <center>
+                        {" "}
+                        <span>Loading.....</span>
+                      </center>
+                    </div>
+                  ) : (
+                    <div className="row">
+                      <div className="col-md-6 m-auto"></div>
+                    </div>
+                  )}
+                </center>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="search_section">
@@ -91,13 +180,20 @@ const TradeHistory = () => {
                                     type="text"
                                     placeholder="Search TRX id"
                                     className="form-control mb-2"
+                                    value={findTrns}
+                                    onChange={handleTxt} // ✅ Required to update state
+                                    onKeyUp={(e) =>
+                                      console.log("Key Up:", e.target.value)
+                                    } // ✅ Works
                                   />
                                 </div>
                                 <div className="input_form w-100 m-0">
-                                  <select className="form-control mb-2">
-                                    <option>
-                                      All
-                                    </option>
+                                  <select
+                                    className="form-control mb-2"
+                                    value={type}
+                                    onChange={handleType}
+                                  >
+                                    <option>All</option>
                                     <option>Long </option>
                                     <option>Short</option>
                                   </select>
@@ -109,6 +205,8 @@ const TradeHistory = () => {
                                 <div className="input_form date_">
                                   <input
                                     type="date"
+                                    value={dateForm}
+                                    onChange={handleFrnDate}
                                     className="form-control mb-2"
                                   />
                                 </div>
@@ -116,9 +214,20 @@ const TradeHistory = () => {
                                 <div className="input_form date_ m-0">
                                   <input
                                     type="date"
+                                    value={dateTo}
+                                    onChange={handleToDate}
                                     className="form-control mb-2"
                                   />
                                 </div>
+                                <p className="mx-2"></p>
+                                <button
+                                  type="button"
+                                  onClick={getTradeList}
+                                  className="btn_primary"
+                                  style={{ marginTop: "-7px" }}
+                                >
+                                  Filter
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -144,139 +253,45 @@ const TradeHistory = () => {
                             <span className="badge bg-success">$110.00</span>
                           </p>
                         </li>
-                        <li>
-                          <p>Trx: TRX8784345</p>
-                          <p>
-                            <span className="badge bg-danger">Sell Short</span>
-                          </p>
-                          <p>Open: 2024-08-10 15:10:00</p>
-                          <p>Cross: BTCUSDT</p>
-                          <p>Entry Price: $60850.00</p>
-                          <p>Close: 2024-08-10 15:10:00</p>
-                          <p>Av. Close Price: $60950.00</p>
-                          <p>Filled USDT: $100.00</p>
-                          <p>Funding Fee: $1.00</p>
-                          <p>
-                            PNL:{" "}
-                            <span className="badge bg-danger">-$100.00</span>
-                          </p>
-                        </li>
-                        <li>
-                          <p>Trx: TRX8784345</p>
-                          <p>
-                            <span className="badge bg-success">Long</span>
-                          </p>
-                          <p>Open: 2024-08-10 15:10:00</p>
-                          <p>Cross: BTCUSDT</p>
-                          <p>Entry Price: $60850.00</p>
-                          <p>Close: 2024-08-10 15:10:00</p>
-                          <p>Av. Close Price: $60950.00</p>
-                          <p>Filled USDT: $100.00</p>
-                          <p>Funding Fee: $1.00</p>
-                          <p>
-                            PNL:{" "}
-                            <span className="badge bg-success">$110.00</span>
-                          </p>
-                        </li>
                       </ul>
-                      <table className="table table-hover table-dark table-striped table-hover pc_view">
-                        <thead>
-                          <tr>
-                            <th className="col">TRX id</th>
-                            <th>Type</th>
-                            <th>Open Time</th>
-                            <th>Perp Cross</th>
-                            <th>Entry Price</th>
-                            <th>Close time</th>
-                            <th>Avg. Close Price</th>
-                            <th>Filled USDT</th>
-                            <th>Funding Fee</th>
-                            <th>Closing PNL</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>TRX8784345</td>
-                            <td>
-                              <span className="badge bg-success">Long</span>
-                            </td>
-                            <td>
-                              2024-08-10 <br /> 15:10:00
-                            </td>
-                            <td>BTCUSDT</td>
-                            <td>$60850.00</td>
-                            <td>
-                              2024-08-10 <br /> 15:10:30
-                            </td>
-                            <td>$60950.00</td>
-                            <td>$100.00</td>
-                            <td>$1.00</td>
-                            <td>
-                              <span className="badge bg-success">$110.00</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>TRX8784345</td>
-                            <td>
-                              <span className="badge bg-success">Long</span>
-                            </td>
-                            <td>
-                              2024-08-10 <br /> 15:10:00
-                            </td>
-                            <td>BTCUSDT</td>
-                            <td>$60950.00</td>
-                            <td>
-                              2024-08-10 <br /> 15:10:30
-                            </td>
-                            <td>$60850.00</td>
-                            <td>$100.00</td>
-                            <td>$1.00</td>
-                            <td>
-                              <span className="badge bg-danger">-$100.00</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>TRX8784345</td>
-                            <td>
-                              <span className="badge bg-danger">Short</span>
-                            </td>
-                            <td>
-                              2024-08-10 <br /> 15:00:00
-                            </td>
-                            <td>BTCUSDT</td>
-                            <td>$60850.00</td>
-                            <td>
-                              2024-08-10 <br /> 15:00:30
-                            </td>
-                            <td>$60840.00</td>
-                            <td>$100.00</td>
-                            <td>$1.00</td>
-                            <td>
-                              <span className="badge bg-success">$110.00</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>TRX8784345</td>
-                            <td>
-                              <span className="badge bg-danger">Short</span>
-                            </td>
-                            <td>
-                              2024-08-10 <br /> 15:00:00
-                            </td>
-                            <td>BTCUSDT</td>
-                            <td>$60850.00</td>
-                            <td>
-                              2024-08-10 <br /> 15:00:30
-                            </td>
-                            <td>$60950.00</td>
-                            <td>$100.00</td>
-                            <td>$1.00</td>
-                            <td>
-                              <span className="badge bg-danger">-$100.00</span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      {tradeData && tradeData.length > 0 ? (
+                        <table className="table table-hover table-dark table-striped table-hover pc_view">
+                          <thead>
+                            <tr>
+                              <th className="col">TRX id</th>
+                              <th>Type</th>
+                              <th>Open Time</th>
+                              <th>Perp Cross</th>
+                              <th>Entry Price</th>
+                              <th>Close Time</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {tradeData.map((trade, index) => (
+                              <tr key={index}>
+                                <td>{trade.tradeID}</td>
+                                <td>
+                                  <span
+                                    className={
+                                      trade.action_type === "LONG"
+                                        ? "badge bg-success"
+                                        : "badge bg-danger"
+                                    }
+                                  >
+                                    {trade.action_type}
+                                  </span>
+                                </td>
+                                <td>{trade.start_datetime}</td>
+                                <td>{trade.selectedCurrency}USDT</td>
+                                <td>${trade.trade_amount}</td>
+                                <td>{trade.end_datetime}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        <p>No trade data available.</p>
+                      )}
                     </div>
                   </div>
                 </div>
