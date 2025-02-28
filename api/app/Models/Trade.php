@@ -23,6 +23,8 @@ class Trade extends Authenticatable
     'trade_amount',
     'close_price',
     'status',
+    'closingPNL',
+    'action',
     'selected_duration',
     'selected_percentage',
     'action_type',

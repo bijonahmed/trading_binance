@@ -51,7 +51,7 @@ class BalanceController extends Controller
         $tradeAmountComplete    = Trade::where('user_id', $this->userid)->where('status', 1)->sum('trade_amount'); //Complete Trade 
         $tradeLoss              = Trade::where('user_id', $this->userid)->where('action', 'LOSS')->sum('trade_amount'); //Trade Loss
         $tradePercentageResult  = Trade::where('user_id', $this->userid)->where('action', 'WIN')->sum('percentage_result'); //Trade Loss
-      
+        //Balance
         $balance    = $deposit - $withdraw_amount - $tradeAmountRuning + $tradeAmountComplete - $tradeLoss + $tradePercentageResult;
 
         return response()->json([

@@ -38,6 +38,22 @@ class TradingController extends Controller
         $this->name = $user->name;
     }
 
+    public function traderow($id){
+
+        try {
+            $user = Trade::where('trade.id', $id)
+                ->select('users.name', 'trade.*')
+                ->leftJoin('users', 'trade.user_id', '=', 'users.id')
+                ->first();
+            return response()->json($user);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+            $error = $e->getMessage();
+            return response()->json($error);
+        }
+
+    }
+
 
     public function insertTrading(Request $request)
     {
@@ -116,6 +132,175 @@ class TradingController extends Controller
     }
 
 
+    public function updateTrade(Request $request){
+
+        //dd($request->all());
+        $request->validate([
+            'id'                    => 'required',
+            'action_type'           => 'required',
+            'market_price'          => 'required',
+            'close_price'           => 'required',
+            'trade_amount'          => 'required',
+            'selected_percentage'   => 'required',
+
+        ]);
+
+        $id                  = $request->id; 
+        $action_type         = $request->action_type ?? ""; 
+        $market_price        = $request->market_price ?? "";
+        $close_price         = $request->close_price ?? "";
+        $tradeAmt            = $request->trade_amount ?? "";
+        $percentage          = $request->selected_percentage ?? "";
+        //echo "id: $id---action_type: $action_type---market_price: $market_price--close_price:$close_price--trade_amount:$tradeAmt---percentage:$percentage";
+        //exit; 
+        $tradeeFee    =  0;
+        $actionStatus = "";
+        if ($action_type == "LONG" && $market_price > $close_price) {
+            $data['action'] =  "LOSS";
+        } else {
+            $data['action'] =  "WIN";
+            $tradeeFee    =  0;
+        }
+
+        if ($data['action'] == "LOSS") {
+            $data['closingPNL'] = "-$tradeAmt";
+        } else {
+            $tradeAmt = (float) $tradeAmt; // Ensure it's a number
+            $selected_percentage = (float) $percentage; // Ensure it's a number
+            $profitPercentage = ($tradeAmt * $selected_percentage) / 100;
+            $data['closingPNL'] = $tradeAmt + $profitPercentage - $tradeeFee;
+        }
+        $data['status'] = 1;
+        //dd($data);
+
+        $trade = Trade::find($id);
+        if ($trade) {
+            $trade->update($data);
+            return response()->json(['message' => 'Trade updated successfully'], 200);
+        }
+
+
+    }
+
+
+    public function filterTradeHistoryAdmin(Request $request)
+    {
+
+        //dd($request->all()); 
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+
+        $sDate               = $request->filterFrmDate;
+        $eDate               = $request->filterToDate;
+        $searchtxt           = $request->searchtxt;
+        $searchOrderId       = $request->searchOrderId;
+        $selectedFiltertType = $request->selectedFiltertType;
+        $type                = $request->type;
+        $startDate           = Carbon::parse($sDate)->startOfDay();
+        $endDate             = Carbon::parse($eDate)->endOfDay();
+
+        // dd($selectedFilter);
+        $query = Trade::orderBy('trade.id', 'desc')
+            // ->where('trade.user_id',$this->userid)
+            ->join('users', 'trade.user_id', '=', 'users.id')
+            ->select(
+                'trade.*',
+                'users.name',
+                'users.username',
+                'users.telegram',
+                'users.phone_number',
+                'users.whtsapp',
+                'users.email'
+            );
+
+        if ($searchtxt !== null) {
+            $query->where('users.username', 'like', '%' . $searchtxt . '%');
+        }
+
+        if ($searchOrderId !== null) {
+            $query->where('trade.tradeID', 'like', '%' . $searchOrderId . '%');
+        }
+
+        if ($selectedFiltertType !== null) {
+            if ($selectedFiltertType == '') {
+                $query->whereIn('trade.action_type', ['LONG', 'SHORT']);
+            } else {
+                $query->where('trade.action_type', $selectedFiltertType);
+            }
+        }
+        // Apply date range filtering if start and end dates are provided
+        if ($startDate !== null && $endDate !== null) {
+            $query->whereBetween('trade.created_at', [$startDate, $endDate]);
+        }
+  
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+            $tradeAmt = number_format($item->trade_amount, 2);
+            $statusLabels = [
+                1 => 'Complete',
+                0 => 'Runing',
+            ];
+
+            // //Can update admin
+            // $actionStatus = "";
+            // if ($item->action_type == "LONG" && $item->market_price > $item->close_price) {
+            //     $actionStatus =  "LOSS";
+            // } else {
+            //     $actionStatus =  "WIN";
+            //     $tradeeFee    =  0;
+            // }
+
+            // if ($actionStatus == "LOSS") {
+            //     $closingPNL = "-$tradeAmt";
+            // } else {
+
+            //     $tradeAmt = (float) $item->trade_amount; // Ensure it's a number
+            //     $selected_percentage = (float) $item->selected_percentage; // Ensure it's a number
+            //     // Calculate profit percentage
+            //     $profitPercentage = ($tradeAmt * $selected_percentage) / 100;
+            //     // Calculate Closing PNL
+            //     $closingPNL = $tradeAmt + $profitPercentage - $tradeeFee;
+            // }
+            //END
+
+            return [
+                'id'                    => $item->id,
+                'tradeID'               => $item->tradeID,
+                'trade_date'            => date("Y-M-d", strtotime($item->created_at)),
+                'trade_amount'          => number_format($item->trade_amount, 2),
+                'selected_duration'     => $item->selected_duration,
+                'selected_percentage'   => $item->selected_percentage,
+                'action_type'           => $item->action_type, //short or long
+                'name'                  => $item->name,
+                'username'              => $item->username,
+                'email'                 => $item->email,
+                'market_price'          => $item->market_price,
+                'close_price'           => $item->close_price,
+                'selectedCurrency'      => $item->selectedCurrency,
+                'start_datetime'        => $item->start_datetime,
+                'end_datetime'          => $item->end_datetime,
+                'action'                => $item->action,
+                'closingPNL'            => !empty($item->closingPNL) ? number_format($item->closingPNL, 2) : 0,
+                'fee'                   => number_format(0.00, 2),
+                'status'                => $item->status,
+                'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
+            ];
+        });
+
+        //dd($modifiedCollection);
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
+ 
+    }
+
+
     public function filterTradeHistory(Request $request)
     {
 
@@ -128,6 +313,7 @@ class TradingController extends Controller
         $endDate            = Carbon::parse($eDate)->endOfDay();
         // dd($selectedFilter);
         $query = Trade::orderBy('trade.id', 'desc')
+            ->where('trade.user_id', $this->userid)
             ->join('users', 'trade.user_id', '=', 'users.id')
             ->select(
                 'trade.*',
@@ -170,30 +356,6 @@ class TradingController extends Controller
                 0 => 'Pending',
             ];
 
-            //Can update admin
-        
-            $actionStatus = "";
-            if ($item->action_type == "LONG" && $item->market_price > $item->close_price) {
-                $actionStatus =  "LOSS";
-            } else {
-                $actionStatus =  "WIN";
-                $tradeeFee    =  0;
-            }
-
-            if ($actionStatus == "LOSS") {
-                $closingPNL = "-$tradeAmt";
-            } else {
-
-                $tradeAmt = (float) $item->trade_amount; // Ensure it's a number
-                $selected_percentage = (float) $item->selected_percentage; // Ensure it's a number
-                // Calculate profit percentage
-                $profitPercentage = ($tradeAmt * $selected_percentage) / 100;
-                // Calculate Closing PNL
-                $closingPNL = $tradeAmt + $profitPercentage - $tradeeFee;
-            }
-             
-            
-            //END
 
             return [
                 'id'                    => $item->id,
@@ -209,9 +371,9 @@ class TradingController extends Controller
                 'selectedCurrency'      => $item->selectedCurrency,
                 'start_datetime'        => $item->start_datetime,
                 'end_datetime'          => $item->end_datetime,
-                'actionStatus'          => $actionStatus,
-                'closingPNL'            => number_format($closingPNL, 2),
-                'fee'                   => number_format(0.00,2),
+                'actionStatus'          => $item->action,
+                'closingPNL'            => number_format($item->closingPNL, 2),
+                'fee'                   => number_format(0.00, 2),
                 'status'                => $item->status,
                 'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
             ];

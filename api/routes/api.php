@@ -380,9 +380,11 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             'prefix' => 'trade',
         ],
         function () {
-           // Route::get('checkBalanceAdmin/{id}', [BalanceController::class, 'checkBalanceAdmin']);
             Route::post('insertTrade', [TradingController::class, 'insertTrading']);
             Route::get('filterTradeHistory', [TradingController::class, 'filterTradeHistory']);
+            Route::get('traderow/{id}', [TradingController::class, 'traderow']);
+            Route::get('filterTradeHistoryAdmin', [TradingController::class, 'filterTradeHistoryAdmin']);
+            Route::post('updateTrade', [TradingController::class, 'updateTrade']);
         },
     );
 

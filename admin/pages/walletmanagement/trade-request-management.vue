@@ -27,7 +27,7 @@
                             <div class="row">
                                 <div class="col-lg-2 col-md-3 col-sm-12 mb-2">
                                     <input type="email" v-model="searchEmail" class="form-control"
-                                        placeholder="Search Email" />
+                                        placeholder="Search Username" />
                                 </div>
 
                                 <div class="col-lg-2 col-md-3 col-sm-12 mb-2">
@@ -45,10 +45,9 @@
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 mb-2">
                                     <select v-model="selectedFilter" class="form-control" @change="filterData">
-                                        <option value="5">All</option>
-                                        <option value="0">Review</option>
-                                        <option value="2">Reject</option>
-                                        <option value="1">Approved</option>
+                                        <option value="">All</option>
+                                        <option value="LONG">LONG</option>
+                                        <option value="SHORT">SHORT</option>
                                     </select>
                                 </div>
 
@@ -65,100 +64,71 @@
                                     <table class="table w-100 table-wrapper">
                                         <thead>
                                             <tr>
-                                                <th class="text-left">Trade ID</th>
-                                                <th class="text-left">User Info</th>
-                                                <th class="text-left">Trade Type</th>
-                                                <th class="text-left">Pair Name</th>
-                                                <th class="text-left">Start On</th>
-                                                <th class="text-left">Ending On</th>
-                                                <th class="text-left">Duration</th>
-                                                <th class="text-left">Opening Price</th>
-                                                <th class="text-left">Closing Price</th>
-                                                <th class="text-left">Trade Amount</th>
-                                                <th class="text-left">Profit</th>
-                                                <th class="text-left">Est Profit</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">LONG/SHORT</th>
-                                                <th class="text-center">Action</th> 
+                                                <th>User Info</th>
+                                                <th>OrderID</th>
+                                                <th>Perp Cross</th>
+                                                <th>Type</th>
+                                                <th>Amount(USDT)</th>
+                                                <th>Entry Price</th>
+                                                <th>Open Time</th>
+                                                <th>Close Price</th>
+                                                <th>Close</th>
+                                                <th>Fee</th>
+                                                <th>Closing PNL</th>
+                                                <th>WIN/LOSS</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="text-left">TRADE0001</td>
-                                                <td class="text-left"><small>Name: JONS<br />Email:jons@gmail.com<br />Phone: +0054787788</small></td>
-                                                <td class="text-left">Crypto</td>
-                                                <td class="text-left">BTC/USDT</td>
-                                                <td class="text-left">2025-02-01 01:12:56</td>
-                                                <td class="text-left">2025-02-01 01:12:26</td>
-                                                <td class="text-left">10 Second</td>
-                                                <td class="text-left" style="background-color:orange;">$97,500.02</td>
-                                                <td class="text-left" style="background-color:pink;">$97,498.05</td>
-                                                <td class="text-left">$500</td>
-                                                <td class="text-left">5%</td>
-                                                <td class="text-left">$2</td>
-                                                <td class="text-center text-red"><b>Loss</b></td>
-                                                <td class="text-center bg-success">Long/Buy</td>
-                                                <td>
-                                                    <center>
-                                                      
-                                                     <span @click="edit(pro.id)"><button type="button"><i
-                                                                        class="fas fa-edit btnSize"></i></button></span> 
-                                                    </center>
-                                                </td>
-                                               
-                                            </tr>
 
 
-                                            <tr v-for="(pro, index) in productdata" :key="index" class="d-none">
+                                            <tr v-for="(pro, index) in productdata" :key="index">
+                                                <td class="text-left"><small>Name: {{ pro.name
+                                                        }}<br />Email:{{ pro.email }}<br />Username: {{
+                                                            pro.username }}</small></td>
                                                 <td class="text-left">{{ pro.tradeID }}</td>
-                                                <td class="text-left"><small>Name: {{ pro.user_info_name }}<br />Email:{{ pro.user_info_email }}<br />Phone: {{ pro.user_info_phone}}</small></td>
-                                                <td class="text-left">{{ pro.categoryName }}</td>
-                                                <td class="text-left">{{ pro.subCategoryName }}</td>
-                                                <td class="text-left">{{ pro.start_datetime }}</td>
-                                                <td class="text-left">{{ pro.end_datetime }}</td>
-                                                <td class="text-left">${{ pro.tradeAmount }}</td>
-                                                <td class="text-left">{{ pro.durationPercentage }}%</td>
-                                                <td class="text-left">${{ pro.estProfit }}</td>
-
-                                                <td class="text-center">
-                                                    <span v-if="pro.sts == 0"
-                                                        class="badge rounded-pill bg-secondary w-100"> {{ pro.status
-                                                        }}</span>
-                                                    <span class="badge rounded-pill bg-success w-100"
-                                                        v-if="pro.sts == 1">{{ pro.status }}</span>
-                                                    <span class="badge rounded-pill bg-danger w-100"
-                                                        v-if="pro.sts == 2">{{ pro.status }}</span>
+                                                <td>{{ pro.selectedCurrency }}USDT</td>
+                                                <td>
+                                                    <span
+                                                        :class="pro.action_type === 'LONG' ? 'badge bg-success' : 'badge bg-danger'">
+                                                        {{ pro.action_type }}
+                                                    </span>
                                                 </td>
-                                                 
+                                                <td>{{ pro.trade_amount }}</td>
+                                                <td>{{ pro.market_price }}</td>
+                                                <td>{{ pro.start_datetime }}</td>
+                                                <td>{{ pro.close_price || '0.00' }}</td>
+                                                <td>{{ pro.end_datetime }}</td>
+                                                <td>{{ pro.fee }}</td>
+                                                <td :class="getClass(pro.closingPNL)">
+                                                    {{ pro.closingPNL }}
+                                                </td>
+                                                <td>{{ pro.action }}</td>
                                                 <td>
                                                     <center>
                                                         <button class="btn btn-default btn-sm btn-flat"
                                                             @click="preview(pro.id)"><i
                                                                 class="fas fa-eye"></i>Action</button>
-                                                     <span @click="edit(pro.id)"><button type="button"><i
-                                                                        class="fas fa-edit btnSize"></i></button></span> 
+
                                                     </center>
                                                 </td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th class="text-left">Trade ID</th>
-                                                <th class="text-left">User Info</th>
-                                                <th class="text-left">Trade Type</th>
-                                                <th class="text-left">Pair Name</th>
-                                                <th class="text-left">Start On</th>
-                                                <th class="text-left">Ending On</th>
-                                                <th class="text-left">Duration</th>
-                                                <th class="text-left">Opening Price</th>
-                                                <th class="text-left">Closing Price</th>
-                                                <th class="text-left">Trade Amount</th>
-                                                <th class="text-left">Profit</th>
-                                                <th class="text-left">Est Profit</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">LONG/SHORT</th>
-                                                <th class="text-center">Action</th> 
-                                                <!-- <th class="text-center">Action</th>TRADE00001 -->
+                                                <th>User Info</th>
+                                                <th>OrderID</th>
+                                                <th>Perp Cross</th>
+                                                <th>Type</th>
+                                                <th>Amount(USDT)</th>
+                                                <th>Entry Price</th>
+                                                <th>Open Time</th>
+                                                <th>Close Price</th>
+                                                <th>Close</th>
+                                                <th>Fee</th>
+                                                <th>Closing PNL</th>
+                                                <th>WIN/LOSS</th>
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -206,7 +176,7 @@ const totalPages = ref(0);
 const productdata = ref([]);
 const searchOrderId = ref("");
 const searchEmail = ref("");
-const selectedFilter = ref(5); // Add a ref for the search query
+const selectedFilter = ref(""); // Add a ref for the search query
 
 
 // Get today's date in YYYY-MM-DD format
@@ -221,12 +191,12 @@ const filterToDate = ref(formattedDate);
 const fetchData = async (page) => {
     try {
         loading.value = true;
-        const response = await axios.get(`/trading/getTradingList`, {
+        const response = await axios.get(`/trade/filterTradeHistoryAdmin`, {
             params: {
                 page: page,
                 pageSize: pageSize,
-                searchEmail: searchEmail.value, // Pass the search query parameter
-                selectedFilter: selectedFilter.value, // Pass the search query parameter
+                searchtxt: searchEmail.value, // Pass the search query parameter
+                selectedFiltertType: selectedFilter.value, // Pass the search query parameter
                 searchOrderId: searchOrderId.value, // Pass the search query parameter
                 filterFrmDate: filterFrmDate.value, // Pass the search query parameter
                 filterToDate: filterToDate.value, // Pass the search query parameter
@@ -246,6 +216,10 @@ const fetchData = async (page) => {
 onMounted(() => {
     fetchData(currentPage.value);
 });
+
+const getClass = (pnl) => {
+    return pnl >= 0 ? "text-success" : "text-danger";
+};
 
 // Watch for changes in current page and fetch data accordingly
 watch(currentPage, (newPage) => {
@@ -275,7 +249,7 @@ const deleteProduct = (id) => {
 // Define a method to handle previewing
 const preview = (id) => {
     router.push({
-        path: '/walletmanagement/depositpreview',
+        path: '/walletmanagement/tradepreview',
         query: {
             parameter: id
         }

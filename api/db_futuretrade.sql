@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2025 at 04:20 PM
+-- Generation Time: Feb 28, 2025 at 04:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_futuretrade`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `add_country`
+--
+
+CREATE TABLE `add_country` (
+  `id` int(11) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `currency_id` int(11) DEFAULT NULL,
+  `usdt_rate` decimal(10,2) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `add_country`
+--
+
+INSERT INTO `add_country` (`id`, `country_id`, `currency_id`, `usdt_rate`, `status`, `created_at`, `updated_at`) VALUES
+(1, 27, 13, 4000.00, 1, '2025-02-26 18:42:55', '2025-02-26 21:10:46'),
+(2, 35, 16, 700.00, 1, '2025-02-26 18:43:03', '2025-02-26 19:07:25'),
+(3, 13, 5, 300.00, 1, '2025-02-26 18:43:43', '2025-02-26 18:43:43'),
+(4, 18, 21, 123.00, 1, '2025-02-26 18:44:46', '2025-02-26 18:44:46'),
+(6, 101, 9, 1526.00, 1, '2025-02-26 21:10:10', '2025-02-26 21:28:55'),
+(8, 112, 4, 98.00, 1, '2025-02-26 23:33:00', '2025-02-26 23:33:00'),
+(11, 10, 2, 5888.00, 1, '2025-02-26 23:34:11', '2025-02-26 23:34:11');
 
 -- --------------------------------------------------------
 
@@ -42,13 +71,14 @@ CREATE TABLE `add_user_payment_address` (
 --
 
 INSERT INTO `add_user_payment_address` (`id`, `user_id`, `name`, `wallet_address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 8, 'USDT-TRC20-TRX', 'TY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
-(2, 8, 'USDT-TRC20-TRX', 'TY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sMY', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
-(3, 8, 'USDT-TRC20-TRX', 'TY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sCW', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
-(4, 8, 'USDT-TRC20-TRX', 'PO9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
-(5, 8, 'USDT-TRC20-TRX', 'TIWh7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
+(1, 5, 'USDT-TRC20-TRX', 'TY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
+(2, 5, 'USDT-TRC20-TRX', 'TY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sMY', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
+(3, 5, 'USDT-TRC20-TRX', 'TY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sCW', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
+(4, 5, 'USDT-TRC20-TRX', 'PO9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
+(5, 5, 'USDT-TRC20-TRX', 'TIWh7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2024-07-14 08:20:01', '2024-07-14 08:20:01'),
 (6, 5, 'USDT-TRC20-TRX', 'AY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sMY', 1, '2025-02-24 08:44:39', '2025-02-24 08:44:39'),
-(7, 5, 'USDT-TRC20-TRX', 'JK9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2025-02-24 09:23:10', '2025-02-24 09:23:10');
+(7, 5, 'USDT-TRC20-TRX', 'JK9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', 1, '2025-02-24 09:23:10', '2025-02-24 09:23:10'),
+(9, 5, 'USDT-TRC20-TRX', '23333333333333334', 1, '2025-02-25 10:05:27', '2025-02-25 10:05:27');
 
 -- --------------------------------------------------------
 
@@ -91,217 +121,6 @@ CREATE TABLE `api_gamelist_transate` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `api_gamelist_transate`
---
-
-INSERT INTO `api_gamelist_transate` (`id`, `name`, `gameid`, `language`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Honey Trap of Diao Chan', '1', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(2, 'Mines', '9', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(3, 'Hood vs Wolf', '18', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(4, 'Piggy Gold', '39', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(5, 'Jungle Delight', '40', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(6, 'Ganesha Gold', '42', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(7, 'Double Fortune', '48', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(8, 'The Great Icescape', '53', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(9, 'Captain\'s Bounty', '54', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(10, 'Dragon Hatch', '57', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(11, 'Leprechaun Riches', '60', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(12, 'Dragon Tiger Luck', '63', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(13, 'Mahjong Ways', '65', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(14, 'Fortune Mouse', '68', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(15, 'Candy Burst', '70', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(16, 'Caishen Wins', '71', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(17, 'Egypt\'s Book of Mystery', '73', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(18, 'Mahjong Ways 2', '74', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(19, 'Dreams of Macau', '79', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(20, 'Queen of Bounty', '84', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(21, 'Genie\'s 3 Wishes', '85', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(22, 'Treasures of Aztec', '87', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(23, 'Lucky Neko', '89', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(24, 'Thai River Wonders', '92', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(25, 'Fortune Ox', '98', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(26, 'Candy Bonanza', '100', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(27, 'Rise Of Apollo', '101', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(28, 'Wild Bandito', '104', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(29, 'Ways of the Qilin', '106', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(30, 'Buffalo Win', '108', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(31, 'Jurassic Kingdom', '110', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(32, 'Supermarket Spree', '115', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(33, 'Cocktail Nights', '117', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(34, 'Spirited Wonders', '119', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(35, 'Fortune Tiger', '126', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(36, 'Speed Winner', '127', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(37, 'Legend of Perseus', '128', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(38, 'Wild Bounty Showdown', '135', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(39, 'War Of Dragons', '10009', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(40, 'Jungle King', '10016', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(41, 'Fa Fa Fa', '10021', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(42, 'Bubble Beauty', '10030', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(43, 'Crazy777', '10035', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(44, 'Fengshen', '10038', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(45, 'Crazy FaFaFa', '10040', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(46, 'Golden Bank', '10045', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(47, 'Charge Buffalo', '10047', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(48, 'SUPER ACE', '10049', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(49, 'Money Coming', '10051', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(50, 'BOXING KING', '10077', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(51, 'Pharaoh Treasure', '10085', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(52, 'Super Rich', '10100', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(53, 'Medusa', '10101', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(54, 'RomaX', '10102', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(55, 'Golden Empire', '10103', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(56, 'Magic Lamp', '10108', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(57, 'Fortune Gems', '10109', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(58, 'Ali Baba', '10110', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(59, 'Mega Ace', '10134', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(60, 'Samba', '10136', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(61, 'Bonus Hunter', '10142', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(62, 'Master Tiger', '10176', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(63, 'Fortune Gems 2', '10223', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(64, 'Gates of Olympus', '20001', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(65, 'Starlight Princess Pachi', '20002', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(66, 'Gates of Olympus 1000', '20003', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(67, 'Mahjong Wins 2', '20004', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(68, 'Sweet Bonanza 1000', '20005', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(69, 'Revenge of Loki Megaways', '20006', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(70, 'Monkey King Rush', '20007', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(71, 'Sugar Rush 1000', '20009', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(72, 'Power of Ninja', '20010', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(73, 'Great Lagoon', '20011', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(74, 'Sweet Bonanza', '20012', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(75, 'Fire Strike', '20013', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(76, 'Joker\'s Jewels', '20014', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(77, 'Starlight Princess', '20015', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(78, 'Starlight Princess 1000', '20016', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(79, 'Zeus vs Hades - Gods of War', '20017', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(80, 'Angel vs Sinner', '20018', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(81, 'Fire Portals', '20019', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(82, 'Big Bass Splash', '20020', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(83, 'Mystery Mice', '20021', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(84, 'Big Bass Amazon Xtreme', '20022', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(85, 'The Dog House', '20023', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(86, 'Fruit Party', '20024', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(87, 'The Dog House Megaways', '20025', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(88, 'Spirit of Adventure', '20026', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(89, 'Gems Bonanza', '20027', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(90, 'Kraken’s Sky Bounty', '20028', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(91, 'Big Bass Bonanza – Reel Action', '20029', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(92, 'Big Bass Vegas Double Down Deluxe', '20030', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(93, 'Big Bass Bonanza', '20031', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(94, 'Aviator', '100001', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(95, 'Battle Royale', '100002', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(96, 'LUCKYWIN', '100003', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(97, 'Futures', '100005', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(98, 'Asgardian Rising', '1340277', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(99, 'Diner Delights', '1372643', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(100, 'Midas Fortune', '1402846', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(101, 'Songkran Splash', '1448762', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(102, 'Dragon Hatch 2', '1451122', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(103, 'Ultimate Striker', '1489936', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(104, 'Pinata Wins', '1492288', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(105, 'Wild Ape #3258', '1508783', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(106, 'Super Golf Drive', '1513328', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(107, 'Fortune Rabbit', '1543462', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(108, 'Forge of Wealth', '1555350', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(109, 'Wild Heist Cashout', '1568554', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(110, 'Gladiator\'s Glory', '1572362', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(111, 'Mafia Mayhem', '1580541', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(112, 'Safari Wilds', '1594259', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(113, 'WereWolf\'s Hunt', '1615454', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(114, 'Anubis Wrath', '1623475', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(115, 'Zombie Outbreak', '1635221', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(116, 'Shark Bounty', '1648578', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(117, 'Tsar Treasures', '1655268', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(118, 'Gemstones Gold', '1671262', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(119, 'Cash Mania', '1682240', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(120, 'Fortune Dragon', '1695365', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(121, 'Mystic Potion', '1717688', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(122, 'Three Crazy Piggies', '1727711', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(123, 'Chicky Run', '1738001', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(124, 'Wings of lguazu', '1747549', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(125, 'Museum Mystery', '1755623', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(126, 'Yakuza Honor', '1760238', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(127, 'Futebol Fever', '1778752', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(128, 'Rio Fantasia', '1786529', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(129, 'Oishi Delights', '1815268', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(130, 'Plinko', '10000001', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(131, 'Mines', '10000002', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(132, 'Dice', '10000003', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(133, 'Limbo', '10000004', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(134, 'Dragon-tower', '10000005', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(135, 'Crash', '10000006', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(136, 'Keno', '10000007', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(137, 'Wheel', '10000008', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(138, 'Hilo', '10000009', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(139, 'Diamonds', '10000011', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(140, 'Slide', '10000012', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(141, 'Roulette', '10000013', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(142, 'Mines', '10000102', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(143, 'Dice', '10000103', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(144, 'Hilo', '10000105', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(145, 'Plinko', '10000106', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(146, 'Gates of Olympus', '12000001', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(147, 'Sweet Bonanza', '12000002', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(148, 'Joker\'s Jewels', '12000003', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(149, 'Fire Strike', '12000004', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(150, 'Starlight Princess', '12000005', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(151, 'Sugar Rush', '12000006', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(152, 'Big Bass Splash', '12000007', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(153, 'The Dog House', '12000008', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(154, 'Fruit Party', '12000009', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(155, 'Gems Bonanza', '12000010', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(156, 'Big Bass Bonanza', '12000011', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(157, 'Spin & Score Megaways', '12000012', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(158, 'Bigger Bass Blizzard - Christmas Catch', '12000013', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(159, 'Shield of Sparta', '12000014', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(160, 'Sweet PowerNudge', '12000015', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(161, 'Viking Forge', '12000016', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(162, 'Grace of Ebisu', '12000017', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(163, 'Starlight Princess 1000', '12000018', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(164, 'Demon Pots', '12000019', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(165, 'John Hunter and the Book of Tut Megaways', '12000020', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(166, '8 Golden Dragon Challenge', '12000021', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(167, 'Candy Blitz', '12000022', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(168, 'Fortunes of Aztec', '12000023', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(169, 'Infective Wild', '12000024', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(170, 'Rainbow Reels', '12000025', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(171, 'Sweet Bonanza Dice', '12000026', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(172, 'Big Bass Halloween', '12000027', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(173, 'Cash Chips', '12000028', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(174, 'Gemstone', '12000029', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(175, 'Mahjong Wins', '12000030', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(176, 'Wisdom of Athena', '12000031', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(177, 'Forge of Olympus', '12000032', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(178, 'Big Bass Hold & Spinner Megaways', '12000033', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(179, 'Cyclops Smash', '12000034', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(180, 'Saiyan Mania', '12000035', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(181, 'Piggy Bankers', '12000036', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(182, 'Pub Kings', '12000037', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(183, 'Mustang Trail', '12000038', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(184, 'Supermania', '12000039', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(185, 'Diamond Cascade', '12000040', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(186, 'Lobster Bob\'s Crazy Crab Shack', '12000041', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(187, '3 Buzzing Wilds', '12000042', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(188, 'The Dog House Multihold', '12000043', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(189, 'Spellbinding Mystery', '12000044', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(190, 'Cash Box', '12000045', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(191, 'Sky Bounty', '12000046', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(192, 'Hellvis Wild', '12000047', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(193, 'Joker Race', '12000048', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(194, 'Heist for the Golden Nuggets', '12000049', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(195, 'Fat Panda', '12000050', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(196, 'Jewel Rush', '12000051', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(197, 'Pirates Pub', '12000052', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(198, 'Frogs & Bugs', '12000053', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(199, 'Lamp Of Infinity', '12000054', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(200, 'Robber Strike', '12000055', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(201, 'Floating Dragon - Dragon Boat Festival', '12000056', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(202, 'Sticky Bees', '12000057', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(203, 'Knight Hot Spotz', '12000058', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(204, 'Excalibur Unleashed', '12000059', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16'),
-(205, 'Wild Bison Charge', '12000060', 'en', 1, '2024-11-25 17:06:16', '2024-11-25 17:06:16');
 
 -- --------------------------------------------------------
 
@@ -889,6 +708,38 @@ INSERT INTO `country` (`id`, `shortname`, `name`, `phonecode`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `country_wise_bank`
+--
+
+CREATE TABLE `country_wise_bank` (
+  `id` int(11) NOT NULL,
+  `add_country_id` int(11) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `bank_name` varchar(255) NOT NULL,
+  `account_name` varchar(255) DEFAULT NULL,
+  `account_number` varchar(255) DEFAULT NULL,
+  `ific_code` varchar(255) DEFAULT NULL,
+  `swift_code` varchar(255) DEFAULT NULL,
+  `others_code` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `country_wise_bank`
+--
+
+INSERT INTO `country_wise_bank` (`id`, `add_country_id`, `country_id`, `bank_name`, `account_name`, `account_number`, `ific_code`, `swift_code`, `others_code`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 35, 'DBBL', 'Md. Gtazi Giash Uddin', '55112365696', NULL, '1256', NULL, 1, '2025-02-26 20:57:22', '2025-02-26 23:28:23'),
+(2, 6, 101, 'Punjab National Bank (PNB)', 'Jusna', '4511236569659', 'PNB4598', '', '', 1, '2025-02-26 20:59:42', '2025-02-26 23:37:33'),
+(3, 6, 101, 'INDIA BANK', 'Pronoy Kumanr11111', '4411236569658', '124569', NULL, NULL, 1, '2025-02-26 21:29:47', '2025-02-26 23:28:42'),
+(4, 6, 101, 'HDFC Bank', 'Gazi', '4411236569659', '124568', NULL, NULL, 1, '2025-02-26 23:32:35', '2025-02-26 23:32:35'),
+(5, 4, 18, 'DBBL', 'Gazi Giash Uddin', '4511236569658', NULL, '12569DBL', NULL, 1, '2025-02-26 23:34:49', '2025-02-26 23:34:49');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `currency`
 --
 
@@ -906,17 +757,27 @@ CREATE TABLE `currency` (
 --
 
 INSERT INTO `currency` (`id`, `name`, `symbol`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'BRL', 'R$', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(2, 'CNY', '¥', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(3, 'HKD', 'HK$', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(4, 'IDR', 'Rp', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(5, 'INR', '₹', 1, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(6, 'MMK', 'MMK', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(7, 'NGN', '₦', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(8, 'PHP', '₱', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(9, 'THB', '฿', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(10, 'USD', '₮', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15'),
-(11, 'VND', '₫', 0, '2025-02-05 02:45:15', '2025-02-05 02:45:15');
+(1, 'United States Dollar', 'USD', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(2, 'Euro', 'EUR', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(3, 'British Pound', 'GBP', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(4, 'Japanese Yen', 'JPY', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(5, 'Australian Dollar', 'AUD', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(6, 'Canadian Dollar', 'CAD', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(7, 'Swiss Franc', 'CHF', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(8, 'Chinese Yuan', 'CNY', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(9, 'Indian Rupee', 'INR', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(10, 'Russian Ruble', 'RUB', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(11, 'Brazilian Real', 'BRL', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(12, 'South Korean Won', 'KRW', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(13, 'Turkish Lira', 'TRY', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(14, 'South African Rand', 'ZAR', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(15, 'Singapore Dollar', 'SGD', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(16, 'Hong Kong Dollar', 'HKD', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(17, 'Mexican Peso', 'MXN', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(18, 'New Zealand Dollar', 'NZD', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(19, 'United Arab Emirates Dirham', 'AED', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(20, 'Tether (USDT)', 'USDT', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47'),
+(21, 'Bangladeshi Taka', 'BDT', 1, '2025-02-26 16:54:47', '2025-02-26 16:54:47');
 
 -- --------------------------------------------------------
 
@@ -1014,6 +875,16 @@ CREATE TABLE `deposit` (
   `trxId` varchar(255) DEFAULT NULL,
   `depscription` text DEFAULT NULL,
   `wallet_address` varchar(255) DEFAULT NULL,
+  `currencySymbol` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `bank_name` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `account_name` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `account_number` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `ific_code` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `swift_code` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `others_code` varchar(255) DEFAULT NULL COMMENT 'For Bank',
+  `inputAmount` decimal(10,2) DEFAULT NULL COMMENT 'For Bank',
+  `countryId` int(11) DEFAULT NULL COMMENT 'For Bank',
+  `country_wise_bank_id` int(11) DEFAULT NULL COMMENT 'For Bank',
   `approved_by` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
@@ -1023,10 +894,15 @@ CREATE TABLE `deposit` (
 -- Dumping data for table `deposit`
 --
 
-INSERT INTO `deposit` (`id`, `depositID`, `random_key`, `cryptoType`, `user_id`, `gaming_pltform_id`, `currency_id`, `orderId`, `deposit_amount`, `receivable_amount`, `status`, `payment_method`, `to_crypto_wallet_address`, `depsoit_images`, `frm_wallet_address`, `trxId`, `depscription`, `wallet_address`, `approved_by`, `created_at`, `updated_at`) VALUES
-(1, 'DE.2b763288faedb7707c0748abe015ab6c', NULL, NULL, 5, NULL, NULL, NULL, 100.00, 100.00, 1, 'TRC20', '', '/backend/deposit_screenshort/mHbhNHRtqPzAMPlzro7r.jpg', '', '67bc0771bc09b', 'DE.2b763288faedb7707c0748abe015ab6c', NULL, NULL, '2025-02-24 11:45:21', '2025-02-24 11:45:21'),
-(2, 'DE.5b5c2e6aacc6ceb83ee96e328e591aea', NULL, 'BTC', 5, NULL, NULL, NULL, 1000.00, 1000.00, 1, 'TRC20', '', '/backend/deposit_screenshort/tpyRSBhXYS8rW1ZuqEdO.jpg', '', '67bc08b784ddd', 'DE.5b5c2e6aacc6ceb83ee96e328e591aea', NULL, NULL, '2025-02-24 11:50:47', '2025-02-24 11:50:47'),
-(3, 'DE.0f3c5d0c3666eec8cd311bec6d878915', NULL, 'ETH', 5, NULL, NULL, NULL, 300.00, NULL, 0, 'TRC20', '', '/backend/deposit_screenshort/eZxCw5iivyESopx3sLRF.jpg', '', '67bc49e749d88', 'DE.0f3c5d0c3666eec8cd311bec6d878915', NULL, NULL, '2025-02-24 16:28:55', '2025-02-24 16:28:55');
+INSERT INTO `deposit` (`id`, `depositID`, `random_key`, `cryptoType`, `user_id`, `gaming_pltform_id`, `currency_id`, `orderId`, `deposit_amount`, `receivable_amount`, `status`, `payment_method`, `to_crypto_wallet_address`, `depsoit_images`, `frm_wallet_address`, `trxId`, `depscription`, `wallet_address`, `currencySymbol`, `bank_name`, `account_name`, `account_number`, `ific_code`, `swift_code`, `others_code`, `inputAmount`, `countryId`, `country_wise_bank_id`, `approved_by`, `created_at`, `updated_at`) VALUES
+(1, 'DE.2b763288faedb7707c0748abe015ab6c', NULL, 'BTC', 5, NULL, NULL, NULL, 100.00, 100.00, 1, 'CRYPTO', '', '/backend/deposit_screenshort/mHbhNHRtqPzAMPlzro7r.jpg', '', '67bc0771bc09b', 'DE.2b763288faedb7707c0748abe015ab6c', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-24 11:45:21', '2025-02-24 11:45:21'),
+(2, 'DE.5b5c2e6aacc6ceb83ee96e328e591aea', NULL, 'BTC', 5, NULL, NULL, 'c81e728d9d4c2f636f067f89cc14862c', 1000.00, 1000.00, 1, 'CRYPTO', '', '/backend/deposit_screenshort/tpyRSBhXYS8rW1ZuqEdO.jpg', '', '67bc08b784ddd', 'DE.5b5c2e6aacc6ceb83ee96e328e591aea', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-02-24 11:50:47', '2025-02-24 23:37:22'),
+(3, 'DE.0f3c5d0c3666eec8cd311bec6d878915', NULL, 'ETH', 5, NULL, NULL, NULL, 300.00, 300.00, 2, 'CRYPTO', '', '/backend/deposit_screenshort/eZxCw5iivyESopx3sLRF.jpg', '', '67bc49e749d88', 'DE.0f3c5d0c3666eec8cd311bec6d878915', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-02-24 16:28:55', '2025-02-24 23:52:29'),
+(4, 'DE.aceacd5df18526f1d96ee1b9714e95eb', NULL, 'BTC', 5, NULL, NULL, NULL, 1950.00, 1950.00, 1, 'CRYPTO', '', '/backend/deposit_screenshort/vHTb9mlGR57M8FmiMxFt.jpg', '', '67bebd821fb03', 'DE.aceacd5df18526f1d96ee1b9714e95eb', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-02-26 13:06:42', '2025-02-26 13:58:55'),
+(5, 'DE.1db3fa8e5bbd04882892f478a301a311', NULL, 'BTC', 5, NULL, NULL, NULL, 500.00, NULL, 0, 'CRYPTO', '', '/backend/deposit_screenshort/ojxpS04oyc4c8h8H1zQp.jpg', '', '67bf7a9417e79', 'DE.1db3fa8e5bbd04882892f478a301a311', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-27 02:33:24', '2025-02-27 02:33:24'),
+(6, 'D.344ef5151be171062f42f03e69663ecf', NULL, NULL, 5, NULL, NULL, NULL, 48.78, NULL, 0, 'BANK', NULL, '/backend/deposit_screenshort/wfgFBo3323dwPXBOsvEz.jpg', NULL, '67bf7e2d16dc6', 'D.344ef5151be171062f42f03e69663ecf', NULL, 'BDT', 'DBBL', 'Gazi Giash Uddin', '4511236569658', NULL, '12569DBL', NULL, 6000.00, 18, 5, NULL, '2025-02-27 02:48:45', '2025-02-27 02:48:45'),
+(7, 'D.b93f11867481fc6d77908aea58ba6198', NULL, NULL, 5, NULL, NULL, NULL, 6.55, NULL, 0, 'BANK', NULL, '/backend/deposit_screenshort/d5pneEq9uo3ASDxtumy7.jpg', NULL, '67bf7e7366f3d', 'D.b93f11867481fc6d77908aea58ba6198', NULL, 'INR', 'Punjab National Bank (PNB)', 'Jusna', '4511236569659', 'PNB4598', NULL, NULL, 10000.00, 101, 2, NULL, '2025-02-27 02:49:55', '2025-02-27 02:49:55'),
+(8, 'D.320e4df890a1a620573db8170f39a093', NULL, NULL, 5, NULL, NULL, NULL, 40.65, NULL, 0, 'BANK', NULL, '/backend/deposit_screenshort/sbk1qOwbZbg0FbZ9FOCn.png', NULL, '67bf878ece8ae', 'D.320e4df890a1a620573db8170f39a093', NULL, 'BDT', 'DBBL', 'Gazi Giash Uddin', '4511236569658', NULL, '12569DBL', NULL, 5000.00, 18, 5, NULL, '2025-02-27 03:28:46', '2025-02-27 03:28:46');
 
 -- --------------------------------------------------------
 
@@ -1428,11 +1304,11 @@ CREATE TABLE `kyc` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `cnicFrontFile` varchar(255) DEFAULT NULL,
-  `cnicBackFile` varchar(255) DEFAULT NULL,
-  `passportFile` varchar(255) DEFAULT NULL,
-  `drivingFrontFile` varchar(255) DEFAULT NULL,
-  `drivingBackFile` varchar(255) DEFAULT NULL,
+  `dl_front` varchar(255) DEFAULT NULL,
+  `dl_back` varchar(255) DEFAULT NULL,
+  `frontFile_nid` varchar(255) DEFAULT NULL,
+  `backFile_nid` varchar(255) DEFAULT NULL,
+  `passport` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT 0 COMMENT '0=admin not approval\r\n1=admin approval',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -1442,11 +1318,10 @@ CREATE TABLE `kyc` (
 -- Dumping data for table `kyc`
 --
 
-INSERT INTO `kyc` (`id`, `name`, `user_id`, `cnicFrontFile`, `cnicBackFile`, `passportFile`, `drivingFrontFile`, `drivingBackFile`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'cnic', 3, '/backend/files/z6ztsf2tMCcrtfMN3d03.jpg', '/backend/files/rrUDwGlky1d7gkDBhCkv.jpg', NULL, NULL, NULL, 0, '2024-06-13 01:02:00', '2024-06-13 01:02:00'),
-(2, 'passport', 3, NULL, NULL, '/backend/files/1NPKwpf0fRIk24gzRbO0.jpg', NULL, NULL, 0, '2024-06-13 01:11:15', '2024-06-13 01:11:15'),
-(3, 'driving', 3, NULL, NULL, NULL, '/backend/files/VAJzs8huSc6yZI3DzxjR.jpg', '/backend/files/tq14M26TBuS3WpjXBQXc.jpg', 0, '2024-06-13 01:19:03', '2024-06-13 01:19:03'),
-(4, 'cnic', 2, '/backend/files/WjxsRtkU7DL8ujFiCa4Y.png', '/backend/files/6gRvKcQMjuQncByxPg2O.png', NULL, NULL, NULL, 0, '2024-06-13 01:28:02', '2024-06-13 01:28:02');
+INSERT INTO `kyc` (`id`, `name`, `user_id`, `dl_front`, `dl_back`, `frontFile_nid`, `backFile_nid`, `passport`, `status`, `created_at`, `updated_at`) VALUES
+(1, NULL, 5, NULL, NULL, '/backend/files/DiPqUBLZKr0xqmjXJa72.jpeg', '/backend/files/fZcqyArQIYljlQs4cZ2e.jpeg', NULL, 1, '2025-02-25 16:12:33', '2025-02-26 05:07:38'),
+(2, NULL, 5, NULL, NULL, NULL, NULL, '/backend/files/xZwsWR2Zv0UW9qLVuKeX.jpg', 1, '2025-02-25 16:12:45', '2025-02-26 05:07:38'),
+(3, NULL, 5, '/backend/files/wIzJrMK3OCrxmdv1bvwh.jpeg', '/backend/files/KV9yfS0SkFblwD2UsJ7G.jpg', NULL, NULL, NULL, 1, '2025-02-25 16:12:55', '2025-02-26 05:07:38');
 
 -- --------------------------------------------------------
 
@@ -2363,7 +2238,7 @@ CREATE TABLE `setting` (
 --
 
 INSERT INTO `setting` (`id`, `name`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `withdraw_maximum_amount`, `minimum_trade_amount`, `minimum_purchages_amt`, `minimum_deposit_amount`, `trade_fee`, `tel`, `email`, `address`, `whatsApp`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `maximum_supply`, `total_supply`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `website`, `telegram`, `register_bonus`, `mininmum_deposit_amount`, `maximum_deposit_amount`, `minimum_withdrawal`, `maximum_withdrawal`, `level_1_bonus`, `level_2_bonus`, `level_3_bonus`, `ocn_purchage`, `daily_max_withdraw_request`, `withdrawal_free_amount`, `withdrawal_free_on_percentage`, `maximum_supply_level`, `mimumun_transfer_amount_to_other_user`, `maximum_transfer_amount_to_other_user`, `transfer_fee_fixed_amount`, `traansfer_fee_on_percentage`, `total_supply_level`, `liquidity_total_supply`, `beganing_price`, `circlation`, `update_by`, `created_at`, `updated_at`) VALUES
-(1, 'OCN TRADE AI', 5, 64, 5, 20, 4000, 5, 20, 20, 6, '+44245454545', 'ocn@abcd.com', 'Addres', '00000055555', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright Â© 2024 uic . All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '$', '2020-05-13', 5, 30000000.00, '4500000', NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', 'http://winup360.com', '116898999999', 5, 55.00, 5.00, 20.00, 3690.00, 3, 2, 1, NULL, 5.00, 5.00, 5.00, '30 MILLION', 5.00, 5.00, 5.00, 50.00, '4.5 MILLION', '5000', '0.0011244444', 'null', 2993, '2024-05-12 05:32:50', '2024-05-12 03:42:05');
+(1, 'OCN TRADE AI', 5, 64, 5, 20, 4000, 5, 20, 20, 6, '+44245454545', 'ocn@abcd.com', 'Addres', '00000055555', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 2025 uic . All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '$', '2020-05-13', 5, 30000000.00, '4500000', NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', 'http://winup360.com', '116898999999', 5, 55.00, 5.00, 20.00, 3690.00, 3, 2, 1, NULL, 5.00, 5.00, 5.00, '30 MILLION', 5.00, 5.00, 5.00, 50.00, '4.5 MILLION', '5000', '0.0011244444', 'null', 2993, '2024-05-12 05:32:50', '2024-05-12 03:42:05');
 
 -- --------------------------------------------------------
 
@@ -2549,20 +2424,20 @@ CREATE TABLE `trade` (
   `id` int(11) NOT NULL,
   `tradeID` varchar(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL COMMENT 'trading category_id',
-  `subcategory_id` int(11) DEFAULT NULL COMMENT 'trading subcategory_id',
-  `tradeAmount` decimal(10,2) DEFAULT NULL,
-  `durationPercentage` int(11) DEFAULT NULL,
-  `estProfit` decimal(10,2) DEFAULT NULL,
-  `trading_fee` double(10,2) DEFAULT NULL,
-  `net_profit` double(10,2) DEFAULT NULL,
-  `return_amount` double(10,2) DEFAULT 0.00,
+  `market_price` decimal(10,2) DEFAULT NULL,
+  `trade_amount` decimal(10,2) DEFAULT NULL,
+  `selected_duration` int(11) DEFAULT NULL COMMENT 'Seconds',
+  `selected_percentage` int(11) DEFAULT NULL COMMENT '% Percetage',
+  `percentage_result` decimal(10,2) DEFAULT NULL,
+  `close_price` decimal(10,2) DEFAULT NULL,
+  `action_type` varchar(255) DEFAULT NULL,
+  `selectedCurrency` varchar(255) DEFAULT NULL,
+  `fee` int(11) DEFAULT 0,
   `start_datetime` timestamp NULL DEFAULT NULL,
   `end_datetime` timestamp NULL DEFAULT NULL,
-  `durationId` int(11) DEFAULT NULL,
-  `durationDay` varchar(255) DEFAULT NULL,
-  `durationHours` int(11) DEFAULT NULL,
-  `status` int(11) DEFAULT 0,
+  `action` varchar(255) DEFAULT NULL COMMENT 'WIN/LOSS',
+  `closingPNL` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT 0 COMMENT '0=Ruining\r\n1=Complete',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `request_datetime` timestamp NULL DEFAULT current_timestamp(),
@@ -2573,31 +2448,11 @@ CREATE TABLE `trade` (
 -- Dumping data for table `trade`
 --
 
-INSERT INTO `trade` (`id`, `tradeID`, `user_id`, `category_id`, `subcategory_id`, `tradeAmount`, `durationPercentage`, `estProfit`, `trading_fee`, `net_profit`, `return_amount`, `start_datetime`, `end_datetime`, `durationId`, `durationDay`, `durationHours`, `status`, `created_at`, `updated_at`, `request_datetime`, `unique_md5`) VALUES
-(1, 'TID000001', 9, 4, 16, 50.00, 10, 5.00, 0.25, 4.75, 54.75, '2024-07-30 20:49:49', '2024-07-30 20:51:20', 3, '7D', 168, 1, '2024-07-30 20:49:49', '2024-09-10 13:07:43', '2024-09-10 13:07:43', '1fd26d4acd2f25efe271259a6aaa53b7'),
-(3, 'TID000002', 9, 4, 16, 50.00, 10, 5.00, 0.25, 4.75, 54.75, '2024-07-30 20:49:49', '2024-07-30 20:51:20', 3, '7D', 168, 1, '2024-07-30 20:49:49', '2024-08-03 05:02:26', '2024-08-03 05:02:26', '1fd26d4acd2f25efe271259a6aaa53b72');
-
---
--- Triggers `trade`
---
-DELIMITER $$
-CREATE TRIGGER `trade_update` BEFORE UPDATE ON `trade` FOR EACH ROW BEGIN
-    -- User-defined variable for current timestamp
-    SET @current_time = NOW();
-    
-    -- Check if the current time is past the end time of the task
-    IF NEW.end_datetime <= @current_time THEN
-        -- Set the status to '1'
-        SET NEW.status = 1;
-
-        -- Update the return_amount column with the sum of tradeAmount and net_profit
-        SET NEW.return_amount = NEW.tradeAmount + NEW.net_profit;
-          
-    END IF;
-    
-END
-$$
-DELIMITER ;
+INSERT INTO `trade` (`id`, `tradeID`, `user_id`, `market_price`, `trade_amount`, `selected_duration`, `selected_percentage`, `percentage_result`, `close_price`, `action_type`, `selectedCurrency`, `fee`, `start_datetime`, `end_datetime`, `action`, `closingPNL`, `status`, `created_at`, `updated_at`, `request_datetime`, `unique_md5`) VALUES
+(1, 'TID000001', 5, 86712.52, 100.00, 60, 50, 10.00, 86688.94, 'LONG', 'BTC', 0, '2025-02-27 23:19:52', '2025-02-27 23:20:52', 'LOSS', '-100.00', 1, '2025-02-27 23:19:52', '2025-02-28 14:42:33', '2025-02-27 23:19:52', 'e244e1f1e0967a65ba64eb73e66b71b7'),
+(2, 'TID000002', 5, 84436.00, 150.00, 120, 75, 20.00, 26688.94, 'SHORT', 'BTC', 0, '2025-02-27 23:25:52', '2025-02-27 23:27:52', 'WIN', '262.5', 1, '2025-02-27 23:25:52', '2025-02-28 14:35:34', '2025-02-27 23:25:52', '27169078817e34ac467609fbcf489f13'),
+(3, 'TID000003', 5, 84603.78, 100.00, 300, 100, 30.00, 86688.00, 'LONG', 'BTC', 0, '2025-02-27 23:29:23', '2025-02-27 23:34:23', 'WIN', '200', 1, '2025-02-27 23:29:23', '2025-02-28 14:58:43', '2025-02-27 23:29:23', '0e5deeea38a2c124fedd866287d04b1e'),
+(4, 'TID000004', 5, 84782.42, 100.00, 30, 25, 40.00, 26688.94, 'LONG', 'BTC', 0, '2025-02-28 00:01:59', '2025-02-28 00:02:29', 'LOSS', '-100.00', 1, '2025-02-28 00:01:59', '2025-02-28 14:58:07', '2025-02-28 00:01:59', 'd64979186b1b1c461c19eb79fc404621');
 
 -- --------------------------------------------------------
 
@@ -3045,6 +2900,7 @@ CREATE TABLE `users` (
   `role_id` int(11) DEFAULT NULL COMMENT '1=Super admin,2=Player,3=Admin',
   `email` varchar(255) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(225) DEFAULT NULL,
   `available_balance` double(10,8) DEFAULT NULL,
   `mining_amount` varchar(255) DEFAULT NULL,
   `level_commission` int(11) DEFAULT NULL,
@@ -3052,7 +2908,6 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `real_name` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(225) DEFAULT NULL,
   `image` varchar(225) DEFAULT NULL,
   `doc_file` varchar(255) DEFAULT NULL,
   `address` varchar(225) DEFAULT NULL,
@@ -3093,12 +2948,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fg_id`, `fg_wallet_address`, `inviteCode`, `ref_id`, `employee_id`, `role_id`, `email`, `username`, `available_balance`, `mining_amount`, `level_commission`, `show_password`, `password`, `name`, `real_name`, `phone_number`, `image`, `doc_file`, `address`, `address_1`, `address_2`, `website`, `github`, `gender`, `date_of_birth`, `twitter`, `instagram`, `nationality_id`, `state_id`, `register_bonus`, `otp`, `facebook`, `wallet_balance`, `old_pin`, `new_pin`, `email_verified_at`, `telegram`, `whtsapp`, `withdrwal_wallet_address`, `othersway_connect`, `remember_token`, `entry_by`, `register_ip`, `lastlogin_ip`, `lastlogin_country`, `lastlogin_datetime`, `created_at`, `updated_at`, `status`, `logged_out`) VALUES
-(1, NULL, '6f21357fs863ce24ce21c1a82f49a7d5d13', '0000123', 0, 4, 1, 'dev1@mail.com', NULL, 1.00000000, NULL, 1, 'dev1@mail.com', '$2a$12$O.hHt1uQsC5ANQ6yhiIkMu7p9XPmbjzvVn5UIdq5NNHjE2wIbVQJq', 'Dev1', NULL, '01915728982', '/backend/files/hZkagctUSINKsFU64UJr.png', NULL, 'Dhaka', '', '', 'http://localhost:3000/profile', 'http://localhost:3000/profile', '', '1982-01-30', 'http://localhost:3000/profile', 'http://localhost:3000/profile', 0, 0, 0, NULL, 'http://localhost:3000/profile', NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '127.0.0.1', NULL, '2025-02-20 22:18:37', '2023-06-22 03:20:43', '2025-02-20 16:18:37', 1, NULL),
-(2, 'FG000000002', 'be036e59dd06bfa6d13d36110d3d96a3', '9234087', 0, NULL, 2, 'mrmamun@gmail.com', 'mamun', 5.00000000, NULL, NULL, 'Password', '$2y$10$VQOKQNqr6/WAhN004ea0Nu.N/j4Tgy2TQL8rzAeEGhm.LBeoUzW5a', 'Mamun', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2024-10-17 07:13:54', '2024-10-17 07:13:54', 1, NULL),
-(3, 'FG000000003', '52f02f16c2f22a233e76a84fe87f73f4', '2843662', 0, NULL, 2, 'mrmamunahmed@gmail.com', 'mamunahmed', 5.00000000, NULL, NULL, 'Password', '$2y$10$L53y8kGnH7XRqY5Bgr6LaOuhWKtxcZfbzIlLFqoevJVynD9LOipfm', 'Mamun', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2024-10-17 07:14:44', '2024-10-17 07:14:44', 1, NULL),
-(4, 'FG000000004', '0294d090cc9b186adac2d2f0bd8ced42', '4941998', 0, NULL, 2, 'kabirahmed@gmail.com', 'kabirahmed', 5.00000000, NULL, NULL, 'kabirahmed', '$2y$10$lmzA0KbNyMantkLl55QsWO1VzooI7rpLZXTozHrOatTLhSn3wSZ/i', 'Kabir', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2024-10-17 07:18:14', '2024-10-17 07:18:14', 1, NULL),
-(5, 'TRADE000000005', '36382ada933618db3adf513951503d6d', '9116288', 4, NULL, 2, 'jannat123456@gmail.com', 'jannat123456', 5.00000000, NULL, NULL, 'jannat123456', '$2y$10$DaPhaog7jYkeFTTuTRvu1uYL7zgPogZ.D6Al4Ary86EDCdmIPXeO2', 'jannat123456', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2025-02-23 18:38:31', '2025-02-23 18:38:31', 1, NULL);
+INSERT INTO `users` (`id`, `fg_id`, `fg_wallet_address`, `inviteCode`, `ref_id`, `employee_id`, `role_id`, `email`, `username`, `phone_number`, `available_balance`, `mining_amount`, `level_commission`, `show_password`, `password`, `name`, `real_name`, `image`, `doc_file`, `address`, `address_1`, `address_2`, `website`, `github`, `gender`, `date_of_birth`, `twitter`, `instagram`, `nationality_id`, `state_id`, `register_bonus`, `otp`, `facebook`, `wallet_balance`, `old_pin`, `new_pin`, `email_verified_at`, `telegram`, `whtsapp`, `withdrwal_wallet_address`, `othersway_connect`, `remember_token`, `entry_by`, `register_ip`, `lastlogin_ip`, `lastlogin_country`, `lastlogin_datetime`, `created_at`, `updated_at`, `status`, `logged_out`) VALUES
+(1, NULL, '6f21357fs863ce24ce21c1a82f49a7d5d13', '0000123', 0, 4, 1, 'dev1@mail.com', NULL, NULL, 1.00000000, NULL, 1, 'dev1@mail.com', '$2a$12$O.hHt1uQsC5ANQ6yhiIkMu7p9XPmbjzvVn5UIdq5NNHjE2wIbVQJq', 'Mamun', NULL, '/backend/files/hZkagctUSINKsFU64UJr.png', NULL, 'Dhaka', '', '', 'http://localhost:3000/profile', 'http://localhost:3000/profile', '', '1982-01-30', 'http://localhost:3000/profile', 'http://localhost:3000/profile', 0, 0, 0, NULL, 'http://localhost:3000/profile', NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '127.0.0.1', NULL, '2025-02-28 17:29:22', '2023-06-22 03:20:43', '2025-02-28 11:29:22', 1, NULL),
+(2, 'FG000000002', 'be036e59dd06bfa6d13d36110d3d96a3', '9234087', 0, NULL, 2, 'mrmamun@gmail.com', 'mamun', NULL, 5.00000000, NULL, NULL, 'Password', '$2y$10$VQOKQNqr6/WAhN004ea0Nu.N/j4Tgy2TQL8rzAeEGhm.LBeoUzW5a', 'Mamun', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2024-10-17 07:13:54', '2025-02-24 18:47:37', 1, NULL),
+(3, 'FG000000003', '52f02f16c2f22a233e76a84fe87f73f4', '2843662', 0, NULL, 2, 'mrmamunahmed@gmail.com', 'mamunahmed', NULL, 5.00000000, NULL, NULL, 'Password', '$2y$10$L53y8kGnH7XRqY5Bgr6LaOuhWKtxcZfbzIlLFqoevJVynD9LOipfm', 'Mamun', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2024-10-17 07:14:44', '2024-10-17 07:14:44', 1, NULL),
+(4, 'FG000000004', '0294d090cc9b186adac2d2f0bd8ced42', '4941998', 0, NULL, 2, 'kabirahmed@gmail.com', 'kabirahmed', NULL, 5.00000000, NULL, NULL, 'kabirahmed', '$2y$10$lmzA0KbNyMantkLl55QsWO1VzooI7rpLZXTozHrOatTLhSn3wSZ/i', 'Kabir', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2024-10-17 07:18:14', '2024-10-17 07:18:14', 1, NULL),
+(5, 'TRADE000000005', '36382ada933618db3adf513951503d6d', '9116288', 4, NULL, 2, 'jannat123456@gmail.com', 'jannat123456', '01915728987', 5.00000000, NULL, NULL, 'jannat123456', '$2y$10$DaPhaog7jYkeFTTuTRvu1uYL7zgPogZ.D6Al4Ary86EDCdmIPXeO2', 'jannat123456', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', NULL, NULL, NULL, '2025-02-23 18:38:31', '2025-02-25 10:27:51', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -3331,9 +3186,9 @@ CREATE TABLE `withdraw` (
 INSERT INTO `withdraw` (`id`, `withdrawID`, `depscription`, `payment_method`, `withdrawal_amount`, `user_id`, `receivable_amount`, `wallet_address`, `gaming_pltform_id`, `currency_id`, `orderId`, `withdrawal_pin`, `remarks`, `approved_by`, `transection_fee`, `payable_amount`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'W:c92383002f757cddd52df84e68894b5e', 'W:c92383002f757cddd52df84e68894b5e', 'TRC20', '23', 5, NULL, 'AY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sMY', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 1, '2025-02-24 09:59:41', '2025-02-24 09:59:41'),
 (2, 'W:c831e9b5f6c9bab6b23c26c2dab2a29c', 'W:c831e9b5f6c9bab6b23c26c2dab2a29c', 'TRC20', '230', 5, NULL, 'AY9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sMY', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 1, '2025-02-24 10:00:14', '2025-02-24 10:00:14'),
-(3, 'W:4dea382d82666332fb564f2e711cbc71', 'W:4dea382d82666332fb564f2e711cbc71', 'TRC20', '20', 5, NULL, 'TIWh7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2025-02-24 10:00:51', '2025-02-24 10:00:51'),
-(4, 'W:c4c42505a03f2e969b4c0a97ee9b34e7', 'W:c4c42505a03f2e969b4c0a97ee9b34e7', 'TRC20', '35', 5, NULL, 'TIWh7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 1, '2025-02-24 10:08:08', '2025-02-24 10:08:08'),
-(5, 'W:5fcc629edc0cfa360016263112fe8058', 'W:5fcc629edc0cfa360016263112fe8058', 'TRC20', '10', 5, NULL, 'PO9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 2, '2025-02-24 10:30:07', '2025-02-24 10:30:07');
+(3, 'W:4dea382d82666332fb564f2e711cbc71', 'W:4dea382d82666332fb564f2e711cbc71', 'TRC20', '20', 5, NULL, 'TIWh7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 2, '2025-02-24 10:00:51', '2025-02-24 17:58:02'),
+(4, 'W:c4c42505a03f2e969b4c0a97ee9b34e7', 'W:c4c42505a03f2e969b4c0a97ee9b34e7', 'TRC20', '35', 5, NULL, 'TIWh7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 2, '2025-02-24 10:08:08', '2025-02-24 18:03:18'),
+(5, 'W:5fcc629edc0cfa360016263112fe8058', 'W:5fcc629edc0cfa360016263112fe8058', 'TRC20', '10', 5, NULL, 'PO9h7s4aQ2hX4N8b4C1Jv2L3pW4ZmR7sT1', NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 1, '2025-02-24 10:30:07', '2025-02-24 18:02:52');
 
 -- --------------------------------------------------------
 
@@ -3356,6 +3211,14 @@ CREATE TABLE `withdrawal_method` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `add_country`
+--
+ALTER TABLE `add_country`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `currency_id` (`currency_id`),
+  ADD UNIQUE KEY `country_id` (`country_id`);
 
 --
 -- Indexes for table `add_user_payment_address`
@@ -3422,6 +3285,12 @@ ALTER TABLE `countdown`
 -- Indexes for table `country`
 --
 ALTER TABLE `country`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `country_wise_bank`
+--
+ALTER TABLE `country_wise_bank`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3848,10 +3717,16 @@ ALTER TABLE `withdrawal_method`
 --
 
 --
+-- AUTO_INCREMENT for table `add_country`
+--
+ALTER TABLE `add_country`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `add_user_payment_address`
 --
 ALTER TABLE `add_user_payment_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `api_configs`
@@ -3863,7 +3738,7 @@ ALTER TABLE `api_configs`
 -- AUTO_INCREMENT for table `api_gamelist_transate`
 --
 ALTER TABLE `api_gamelist_transate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `boost_boot_setting`
@@ -3914,10 +3789,16 @@ ALTER TABLE `country`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 
 --
+-- AUTO_INCREMENT for table `country_wise_bank`
+--
+ALTER TABLE `country_wise_bank`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `currency`
 --
 ALTER TABLE `currency`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `currency_type`
@@ -3941,7 +3822,7 @@ ALTER TABLE `customer_history`
 -- AUTO_INCREMENT for table `deposit`
 --
 ALTER TABLE `deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `expense_history`
@@ -3995,7 +3876,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `kyc`
 --
 ALTER TABLE `kyc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -4217,7 +4098,7 @@ ALTER TABLE `system_configs`
 -- AUTO_INCREMENT for table `trade`
 --
 ALTER TABLE `trade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `trading_category`
