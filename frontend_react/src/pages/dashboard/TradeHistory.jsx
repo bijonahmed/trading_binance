@@ -48,8 +48,8 @@ const TradeHistory = () => {
     setDateTo(event.target.value);
   };
 
-  const getClass = (closingPNL) => 
-    closingPNL < 0 ? "text-danger" : "bg-success text-success";
+  const getClass = (closingPNL) =>
+    closingPNL < 0 ? "text-danger" : "text-success text-success";
   const getTradeList = async () => {
     setLoading(true);
     try {
@@ -175,59 +175,57 @@ const TradeHistory = () => {
                     <div className="search_section">
                       <form action="">
                         <div className="search_div">
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className=" d-flex align-items-center w-100">
+                          <div className="row g-3">
+                            {/* Search & Type Filter */}
+                            <div className="col-12 col-md-6">
+                              <div className="d-flex flex-column flex-md-row align-items-center gap-2 w-100">
                                 <div className="input_form w-100">
                                   <input
                                     type="text"
-                                    placeholder="Search TRX id"
-                                    className="form-control mb-2"
+                                    placeholder="Search Order ID"
+                                    className="form-control"
                                     value={findTrns}
-                                    onChange={handleTxt} // ✅ Required to update state
-                                    onKeyUp={(e) =>
-                                      console.log("Key Up:", e.target.value)
-                                    } // ✅ Works
+                                    onChange={handleTxt}
                                   />
                                 </div>
-                                <div className="input_form w-100 m-0">
+                                <div className="input_form w-100">
                                   <select
-                                    className="form-control mb-2"
+                                    className="form-control"
                                     value={type}
                                     onChange={handleType}
                                   >
-                                    <option>All</option>
-                                    <option>Long </option>
-                                    <option>Short</option>
+                                    <option value="">All</option>
+                                    <option value="LONG">Long</option>
+                                    <option value="SHORT">Short</option>
                                   </select>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-md-6">
-                              <div className=" d-flex align-items-center justify-content-md-start justify-content-center">
+
+                            {/* Date Range & Filter Button */}
+                            <div className="col-12 col-md-6">
+                              <div className="d-flex flex-column flex-md-row align-items-center gap-2 justify-content-md-start justify-content-center">
                                 <div className="input_form date_">
                                   <input
                                     type="date"
                                     value={dateForm}
                                     onChange={handleFrnDate}
-                                    className="form-control mb-2"
+                                    className="form-control"
                                   />
                                 </div>
-                                <p>TO</p>
-                                <div className="input_form date_ m-0">
+                                <p className="d-none d-md-block">TO</p>
+                                <div className="input_form date_">
                                   <input
                                     type="date"
                                     value={dateTo}
                                     onChange={handleToDate}
-                                    className="form-control mb-2"
+                                    className="form-control"
                                   />
                                 </div>
-                                <p className="mx-2"></p>
                                 <button
                                   type="button"
                                   onClick={getTradeList}
-                                  className="btn_primary"
-                                  style={{ marginTop: "-7px" }}
+                                  className="btn_primary mt-2 mt-md-0"
                                 >
                                   Filter
                                 </button>
@@ -239,30 +237,71 @@ const TradeHistory = () => {
                     </div>
                     <div className="table-responsive">
                       <ul className="transec_tb_mobile trande_ mobile_view">
-                        <li>
-                          <p>Trx: TRX8784345</p>
-                          <p>
-                            <span className="badge bg-success">By Long</span>
-                          </p>
-                          <p>Cross: BTCUSDT</p>
-                          <p>Filled USDT: $100.00</p>
-                          <p>Open: 2024-08-10 15:10:00</p>
-                          <p>Close: 2024-08-10 15:10:00</p>
-                          <p>Entry Price: $60850.00</p>
-                          <p>Av. Close Price: $60950.00</p>
-                          <p>Funding Fee: $1.00</p>
-                          <p>
-                            PNL:{" "}
-                            <span className="badge bg-success">$110.00</span>
-                          </p>
-                        </li>
+                        {tradeData && tradeData.length > 0 ? (
+                          <ul className="ps-0 list-unstyled">
+                            {tradeData.map((trade, index) => (
+                              <li
+                                key={index}
+                                className="border p-2 mb-2 bg-dark text-white rounded"
+                              >
+                                <p>
+                                  <strong>Order ID:</strong> {trade.tradeID}
+                                </p>
+                                <p>
+                                  <strong>Perp Cross:</strong>{" "}
+                                  {trade.selectedCurrency}USDT
+                                </p>
+                                <p>
+                                  <strong>Type:</strong>{" "}
+                                  <span
+                                    className={`badge ${
+                                      trade.action_type === "LONG"
+                                        ? "bg-success"
+                                        : "bg-danger"
+                                    }`}
+                                  >
+                                    {trade.action_type}
+                                  </span>
+                                </p>
+                                <p>
+                                  <strong>Amount (USDT):</strong>{" "}
+                                  {trade.trade_amount}
+                                </p>
+                                <p>
+                                  <strong>Entry Price:</strong> $
+                                  {trade.market_price}
+                                </p>
+                                <p>
+                                  <strong>Open:</strong> {trade.start_datetime}
+                                </p>
+                                <p>
+                                  <strong>Close Price:</strong> $
+                                  {trade.close_price || "0.00"}
+                                </p>
+                                <p>
+                                  <strong>Close:</strong> {trade.end_datetime}
+                                </p>
+                                <p>
+                                  <strong>Fee:</strong> ${trade.fee}
+                                </p>
+                                <p>
+                                  <strong>PNL:</strong>{" "}
+                                  <span className={getClass(trade.closingPNL)}>
+                                    {trade.closingPNL}
+                                  </span>
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p>No trade data available.</p>
+                        )}
                       </ul>
                       {tradeData && tradeData.length > 0 ? (
-                        <table className="table table-hover table-dark table-striped table-hover pc_view">
+                        <table className="table table-dark table-striped table-hover pc_view">
                           <thead>
                             <tr>
-                              {/* <th className="col">TRX id</th> */}
-                              
+                              <th className="col">OrderID</th>
                               <th>Perp Cross</th>
                               <th>Type</th>
                               <th>Amount(USDT)</th>
@@ -271,17 +310,13 @@ const TradeHistory = () => {
                               <th>Close Price</th>
                               <th>Close</th>
                               <th>Fee</th>
-                            <th>Closing PNL</th>
-
-
-                            
-                          
+                              <th>Closing PNL</th>
                             </tr>
                           </thead>
                           <tbody>
                             {tradeData.map((trade, index) => (
                               <tr key={index}>
-                                {/* <td>{trade.tradeID}</td> */}
+                                <td>{trade.tradeID}</td>
                                 <td>{trade.selectedCurrency}USDT</td>
                                 <td>
                                   <span
@@ -298,14 +333,12 @@ const TradeHistory = () => {
                                 <td>{trade.trade_amount}</td>
                                 <td>{trade.market_price}</td>
                                 <td>{trade.start_datetime}</td>
-                                <td>{trade.close_price || 0.00 }</td>
+                                <td>{trade.close_price || 0.0}</td>
                                 <td>{trade.end_datetime}</td>
                                 <td>{trade.fee}</td>
                                 <td className={getClass(trade.closingPNL)}>
-  {trade.closingPNL}
-</td>
-
-                              
+                                  {trade.closingPNL}
+                                </td>
                               </tr>
                             ))}
                           </tbody>

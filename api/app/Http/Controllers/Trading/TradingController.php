@@ -143,10 +143,10 @@ class TradingController extends Controller
             //$query->where('users.email', $searchOrderId);
         }
         if ($selectedStatus !== null) {
-            if ($selectedStatus == 5) {
-                $query->whereIn('trade.status', [0, 1, 2]);
+            if ($selectedStatus == '') {
+                $query->whereIn('trade.action_type', ['LONG', 'SHORT']);
             } else {
-                $query->where('trade.status', $selectedStatus);
+                $query->where('trade.action_type', $selectedStatus);
             }
         }
         // Apply date range filtering if start and end dates are provided
@@ -171,7 +171,7 @@ class TradingController extends Controller
             ];
 
             //Can update admin
-            /*
+        
             $actionStatus = "";
             if ($item->action_type == "LONG" && $item->market_price > $item->close_price) {
                 $actionStatus =  "LOSS";
@@ -191,7 +191,7 @@ class TradingController extends Controller
                 // Calculate Closing PNL
                 $closingPNL = $tradeAmt + $profitPercentage - $tradeeFee;
             }
-            */
+             
             
             //END
 
