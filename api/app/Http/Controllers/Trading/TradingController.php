@@ -85,6 +85,7 @@ class TradingController extends Controller
             'action_type'          => strtoupper($request->action_type),
             'selectedCurrency'     => strtoupper($request->selectedCurrency),
             'start_datetime'       => $start_datetime,
+            'status'               => 0,
             'end_datetime'         => $end_datetime
         );
         //dd($data);
@@ -155,18 +156,44 @@ class TradingController extends Controller
 
         if ($type !== null) {
             $query->where('trade.action_type', $type);
-        }else{
-            $query->whereIn('trade.action_type', ['LONG','SHORT']);
+        } else {
+            $query->whereIn('trade.action_type', ['LONG', 'SHORT']);
         }
 
-        // $query->where('users.role_id', 2);
+        //$query->whereIn('trade.id', [1, 2]);
         $results = $query->get();
         $modifiedCollection = $results->map(function ($item) {
+            $tradeAmt = number_format($item->trade_amount, 2);
 
             $statusLabels = [
                 1 => 'Active',
                 0 => 'Pending',
             ];
+
+            //Can update admin
+            /*
+            $actionStatus = "";
+            if ($item->action_type == "LONG" && $item->market_price > $item->close_price) {
+                $actionStatus =  "LOSS";
+            } else {
+                $actionStatus =  "WIN";
+                $tradeeFee    =  0;
+            }
+
+            if ($actionStatus == "LOSS") {
+                $closingPNL = "-$tradeAmt";
+            } else {
+
+                $tradeAmt = (float) $item->trade_amount; // Ensure it's a number
+                $selected_percentage = (float) $item->selected_percentage; // Ensure it's a number
+                // Calculate profit percentage
+                $profitPercentage = ($tradeAmt * $selected_percentage) / 100;
+                // Calculate Closing PNL
+                $closingPNL = $tradeAmt + $profitPercentage - $tradeeFee;
+            }
+            */
+            
+            //END
 
             return [
                 'id'                    => $item->id,
@@ -177,10 +204,14 @@ class TradingController extends Controller
                 'selected_percentage'   => $item->selected_percentage,
                 'action_type'           => $item->action_type, //short or long
                 'username'              => $item->username,
+                'market_price'          => $item->market_price,
+                'close_price'           => $item->close_price,
                 'selectedCurrency'      => $item->selectedCurrency,
                 'start_datetime'        => $item->start_datetime,
                 'end_datetime'          => $item->end_datetime,
-                'start_datetime'        => $item->start_datetime,
+                'actionStatus'          => $actionStatus,
+                'closingPNL'            => number_format($closingPNL, 2),
+                'fee'                   => number_format(0.00,2),
                 'status'                => $item->status,
                 'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
             ];

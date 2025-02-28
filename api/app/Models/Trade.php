@@ -21,6 +21,8 @@ class Trade extends Authenticatable
     'user_id',
     'market_price',
     'trade_amount',
+    'close_price',
+    'status',
     'selected_duration',
     'selected_percentage',
     'action_type',

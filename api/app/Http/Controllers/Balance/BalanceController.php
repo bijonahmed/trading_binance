@@ -45,13 +45,17 @@ class BalanceController extends Controller
     public function getCurrentBalance()
     {
 
-        $deposit         = Deposit::where('user_id', $this->userid)->where('status', 1)->sum('receivable_amount');
-        $withdraw_amount = Withdraw::where('user_id', $this->userid)->where('status', 1)->sum('withdrawal_amount');
-        $tradeAmount     = Trade::where('user_id', $this->userid)->where('status', 1)->sum('trade_amount');
-        $balance         = $deposit - $withdraw_amount - $tradeAmount;
+        $deposit                = Deposit::where('user_id', $this->userid)->where('status', 1)->sum('receivable_amount');
+        $withdraw_amount        = Withdraw::where('user_id', $this->userid)->where('status', 1)->sum('withdrawal_amount');
+        $tradeAmountRuning      = Trade::where('user_id', $this->userid)->where('status', 0)->sum('trade_amount'); //Runing Trade
+        $tradeAmountComplete    = Trade::where('user_id', $this->userid)->where('status', 1)->sum('trade_amount'); //Complete Trade 
+        $tradeLoss              = Trade::where('user_id', $this->userid)->where('action', 'LOSS')->sum('trade_amount'); //Trade Loss
+        $tradePercentageResult  = Trade::where('user_id', $this->userid)->where('action', 'WIN')->sum('percentage_result'); //Trade Loss
+      
+        $balance    = $deposit - $withdraw_amount - $tradeAmountRuning + $tradeAmountComplete - $tradeLoss + $tradePercentageResult;
 
         return response()->json([
-            'balance' => $balance,
+            'balance' => number_format($balance,2),
         ]);
     }
 }

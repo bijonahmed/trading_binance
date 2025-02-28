@@ -49,7 +49,7 @@ const SidebarAuth = () => {
               </Link>
             </li>
             <li className={`sidebar_item ${location.pathname === "/future" ? "active" : ""}`}>
-              <Link to="/future" className="sidebar_link">
+              <Link to="/future/btc" className="sidebar_link">
                 <i className="fa-solid fa-chart-candlestick" />
                 <span>Futures</span>
               </Link>

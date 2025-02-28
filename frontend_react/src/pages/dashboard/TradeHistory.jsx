@@ -47,6 +47,9 @@ const TradeHistory = () => {
   const handleToDate = (event) => {
     setDateTo(event.target.value);
   };
+
+  const getClass = (closingPNL) => 
+    closingPNL < 0 ? "text-danger" : "bg-success text-success";
   const getTradeList = async () => {
     setLoading(true);
     try {
@@ -123,7 +126,7 @@ const TradeHistory = () => {
                     <h5>Estimated Balance</h5>
                     <h4>
                       {currentBalance}
-                      <span>USDT</span>{" "}
+                      <span>&nbsp;USDT</span>{" "}
                     </h4>
                     {/* <h6>$0.00</h6> */}
                   </div>
@@ -258,18 +261,28 @@ const TradeHistory = () => {
                         <table className="table table-hover table-dark table-striped table-hover pc_view">
                           <thead>
                             <tr>
-                              <th className="col">TRX id</th>
-                              <th>Type</th>
-                              <th>Open Time</th>
+                              {/* <th className="col">TRX id</th> */}
+                              
                               <th>Perp Cross</th>
+                              <th>Type</th>
+                              <th>Amount(USDT)</th>
                               <th>Entry Price</th>
-                              <th>Close Time</th>
+                              <th>Open Time</th>
+                              <th>Close Price</th>
+                              <th>Close</th>
+                              <th>Fee</th>
+                            <th>Closing PNL</th>
+
+
+                            
+                          
                             </tr>
                           </thead>
                           <tbody>
                             {tradeData.map((trade, index) => (
                               <tr key={index}>
-                                <td>{trade.tradeID}</td>
+                                {/* <td>{trade.tradeID}</td> */}
+                                <td>{trade.selectedCurrency}USDT</td>
                                 <td>
                                   <span
                                     className={
@@ -281,10 +294,18 @@ const TradeHistory = () => {
                                     {trade.action_type}
                                   </span>
                                 </td>
+
+                                <td>{trade.trade_amount}</td>
+                                <td>{trade.market_price}</td>
                                 <td>{trade.start_datetime}</td>
-                                <td>{trade.selectedCurrency}USDT</td>
-                                <td>${trade.trade_amount}</td>
+                                <td>{trade.close_price || 0.00 }</td>
                                 <td>{trade.end_datetime}</td>
+                                <td>{trade.fee}</td>
+                                <td className={getClass(trade.closingPNL)}>
+  {trade.closingPNL}
+</td>
+
+                              
                               </tr>
                             ))}
                           </tbody>
