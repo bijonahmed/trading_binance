@@ -345,7 +345,7 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::get('settingrowSystem', [SettingController::class, 'settingrow']);
             Route::get('getLanguageList', [SettingController::class, 'getLanguageList']);
             Route::get('getLanguageActiveList', [SettingController::class, 'getLanguageActiveList']);
-            Route::get('getBankListAdmin', [SettingController::class, 'getTranslationList']);
+            Route::get('getCuntryCurrencyList', [SettingController::class, 'getCuntryCurrencyList']);
             Route::get('languagerow/{id}', [SettingController::class, 'chkLanguagerow']);
             Route::get('updateTransationRow', [SettingController::class, 'updateTransationRow']);
 

@@ -17,6 +17,8 @@ const Dashboard = () => {
       navigate('/login'); // Redirect to the login page if `user` is null or undefined
     }
   }, [user, navigate]);
+
+ 
   return (
     <>
       <Helmet>

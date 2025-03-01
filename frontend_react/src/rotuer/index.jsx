@@ -20,6 +20,7 @@ import Register from "../pages/Register.jsx";
 import DepositCrypto from "../pages/dashboard/DepositCrypto.jsx";
 import DepositBank from "../pages/dashboard/DepositBank.jsx";
 import ChangePassword from "../pages/dashboard/ChangePassword.jsx";
+import MobileMenu from "../pages/dashboard/MobileMenu.jsx";
 
 
 //<Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}/>
@@ -34,6 +35,7 @@ const AppRouter = () => {
       <Route path="/dashboard/withdraw" element={<Withdraw />} />
       <Route path="/dashboard/profile" element={<Profile />} />
       <Route path="/dashboard/wallet" element={<Wallet />} />
+
       <Route path="/dashboard/payment" element={<Payment />} />
       <Route path="/dashboard/trade-history" element={<TradeHistory />} />
       <Route path="/dashboard/kyc" element={<Kyc />} />
@@ -44,6 +46,7 @@ const AppRouter = () => {
       <Route path="/deposit-crypto/:slug" element={<DepositCrypto />} />
       <Route path="/deposit-bank/:bankId/:countryId" element={<DepositBank />} />
       <Route path="/change-password" element={<ChangePassword />} />
+      <Route path="/dashboard/mobile-menu" element={<MobileMenu />} />
 
       {/* <Route path="/hoster-profile:slug" element={<HosterProfile />} />
       <Route path="/adult-categorys/:slug" element={<Adultcategory />} />

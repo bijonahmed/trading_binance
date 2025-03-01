@@ -866,8 +866,14 @@ class DepositController extends Controller
         $setting = Setting::find(1);
         $checkSetting = $setting->minimum_deposit_amount;
         // if ($request->deposit_amount <= $checkSetting) {
+
+
         if ($request->amount <= 0) {
-            return response()->json(['errors' => ['deposit_amount' => ['Your deposit amount is low']]], 422);
+            return response()->json(['errors' => ['deposit_amount' => ['Zero Not Allowed.']]], 422);
+        }
+
+        if ($request->amount < 10) {
+            return response()->json(['errors' => ['deposit_amount' => ['The deposit amount must be at least 10.']]], 422);
         }
 
         $uniqueID = 'D.' . $this->generateUnique4DigitNumber();

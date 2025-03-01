@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, navigate } from "react";
 import { Helmet } from "react-helmet";
 import Sidebar from "../../components/SidebarAuth";
 import AuthGuard from "../../components/AuthGuard";
@@ -9,16 +9,17 @@ import QRCode from "qrcode";
 import { useParams } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 import Loader from "../../components/Loader";
-
+import { useNavigate } from "react-router-dom";
 
 const Deposit = () => {
+  const navigate = useNavigate(); // Get the navigate function
   const [hasRequested, setHasRequested] = useState(false);
   const [allCountry, setCountryName] = useState([]);
   const { token, logout } = AuthUser();
   const [selectedCountry, setSelectedCountry] = useState("");
   const [bankList, setBankList] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const showAllBankCountryWise = async (event) => {
     const country_id = event.target.value;
     setSelectedCountry(event.target.value);
@@ -37,7 +38,7 @@ const Deposit = () => {
       setBankList(response.data.data);
     } catch (error) {
       console.error("Error Data:", error);
-    } finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -66,6 +67,10 @@ const Deposit = () => {
     { slug: "usdt", name: "USDT", imgSrc: "/fasttrading/images/usdt.png" },
     { slug: "eth", name: "Ethereum", imgSrc: "/fasttrading/images/eth.png" },
   ];
+  const goBack = () => {
+    console.log("/dashboard/wallet");
+    history.push("/dashboard/wallet");
+  };
 
   return (
     <>
@@ -89,16 +94,9 @@ const Deposit = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="page_title">
-                  <a
-                    href="#"
-                    className="btn_back"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.history.back();
-                    }}
-                  >
+                  <Link className="btn_back" to="/dashboard/wallet">
                     <i className="fa-solid fa-arrow-left" />
-                  </a>
+                  </Link>
                   <div className="d-flex justify-content-between w-100 align-items-end">
                     <h4>Deposit</h4>
                   </div>
@@ -158,8 +156,14 @@ const Deposit = () => {
                     <div className="deposit_method">
                       {bankList.map((bank, index) => (
                         <div className="deposit_option" key={index}>
-                         <Link to={`/deposit-bank/${bank.id}/${bank.country_id}`}>
-                            <img src="/fasttrading/images/Bank_image.png" className="img-fluid" alt={bank.bank_name} />
+                          <Link
+                            to={`/deposit-bank/${bank.id}/${bank.country_id}`}
+                          >
+                            <img
+                              src="/fasttrading/images/Bank_image.png"
+                              className="img-fluid"
+                              alt={bank.bank_name}
+                            />
                             <h4>{bank.bank_name}</h4>
                           </Link>
                         </div>

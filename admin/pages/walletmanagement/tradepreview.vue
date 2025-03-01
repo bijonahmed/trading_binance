@@ -111,7 +111,7 @@
                                                     <tr>
                                                         <td>Status</td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{{ getStatus(request.status) }}</td> 
+                                                        <td>{{ getStatus(request.status) }}</td>
                                                     </tr>
 
 
@@ -143,6 +143,20 @@
                                                     <div class="tab-pane fade active show" id="custom-tabs-three-home"
                                                         role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                                                         <!-- General  {{ request.deposit_amount }}-->
+
+
+                                                        <div class="row mb-3 required">
+                                                            <label for="input-name-1"
+                                                                class="col-sm-2 col-form-label required-label">Close
+                                                                Price</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" v-model="request.close_price"
+                                                                    autofocus class="form-control" />
+                                                                <span class="text-danger" v-if="errors.close_price">{{
+                                                                    errors.close_price[0] }}</span>
+                                                            </div>
+                                                        </div>
+
                                                         <button type="submit" class="btn btn-success px-5 w-100">
                                                             <i class="bx bx-check-circle mr-1"></i>
                                                             {{ isSubmitting ? 'Updating...' : 'Update' }}
@@ -194,6 +208,7 @@ const request = ref({
     fee: '',
     start_datetime: '',
     end_datetime: '',
+    closing_price: '',
     action: '',
     closingPNL: '',
     status: '',
@@ -224,10 +239,19 @@ const Toast = Swal.mixin({
 const isSubmitting = ref(false);  // Add a reactive variable to track submission state
 
 const getClass = (pnl) => {
-  return pnl >= 0 ? "text-success" : "text-danger";
+    return pnl >= 0 ? "text-success" : "text-danger";
 };
 const saveData = () => {
     if (isSubmitting.value) return; // Prevent multiple submissions
+
+    // Clear previous errors
+    errors.close_price = '';
+    // Check if `close_price` is empty
+    if (!request.value.close_price) {
+        error_noti();
+        errors.close_price = ['Close price cannot be empty!']; // Assign array
+        return; // Stop execution
+    }
     const formData = new FormData();
     const id = router.currentRoute.value.query.parameter;
     formData.append('id', id);
@@ -236,7 +260,7 @@ const saveData = () => {
     formData.append('close_price', request.value.close_price);
     formData.append('trade_amount', request.value.trade_amount);
     formData.append('selected_percentage', request.value.selected_percentage);
-    
+
     axios.post('/trade/updateTrade', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -328,6 +352,26 @@ const success_noti = () => {
     Toast.fire({
         icon: "success",
         title: "Has been successfully update Deposit."
+    });
+};
+
+
+const error_noti = () => {
+    //alert("Your data has been successfully inserted.");
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: "error",
+        title: "Close price cannot be empty!"
     });
 };
 onMounted(() => {

@@ -14,6 +14,7 @@
 body {
     background-color: var(--color_secondary);
     scrollbar-width: 0px;
+    /* overflow: unset !important; */
 }
 
 body::-webkit-scrollbar {

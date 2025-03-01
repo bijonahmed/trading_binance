@@ -20,8 +20,13 @@
                 </div>
             </section>
 
+
             <section class="content">
+
                 <div class="container-fluid">
+                    <h3>&nbsp;<b style="color:red;">Pending Request ({{ countPendingTrade }})</b> <small>Check every 10
+                            seconds</small></h3>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
@@ -84,7 +89,7 @@
 
                                             <tr v-for="(pro, index) in productdata" :key="index">
                                                 <td class="text-left"><small>Name: {{ pro.name
-                                                        }}<br />Email:{{ pro.email }}<br />Username: {{
+                                                }}<br />Email:{{ pro.email }}<br />Username: {{
                                                             pro.username }}</small></td>
                                                 <td class="text-left">{{ pro.tradeID }}</td>
                                                 <td>{{ pro.selectedCurrency }}USDT</td>
@@ -173,6 +178,7 @@ const currentPage = ref(1);
 const pageSize = 10;
 const totalRecords = ref(0);
 const totalPages = ref(0);
+const countPendingTrade = ref(0);
 const productdata = ref([]);
 const searchOrderId = ref("");
 const searchEmail = ref("");
@@ -184,10 +190,22 @@ const today = new Date();
 const yyyy = today.getFullYear();
 const mm = String(today.getMonth() + 1).padStart(2, '0');
 const dd = String(today.getDate()).padStart(2, '0');
+
+// Format today's date as YYYY-MM-DD
 const formattedDate = `${yyyy}-${mm}-${dd}`;
-// Define a reactive ref to store the current date
-const filterFrmDate = ref(formattedDate);
-const filterToDate = ref(formattedDate);
+
+// Get the date 10 days ago
+const pastDate = new Date();
+pastDate.setDate(today.getDate() - 10);
+const pastYyyy = pastDate.getFullYear();
+const pastMm = String(pastDate.getMonth() + 1).padStart(2, '0');
+const pastDd = String(pastDate.getDate()).padStart(2, '0');
+const formattedPastDate = `${pastYyyy}-${pastMm}-${pastDd}`;
+
+// Define reactive refs
+const filterFrmDate = ref(formattedPastDate); // 10 days before today
+const filterToDate = ref(formattedDate); // Today's date
+
 const fetchData = async (page) => {
     try {
         loading.value = true;
@@ -206,17 +224,27 @@ const fetchData = async (page) => {
         totalRecords.value = response.data.total_records;
         totalPages.value = response.data.total_pages;
         currentPage.value = response.data.current_page;
+        countPendingTrade.value = response.data.countPendingTrade;
     } catch (error) {
         // Handle error
     } finally {
         loading.value = false;
     }
 };
-
+let intervalId;
 onMounted(() => {
-    fetchData(currentPage.value);
-});
 
+    fetchData(currentPage.value);
+    // Set interval to fetch data every 10 seconds
+    intervalId = setInterval(() => {
+        fetchData(currentPage.value);
+    }, 10000);
+
+});
+onUnmounted(() => {
+    // Clear interval when component is destroyed to prevent memory leaks
+    clearInterval(intervalId);
+});
 const getClass = (pnl) => {
     return pnl >= 0 ? "text-success" : "text-danger";
 };

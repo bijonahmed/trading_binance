@@ -635,10 +635,10 @@ const fetechCountryCurrencyData = async () => {
 const fetchCountryData = async () => {
     try {
         loading.value = true;
-        const response = await axios.get(`/setting/getBankListAdmin`);
+        const response = await axios.get(`/setting/getCuntryCurrencyList`);
         if (response.data) {
-            countryList.value = response.data.countryList;
-            currencyList.value = response.data.currencyList;
+            countryList.value = response.data.data.countryList;
+            currencyList.value = response.data.data.currencyList;
         }
     } catch (error) {
         console.error("Error fetching bank list:", error);

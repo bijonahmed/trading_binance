@@ -157,6 +157,8 @@ const Future = () => {
       localStorage.setItem("currency_", slug);
     }
   }, [slug]);
+
+  
   return (
     <>
       <Helmet>

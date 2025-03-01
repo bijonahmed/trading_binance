@@ -9,30 +9,21 @@ const SidebarAuth = () => {
   const navigate = useNavigate(); // Move useNavigate inside the component
 
   const { token, logout } = AuthUser();
-
   const logoutUser = async () => {
     logout();
     localStorage.removeItem("token");
+
     setTimeout(() => {
       navigate("/login");
     }, 100); // Small delay to allow state update
   };
-
- const sidebarMenu = async () => {
-      navigate("/dashboard/mobile-menu");
-     
-  };
-
-
-  
-
 
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <ul className="navbar_secondary  mb-2 mb-lg-0">
           <li className="d-lg-none">
-            <button className="btn_sidebar" onClick={sidebarMenu} type="button">
+            <button className="btn_sidebar" click="showSidebar" type="button">
               <i className="fa-solid fa-bars" />
             </button>
           </li>
@@ -57,7 +48,6 @@ const SidebarAuth = () => {
               </div>
             </a>
             <ul className="dropdown-menu">
-
               <li>
                 <Link className="dropdown-item" to="#" onClick={logoutUser}>
                   Logout

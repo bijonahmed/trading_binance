@@ -9,6 +9,17 @@ const Navbar = () => {
   const removeBodyStyles = () => {
     document.body.removeAttribute("style");
   };
+
+  const logoutUser = async () => {
+    logout();
+    localStorage.removeItem("token");
+    setTimeout(() => {
+      navigate("/login");
+    }, 100); // Small delay to allow state update
+  };
+
+
+
   useEffect(() => {
     // Attach event listener to all nav-links
     const navLinks = document.querySelectorAll(".nav-link");
@@ -53,32 +64,118 @@ const Navbar = () => {
               </button>
             </div>
             <div className="offcanvas-body">
-              <div className="d-flex aligh-items-center w-100 justify-content-between">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <Link className="nav-link" aria-current="page" to="/market">
-                      Markets
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/dashboard/trade-history">
-                      Trade
-                    </Link>
-                  </li>
-                </ul>
+              <div className="">
+                <div className="d-flex align-items-center w-100 justify-content-between">
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                      <Link
+                        className="nav-link"
+                        aria-current="page"
+                        to="/market"
+                      >
+                        Markets
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/dashboard/trade-history">
+                        Trade
+                      </Link>
+                    </li>
+
+                    {token ? (
+                      <>
+                      <li className="nav-item">
+                      <Link
+                        className="nav-link"
+                        aria-current="page"
+                        to="/market"
+                      >
+                        Markets
+                      </Link>
+                    </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/dashboard/profile">
+                            Profile
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/dashboard/wallet">
+                            Wallet
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/dashboard/deposit">
+                            Deposit
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/dashboard/withdraw">
+                            Withdraw
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/dashboard/payment">
+                            Payment Method
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link
+                            className="nav-link"
+                            to="/dashboard/trade-history"
+                          >
+                            Trade History
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/dashboard/kyc">
+                            KYC Verification
+                          </Link>
+                        </li>
+                      </>
+                    ) : null}
+                  </ul>
+                </div>
               </div>
+
               {/* mobile login register  */}
+
               <ul className="navbar-nav ms-auto mobile_ group_btns mb-2 mb-lg-0  d-sm-none ">
-                <li className="nav-item w-50">
-                  <Link className="nav-link btn_login w-100" to="/login">
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item w-50">
-                  <Link className="nav-link btn_signup w-100" to="/register">
-                    Sign Up
-                  </Link>
-                </li>
+                {token ? (
+                  <>
+                    <li className="nav-item w-50">
+                      <Link
+                        className="nav-link btn_login w-100"
+                        to="/dashboard/profile"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li className="nav-item w-50">
+                      <Link
+                        className="nav-link btn_signup w-100"
+                        onClick={logoutUser}
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item w-50">
+                      <Link className="nav-link btn_login w-100" to="/login">
+                        Login
+                      </Link>
+                    </li>
+                    <li className="nav-item w-50">
+                      <Link
+                        className="nav-link btn_signup w-100"
+                        to="/register"
+                      >
+                        Sign Up
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>
@@ -89,12 +186,12 @@ const Navbar = () => {
               <ul className="navbar-nav ms-auto group_btns mb-2 mb-lg-0 d-none d-lg-flex">
                 {token ? (
                   <>
-                  <li className="nav-item">
+                    <li className="nav-item">
                       <Link className="nav-link " to="/dashboard/profile">
                         My Profile
                       </Link>
                     </li>
-                    <li className="nav-item" onClick={logout}>
+                    <li className="nav-item" onClick={logoutUser}>
                       <Link className="nav-link " to="#">
                         Logout
                       </Link>
@@ -147,9 +244,9 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li>
-                        <button className="dropdown-item" onClick={logout}>
-                          <i className="fa-solid fa-right-from-bracket" />&nbsp;
-                          Logout
+                        <button className="dropdown-item" onClick={logoutUser}>
+                          <i className="fa-solid fa-right-from-bracket" />
+                          &nbsp; Logout
                         </button>
                       </li>
                     </ul>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddCountry;
+use App\Models\BankList;
 use App\Models\Countrys;
 use App\Models\CountryWiseBank;
 use App\Models\Currency;
@@ -36,6 +37,16 @@ class SettingController extends Controller
     }
 
 
+    public function getCuntryCurrencyList()
+    {
+
+        $data['countryList'] = Countrys::where('status', 1)->get();
+        $data['currencyList'] = Currency::where('status', 1)->get();
+        return response()->json([
+            'data' => $data,
+            'message' => 'success'
+        ], 200);
+    }
 
     public function getSelectedBank(Request $request)
     {

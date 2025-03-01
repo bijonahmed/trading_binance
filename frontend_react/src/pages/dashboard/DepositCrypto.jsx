@@ -106,17 +106,19 @@ const DepositCrypto = () => {
     }
   };
 
-  const amounts = [50, 100, 300, 500, 1000]; // List of amounts
+  const amounts = [50, 100, 300, 500, 800, 1000]; // List of amounts
 
   // Function to update input with clicked amount
   const handleAmountClick = (value) => {
     setAmount(value.toString());
   };
 
-  // Function to sum all amounts when clicking "All"
-  const handleAllClick = () => {
-    const total = amounts.reduce((acc, num) => acc + num, 0);
-    setAmount(total.toString());
+  const handleInputChange = (e) => {
+    // Only update the amount if the value is a valid number or empty string
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setAmount(value); // Update the state with the valid number or empty string
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -152,29 +154,24 @@ const DepositCrypto = () => {
       );
       console.log("Live request response:", response.data);
       $.notify("Deposit request submitted successfully!", "success");
-      
+
       setTimeout(() => navigate("/dashboard/deposit"), 2000);
     } catch (error) {
-      console.error("Registration error:", error);
-
-      if (error.response) {
-        console.error("Error response data:", error.response.data);
-
-        if (error.response.data.errors) {
-          setErrors(error.response.data.errors); // Set errors from API response
-        } else {
-          // toast.error(error.response.data.message || "Something went wrong!");
-          $.notify(
-            error.response.data.message || "Something went wrong!",
-            "error"
-          );
-        }
+      if (error.response && error.response.status === 422) {
+        Swal.fire({
+          icon: "error",
+          title: "Validation Errors",
+          html: Object.values(error.response.data.errors)
+            .map((err) => `<div>${err.join("<br>")}</div>`)
+            .join(""),
+        });
+        console.error("Validation errors:", error.response.data.errors);
+        setErrors(error.response.data.errors);
       } else {
-        // toast.error("Network error. Please try again.");
-        $.notify("Network error. Please try again.", "error");
+        console.error("Error updating user:", error);
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Ensure to hide loading state once done
     }
   };
 
@@ -191,7 +188,6 @@ const DepositCrypto = () => {
       setLoading(false); // Stop the loader
     }
   };
-
 
   const handletrc20Copy = async () => {
     setLoading(true); // Start the loader
@@ -280,12 +276,13 @@ const DepositCrypto = () => {
                         <div>
                           <div>
                             <h3>Deposit Amount</h3>
+
                             <input
                               type="text"
                               className="form-control"
-                              placeholder="00.00"
                               value={amount}
-                              readOnly // Prevent manual input
+                              onChange={handleInputChange}
+                              placeholder="Enter amount"
                             />
 
                             {errors.amount && (
@@ -306,15 +303,6 @@ const DepositCrypto = () => {
                                   </button>
                                 </div>
                               ))}
-                              <div className="col-2">
-                                <button
-                                  className="btn btn_ammount"
-                                  type="button"
-                                  onClick={handleAllClick}
-                                >
-                                  All
-                                </button>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -339,7 +327,11 @@ const DepositCrypto = () => {
                             <h2>Tron (TRC 20)</h2>
                           </div>
                           <div>
-                            <button type="button" className="btn_edit" onClick={handletrc20Copy}>
+                            <button
+                              type="button"
+                              className="btn_edit"
+                              onClick={handletrc20Copy}
+                            >
                               <i className="fa-solid fa-copy " />
                             </button>
                           </div>
@@ -350,7 +342,7 @@ const DepositCrypto = () => {
                               <h4>Minimum deposit</h4>
                             </div>
                             <div>
-                              <p>50.00 USDT</p>
+                              <p>10.00 USDT</p>
                             </div>
                           </div>
                           <div className="d-flex justify-content-between align-items-center my-2">
@@ -358,28 +350,14 @@ const DepositCrypto = () => {
                               <h4>Maximum deposit</h4>
                             </div>
                             <div>
-                              <p>1950 USDT</p>
-                            </div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center my-2">
-                            <div>
-                              <h4>Expected arrival</h4>
-                            </div>
-                            <div>
-                              <p>1 network confirmation</p>
-                            </div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center my-2">
-                            <div>
-                              <h4>Expected unlock</h4>
-                            </div>
-                            <div>
-                              <p>1 network confirmations</p>
+                              <p>1,00,000 USDT</p>
                             </div>
                           </div>
                         </div>
                         <div className="mb-2">
-                        <h3 className="text-danger">Please Upload Your Deposit Screenshot Here</h3>
+                          <h3 className="text-danger">
+                            Please Upload Your Deposit Screenshot Here
+                          </h3>
                           <input
                             type="file"
                             className="form-control"
@@ -395,11 +373,10 @@ const DepositCrypto = () => {
                             />
                           )}
                           {errors.image && (
-                              <div className="error text-danger">
-                                {errors.image}
-                              </div>
-                            )}
-
+                            <div className="error text-danger">
+                              {errors.image}
+                            </div>
+                          )}
                         </div>
                         <div className="mb-2">
                           <button

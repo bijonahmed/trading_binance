@@ -107,11 +107,12 @@ class TradingController extends Controller
         //dd($data);
 
         $response          = app('App\Http\Controllers\Balance\BalanceController')->getCurrentBalance();
-        $currentBalance = $response instanceof JsonResponse ? $response->getData(true)['balance'] : 0;
-        // echo $currentBalance;exit; 
+        $currentBalance    = $response instanceof JsonResponse ? $response->getData(true)['balance'] : 0;
+        $formattedBalance  = str_replace(',', '', $currentBalance);
+        // echo $formattedBalance;exit; 
         $tradingAmount     = !empty($request->trade_amount) ? $request->trade_amount : "";
 
-        if ($tradingAmount > $currentBalance) {
+        if ($tradingAmount > $formattedBalance) {
             return response()->json([
                 'errors' => [
                     'invalid_amount' => ["Sorry, the request is invalid. Your current balance is {$currentBalance} USDT."]
@@ -134,7 +135,7 @@ class TradingController extends Controller
 
     public function updateTrade(Request $request){
 
-        //dd($request->all());
+      // dd($request->all());
         $request->validate([
             'id'                    => 'required',
             'action_type'           => 'required',
@@ -170,7 +171,9 @@ class TradingController extends Controller
             $profitPercentage = ($tradeAmt * $selected_percentage) / 100;
             $data['closingPNL'] = $tradeAmt + $profitPercentage - $tradeeFee;
         }
-        $data['status'] = 1;
+       
+        $data['status']      = 1;
+        $data['close_price'] = $close_price;
         //dd($data);
 
         $trade = Trade::find($id);
@@ -265,6 +268,8 @@ class TradingController extends Controller
             // }
             //END
 
+           
+
             return [
                 'id'                    => $item->id,
                 'tradeID'               => $item->tradeID,
@@ -288,14 +293,15 @@ class TradingController extends Controller
                 'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
             ];
         });
-
+        $countPendingTrade = Trade::where('status', 0)->count();
         //dd($modifiedCollection);
         // Return the modified collection along with pagination metadata
         return response()->json([
-            'data' => $modifiedCollection,
-            'current_page' => $paginator->currentPage(),
-            'total_pages' => $paginator->lastPage(),
-            'total_records' => $paginator->total(),
+            'data'              => $modifiedCollection,
+            'current_page'      => $paginator->currentPage(),
+            'total_pages'       => $paginator->lastPage(),
+            'total_records'     => $paginator->total(),
+            'countPendingTrade' => $countPendingTrade,
         ], 200);
  
     }
@@ -346,7 +352,7 @@ class TradingController extends Controller
             $query->whereIn('trade.action_type', ['LONG', 'SHORT']);
         }
 
-        //$query->whereIn('trade.id', [1, 2]);
+        $query->where('trade.status', 1);
         $results = $query->get();
         $modifiedCollection = $results->map(function ($item) {
             $tradeAmt = number_format($item->trade_amount, 2);

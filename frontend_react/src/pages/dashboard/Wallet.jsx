@@ -294,52 +294,50 @@ const Wallet = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="search_div">
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="input_form mb-2 m-0">
-                                <input
-                                  type="text"
-                                  placeholder="Search TRX id"
-                                  className="form-control"
-                                  value={witdrawTxt}
-                                  onChange={handleWithdrawTxt} // ✅ Required to update state
-                                  onKeyUp={(e) =>
-                                    console.log("Key Up:", e.target.value)
-                                  } // ✅ Works when a key is released
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="d-flex align-items-center justify-content-md-start justify-content-center">
-                                <div className="input_form date_">
-                                  <input
-                                    type="date"
-                                    className="form-control mb-2"
-                                    value={dateForm}
-                                    onChange={handleDateChangeFrm}
-                                  />
-                                </div>
-                                <p className="mx-2">TO</p>
-                                <div className="input_form date_ m-0">
-                                  <input
-                                    type="date"
-                                    className="form-control mb-2"
-                                    value={dateTo}
-                                    onChange={handleDateChangeTo}
-                                  />
-                                </div>
-                                <p className="mx-2"></p>
-                                <button
-                                  type="button"
-                                  onClick={getWithdrawList}
-                                  className="btn_primary"
-                                  style={{ marginTop: "-7px" }}
-                                >
-                                  Filter
-                                </button>
-                              </div>
-                            </div>
-                          </div>
+                        <div className="row">
+  <div className="col-12 col-md-6 mb-2">
+    <div className="input_form m-0">
+      <input
+        type="text"
+        placeholder="Search Order ID"
+        className="form-control"
+        value={witdrawTxt}
+        onChange={handleWithdrawTxt} // ✅ Required to update state
+        onKeyUp={(e) =>
+          console.log("Key Up:", e.target.value)
+        } // ✅ Works when a key is released
+      />
+    </div>
+  </div>
+
+  <div className="col-12 col-md-6 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start">
+    <div className="input_form date_ mb-2 mb-md-0">
+      <input
+        type="date"
+        className="form-control"
+        value={dateForm}
+        onChange={handleDateChangeFrm}
+      />
+    </div>
+    <p className="mx-2 mb-2 mb-md-0">TO</p>
+    <div className="input_form date_ mb-2 mb-md-0">
+      <input
+        type="date"
+        className="form-control"
+        value={dateTo}
+        onChange={handleDateChangeTo}
+      />
+    </div>
+    <button
+      type="button"
+      onClick={getWithdrawList}
+      className="btn_primary mt-2 mt-md-0"
+    >
+      Search
+    </button>
+  </div>
+</div>
+
                         </div>
                         <div className="transection_table table-responsive">
                           {/* withdrawData */}
@@ -432,7 +430,7 @@ const Wallet = () => {
                               <div className="input_form mb-2 m-0">
                                 <input
                                   type="text"
-                                  placeholder="Search TRX id"
+                                  placeholder="Search Order ID"
                                   className="form-control"
                                   value={de_depositTxt}
                                   onChange={handleWithdrawTxt_deposit} // ✅ Required to update state
@@ -443,32 +441,36 @@ const Wallet = () => {
                               </div>
                             </div>
                             <div className="col-md-6">
-                              <div className=" d-flex align-items-center justify-content-md-start justify-content-center">
-                                <div className="input_form date_ ">
+                              <div className="d-flex flex-column flex-md-row align-items-center justify-content-md-start justify-content-center">
+                                <div className="input_form date_ mb-2 mb-md-0">
                                   <input
                                     type="date"
-                                    className="form-control"
+                                    className="form-control  w-100"
                                     value={de_dateForm}
                                     onChange={handleDateChangeFrm_deposit}
                                   />
                                 </div>
+
                                 <p className="text-white my-0 mx-2">TO</p>
-                                <div className="input_form date_  m-0">
+
+                                <div className="input_form date_ mb-2 mb-md-0">
                                   <input
                                     type="date"
-                                    className="form-control"
+                                    className="form-control w-100"
                                     value={de_dateTo}
                                     onChange={handleDateChangeTo_deposit}
                                   />
                                 </div>
-                                <p className="mx-2"></p>
+
+                                <p className="mx-2 mb-2 mb-md-0"></p>
+
                                 <button
                                   type="button"
                                   onClick={getDepositList}
                                   className="btn_primary"
                                   style={{ marginTop: "-7px" }}
                                 >
-                                  Filter
+                                  Search
                                 </button>
                               </div>
                             </div>
@@ -600,7 +602,7 @@ const Wallet = () => {
                   </div>
                 </div>
                 <div className="modal-body">
-                  <div class="table-responsive">
+                  <div className="table-responsive">
                     {bankInfo.payment_method == "BANK" && (
                       <>
                         <center className="text-white">
@@ -671,19 +673,6 @@ const Wallet = () => {
                               </td>
                               <td>{bankInfo.inputAmount}</td>
                             </tr>
-
-                            {/* <tr>
-                          <td>
-                            <strong>Country ID</strong>
-                          </td>
-                          <td>18</td>
-                        </tr> */}
-                            {/* <tr>
-                          <td>
-                            <strong>Country Wise Bank ID</strong>
-                          </td>
-                          <td>5</td>
-                        </tr> */}
                           </tbody>
                         </table>
                       </>

@@ -80,7 +80,7 @@ const ChangePassword = () => {
   const backtoList = () => {
     navigate("/user/profile"); // Adjust the navigation path as needed
   };
-  useEffect(() => {}, []);
+ 
   return (
     <>
       <Helmet>

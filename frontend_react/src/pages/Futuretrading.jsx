@@ -19,8 +19,7 @@ const Futuretrading = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [currency, setCurrency] = useState(null); // To track if Long or Short is selected
  
-
-
+ 
 
 
   useEffect(() => {
