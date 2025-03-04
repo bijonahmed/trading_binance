@@ -84,8 +84,8 @@ const Index = () => {
                 <div className="hero_content">
                   <h1>
                     <span>{userCount.toLocaleString()}</span> {/* Format number */}
-                    <strong>USERS</strong>
-                    <strong>TRUST US</strong>
+                    <strong>Trade with </strong>
+                    <strong>Confidence</strong>
                   </h1>
                   <div className="row">
                     <div className="col-xl-8 me-auto">
