@@ -1,50 +1,19 @@
 import { useEffect, useState, useRef } from "react";
 
+
 const cryptos = [
-  {
-    symbol: "bitcoin",
-    name: "BTC/USDT",
-    image: "/fasttrading/images/bitcoin.png",
-  },
-  {
-    symbol: "ethereum",
-    name: "ETH/USDT",
-    image: "/fasttrading/images/eth.png",
-  },
+  { symbol: "bitcoin", name: "BTC/USDT", image: "/fasttrading/images/bitcoin.png" },
+  { symbol: "ethereum", name: "ETH/USDT", image: "/fasttrading/images/eth.png" },
   // { symbol: "binancecoin", name: "BNB/USDT", image: "/fasttrading/images/bnb.png" },
   { symbol: "ripple", name: "XRP/USDT", image: "/fasttrading/images/xrp.png" },
   { symbol: "cardano", name: "ADA/USDT", image: "/fasttrading/images/ada.png" },
   { symbol: "solana", name: "SOL/USDT", image: "/fasttrading/images/sol.png" },
-  {
-    symbol: "polkadot",
-    name: "DOT/USDT",
-    image: "/fasttrading/images/dot.png",
-  },
-  {
-    symbol: "dogecoin",
-    name: "DOGE/USDT",
-    image: "/fasttrading/images/doge.png",
-  },
-  {
-    symbol: "shiba-inu",
-    name: "SHIB/USDT",
-    image: "/fasttrading/images/shib.png",
-  },
-  {
-    symbol: "litecoin",
-    name: "LTC/USDT",
-    image: "/fasttrading/images/ltc.png",
-  },
-  {
-    symbol: "chainlink",
-    name: "LINK/USDT",
-    image: "/fasttrading/images/link.png",
-  },
-  {
-    symbol: "avalanche-2",
-    name: "AVAX/USDT",
-    image: "/fasttrading/images/avax.png",
-  },
+  { symbol: "polkadot", name: "DOT/USDT", image: "/fasttrading/images/dot.png" },
+  { symbol: "dogecoin", name: "DOGE/USDT", image: "/fasttrading/images/doge.png" },
+  { symbol: "shiba-inu", name: "SHIB/USDT", image: "/fasttrading/images/shib.png" },
+  { symbol: "litecoin", name: "LTC/USDT", image: "/fasttrading/images/ltc.png" },
+  { symbol: "chainlink", name: "LINK/USDT", image: "/fasttrading/images/link.png" },
+  { symbol: "avalanche-2", name: "AVAX/USDT", image: "/fasttrading/images/avax.png" },
   { symbol: "uniswap", name: "UNI/USDT", image: "/fasttrading/images/uni.png" },
   { symbol: "stellar", name: "XLM/USDT", image: "/fasttrading/images/xlm.png" },
   { symbol: "vechain", name: "VET/USDT", image: "/fasttrading/images/vet.png" },
@@ -95,8 +64,7 @@ const CryptoList = () => {
         const response = await fetch(url);
         const data = await response.json();
 
-        if (!data || !data.prices)
-          throw new Error("No historical data received");
+        if (!data || !data.prices) throw new Error("No historical data received");
 
         const pricesArray = data.prices.map((entry) => entry[1]); // Extract prices
         const firstPrice = pricesArray[0];
@@ -127,14 +95,14 @@ const CryptoList = () => {
   const renderChart = (symbol, pricesArray) => {
     const canvas = document.getElementById(`${symbol}Chart`);
     if (!canvas) return;
-
+  
     const ctx = canvas.getContext("2d");
-
+  
     // Check if a chart already exists and destroy it
     if (chartRefs.current[symbol]) {
       chartRefs.current[symbol].destroy();
     }
-
+  
     const chart = new Chart(ctx, {
       type: "line",
       data: {
@@ -157,10 +125,11 @@ const CryptoList = () => {
         scales: { x: { display: false }, y: { display: false } },
       },
     });
-
+  
     // Save the chart instance
     chartRefs.current[symbol] = chart;
   };
+  
 
   return (
     <tbody>
@@ -174,21 +143,13 @@ const CryptoList = () => {
               </div>
               <div>
                 <h5 className=" mb-0">{crypto.name}</h5>
-                <p className="mobile_view mb-0">
-                  Volume: {volumes[crypto.symbol] || "0000.000"}
-                </p>
-                <p className="mobile_view mb-0">
-                  Price: ${prices[crypto.symbol] || "Loading..."}
-                </p>
+                <p className="mobile_view mb-0">Volume: {volumes[crypto.symbol] || "0000.000"}</p>
+                <p className="mobile_view mb-0">Price: ${prices[crypto.symbol] || "Loading..."}</p>
               </div>
             </div>
           </td>
-          <td className="pc_view text-center">
-            {volumes[crypto.symbol] || "0000.000"}
-          </td>
-          <td className="pc_view text-center">
-            ${prices[crypto.symbol] || "Loading..."}
-          </td>
+          <td className="pc_view text-center">{volumes[crypto.symbol] || "0000.000"}</td>
+          <td className="pc_view text-center">${prices[crypto.symbol] || "Loading..."}</td>
           {/* <td>
             <div className="chart-container">
               <canvas id={`${crypto.symbol}Chart`}></canvas>
@@ -196,10 +157,8 @@ const CryptoList = () => {
           </td> */}
           <td>
             <a
-              href="#"
-              className={`btn_charge btn ${
-                changes[crypto.symbol] >= 0 ? "btn-success" : "btn-danger"
-              }`}
+              href="/future"
+              className={`btn_charge btn ${changes[crypto.symbol] >= 0 ? "btn-success" : "btn-danger"}`}
             >
               {changes[crypto.symbol] ? `${changes[crypto.symbol]}%` : "NaN"}
             </a>

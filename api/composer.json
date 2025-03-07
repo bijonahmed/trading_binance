@@ -19,6 +19,8 @@
         "php-curl-class/php-curl-class": "^9.19",
         "phpoffice/phpexcel": "^1.8",
         "pusher/pusher-php-server": "^7.2",
+        "setasign/fpdf": "*",
+        "setasign/fpdi": "^2.6",
         "srmklive/paypal": "~3.0",
         "torann/geoip": "^3.0",
         "tymon/jwt-auth": "^2.0",

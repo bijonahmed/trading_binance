@@ -14,16 +14,16 @@ import Footer from "../components/Footer";
 // import Chart from "chart.js/auto";
 
 const cryptos = [
-  { symbol: "bitcoin", name: "BTC/USDT", image: "/fasttrading/images/btc.png" },
-  { symbol: "ethereum", name: "ETH/USDT", image: "/fasttrading/images/eth.png" },
-  { symbol: "cardano", name: "ADA/USDT", image: "/fasttrading/images/ada.png" },
-  { symbol: "ripple", name: "XRP/USDT", image: "/fasttrading/images/xrp.png" },
+  { symbol: "BTC", name: "BTC/USDT", image: "/fasttrading/images/btc.png" },
+  { symbol: "ETH", name: "ETH/USDT", image: "/fasttrading/images/eth.png" },
+  { symbol: "BNB", name: "BNB/USDT", image: "/fasttrading/images/bnb.png" },
+  { symbol: "XRP", name: "XRP/USDT", image: "/fasttrading/images/xrp.png" },
 ];
 
 const Index = () => {
   const [cryptoData, setCryptoData] = useState({});
   const getRandomStart = () => 212436053 + Math.floor(Math.random() * 1001) - 500;
-
+  
   const [userCount, setUserCount] = useState(getRandomStart()); // Initialize with random value
 
   useEffect(() => {
@@ -38,36 +38,32 @@ const Index = () => {
     const fetchCryptoData = async (symbol) => {
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/simple/price?ids=${symbol}&vs_currencies=usd&include_24hr_vol=true&include_24hr_change=true`
+          `https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}USDT`
         );
         const data = await response.json();
-        
-        if (!data[symbol]) throw new Error("Invalid symbol or API issue");
-    
         setCryptoData((prev) => ({
           ...prev,
           [symbol]: {
-            price: data[symbol].usd.toFixed(2),
-            volume: `Vol: ${data[symbol].usd_24h_vol.toFixed(2)}`,
-            change: `${data[symbol].usd_24h_change.toFixed(2)}%`,
-            isPositive: data[symbol].usd_24h_change >= 0,
+            price: parseFloat(data.lastPrice).toFixed(2),
+            volume: `Vol: ${parseFloat(data.volume).toFixed(2)}`,
+            change: `${parseFloat(data.priceChangePercent).toFixed(2)}%`,
+            isPositive: parseFloat(data.priceChangePercent) >= 0,
           },
         }));
       } catch (error) {
         console.error(`Error fetching ${symbol} data:`, error);
       }
     };
-    
 
-    // Fetch data every second
-    const interval = setInterval(() => {
-      cryptos.forEach(({ symbol }) => fetchCryptoData(symbol));
-    }, 4000); // 1-second interval
+      // Fetch data every second
+  const interval = setInterval(() => {
+    cryptos.forEach(({ symbol }) => fetchCryptoData(symbol));
+  }, 4000); // 1-second interval
 
 
     cryptos.forEach(({ symbol }) => fetchCryptoData(symbol));
   }, []);
-
+  
 
   return (
     <div>
@@ -99,7 +95,7 @@ const Index = () => {
                           className="form-control d-none d-md-block"
                           placeholder="Email"
                         />
-                        <Link to="/register" className="btn_primary">
+                         <Link to="/register" className="btn_primary">
                           Sign up
                         </Link>
                       </div>

@@ -176,13 +176,69 @@ const Market = () => {
                 <th>Name</th>
                 <th className="pc_view text-center">24 Hour Volume</th>
                 <th className="pc_view text-center">Price</th>
-                {/* <th>30 Day</th> */}
+                <th>30 Day</th>
                 <th>Change(30 Day)</th>
               </tr>
             </thead>
 
             <CryptoList />
-           
+            {/* <tbody>
+              {cryptos.map((crypto, index) => (
+                <tr key={crypto.symbol}>
+                  <td className="text-center pc_view">{index + 1}</td>
+                  <td>
+                    <div className="d-flex">
+                      <div>
+                        <img src={crypto.image} alt={crypto.name} />
+                      </div>
+                      <div>
+                        <h5 className="m-0">{crypto.name}</h5>
+                        <p
+                          className="mobile_view m-0"
+                          id={`${crypto.symbol.toLowerCase()}-volume`}
+                        >
+                          Volume: {crypto.volume}
+                        </p>
+                        <p
+                          className="mobile_view m-0"
+                          id={`${crypto.symbol.toLowerCase()}-price`}
+                        >
+                          Price: {crypto.price}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    className="pc_view text-center"
+                    id={`${crypto.symbol.toLowerCase()}-volume-pc`}
+                  >
+                    {crypto.volume}
+                  </td>
+                  <td
+                    className="pc_view text-center"
+                    id={`${crypto.symbol.toLowerCase()}-price-pc`}
+                  >
+                    {crypto.price}
+                  </td>
+                  <td>
+                    <div className="chart-container">
+                      <canvas
+                        id={`${crypto.symbol.toLowerCase()}Chart`}
+                      ></canvas>
+                    </div>
+                  </td>
+                  <td>
+                    <a
+                      href="future.html"
+                      className="btn_charge btn btn-success"
+                      id={`${crypto.symbol.toLowerCase()}-change`}
+                    >
+                      {crypto.change}
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody> */}
           </table>
         </div>
       </div>
