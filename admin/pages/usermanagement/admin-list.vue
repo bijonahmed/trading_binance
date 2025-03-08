@@ -13,9 +13,6 @@
                                 <li class="breadcrumb-item">
                                     <LazyNuxtLink to="/admin/dashboard">Dashboard</LazyNuxtLink>
                                 </li>
-                                <li class="breadcrumb-item active">
-                                    <LazyNuxtLink to="/usermanagement/add-user">New</LazyNuxtLink>
-                                </li>
                             </ol>
                         </div>
                     </div>

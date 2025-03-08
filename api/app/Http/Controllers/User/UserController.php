@@ -273,7 +273,7 @@ class UserController extends Controller
 
     public function allrolelist()
     {
-        $activeRule = RuleModel::where('status', 1)->whereNot('id', 3)->get();
+        $activeRule = RuleModel::where('status', 1)->whereIn('id',[1,3])->get();
         return response()->json($activeRule);
     }
     public function allrolelistsInfo()
@@ -454,6 +454,7 @@ class UserController extends Controller
             $query->where('users.status', $selectedFilter);
         }
         $query->where('users.role_id', 1);
+        $query->where('users.id', '!=', 1);
         $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
 
         $modifiedCollection = $paginator->getCollection()->map(function ($item) {
@@ -956,7 +957,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'role_id'    => 'required',
             'name'       => 'required',
-            'phone'      => 'required',
+            //'phone'      => 'required',
             'email'      => 'required|email',
             // 'email' => 'required|email|unique:users',
             'password' => 'min:2|required_with:password_confirmation|same:password_confirmation',
@@ -965,6 +966,8 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+
         $data = array(
             'role_id'       => !empty($request->role_id) ? $request->role_id : "",
             'name'          => !empty($request->name) ? $request->name : "",

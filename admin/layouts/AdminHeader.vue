@@ -1,6 +1,6 @@
 <template>
-	<div v-if="isLoggedIn">
-		<nav class="main-header navbar navbar-expand navbar-white navbar-light" v-if="userStatusIsAdmin">
+	<div>
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -166,8 +166,7 @@ const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore)
 const cartStore = useCartStore()
 
-const userRoleIsAdmin = computed(() => userStore.role_id === 1);
-const userStatusIsAdmin = computed(() => userStore.status === 1);
+
 
 computed(async () => {
 	try {

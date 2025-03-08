@@ -84,12 +84,12 @@ const SidebarAuth = () => {
                 <span>Trade History</span>
               </Link>
             </li>
-            <li className={`sidebar_item ${location.pathname === "/dashboard/kyc" ? "active" : ""}`}>
+            {/* <li className={`sidebar_item ${location.pathname === "/dashboard/kyc" ? "active" : ""}`}>
               <Link to="/dashboard/kyc" className="sidebar_link">
                 <i className="fa-light fa-address-card" />
                 <span>KYC Verification</span>
               </Link>
-            </li>
+            </li> */}
             <li className="sidebar_item" onClick={logoutUser}>
               <Link to="#" className="sidebar_link">
                 <i className="fa-solid fa-right-from-bracket" />

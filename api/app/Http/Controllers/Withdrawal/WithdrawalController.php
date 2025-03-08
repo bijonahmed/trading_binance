@@ -167,8 +167,8 @@ class WithdrawalController extends Controller
             return response()->json(['errors' => ['withdrawal_amount' => ["Invalid Request. Your available balance is: {$currentBalance} USDT"]]], 422);
         }
 
-       // $chkuserWalletAdd =  User::where('id', $this->userid)->first();
-       //$wallAddres       = !empty($chkuserWalletAdd) ? $chkuserWalletAdd->withdrwal_wallet_address : "";
+        // $chkuserWalletAdd =  User::where('id', $this->userid)->first();
+        //$wallAddres       = !empty($chkuserWalletAdd) ? $chkuserWalletAdd->withdrwal_wallet_address : "";
 
         $uniqueID = 'W:' . $this->generateUnique4DigitNumber();
         $data = array(
@@ -337,7 +337,7 @@ class WithdrawalController extends Controller
             return response()->json($error);
         }
     }
- 
+
 
     public function approvedWithdrawRequest(Request $request)
     {
@@ -364,11 +364,11 @@ class WithdrawalController extends Controller
         $withdrawUpdate->update([
             'status'           => 1,
         ]);
-       
-        
+
+
         return response()->json("Successfully update", 200);
     }
-  
+
     // Function to log response
     function logResponse($apiUrl, $headers, $data, $httpCode, $response, $err = null)
     {
@@ -461,7 +461,8 @@ class WithdrawalController extends Controller
         ], 200);
     }
 
-    public function checkwalletAddressAllHistory(Request $request){
+    public function checkwalletAddressAllHistory(Request $request)
+    {
 
 
 
@@ -525,7 +526,5 @@ class WithdrawalController extends Controller
             'total_pages' => $paginator->lastPage(),
             'total_records' => $paginator->total(),
         ], 200);
-
-
     }
 }

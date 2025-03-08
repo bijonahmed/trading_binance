@@ -72,7 +72,7 @@ const Index = () => {
   return (
     <div>
       <Helmet>
-        <title>Welcome to Fast Trading</title>
+        <title>Welcome to Liquid Coin</title>
       </Helmet>
 
       {/* Start */}

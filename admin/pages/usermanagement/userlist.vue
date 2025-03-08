@@ -74,24 +74,7 @@
                   </table>
                 </form>
               </div>
-              <div class="col-md-6">
-                <div class="buttonList">
-                  <div class="btn-group">
-                    <LazyNuxtLink
-                      to="/usermanagement/add-user"
-                      type="button"
-                      class="btn btn-primary btn-flat"
-                    >
-                      <i class="fas fa-plus"></i>Add
-                    </LazyNuxtLink>
-                  </div>
-                  <!-- <button type="button" class="btn btn-danger btn-flat btn-sm" @click="logoutUsers"><i
-                                            class="fas fa-trash-alt"></i>Logout All Users</button> -->
-                  <button type="button" class="btn btn-warning btn-flat btn-sm">
-                    <i class="fas fa-trash-alt"></i>Reset
-                  </button>
-                </div>
-              </div>
+             
             </div>
           </div>
 
@@ -156,12 +139,12 @@
                     </td>
                     <td>
                       <div class="">
-                        <button
+                        <!-- <button
                           class="btn w-100 d-block btn-default btn-sm btn-flat"
                           @click="getDetails(item.id)"
                         >
                           <i class="far fa-eye"></i>Details
-                        </button>
+                        </button> -->
                         <button
                           class="btn w-100 btn-warning btn-sm btn-flat"
                           @click="edit(item.id)"

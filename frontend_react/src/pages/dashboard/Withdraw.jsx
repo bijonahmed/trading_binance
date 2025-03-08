@@ -125,7 +125,7 @@ const Withdraw = () => {
   };
 
   useEffect(() => {
-    checkingKyc();
+   // checkingKyc();
     getWalletData();
     getCurrentBalance();
   }, []);

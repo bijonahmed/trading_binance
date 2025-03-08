@@ -61,9 +61,56 @@ class PaymentController extends Controller
         }
     }
 
-    public function sendPaymentMethodRequest(Request $request)
-    {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function sendPaymentMethodRequestMobileBanking(Request $request)
+    {
+        // dd($request->all());
+        // Check if the incoming request is JSON
+        $validatedData = $request->validate([
+            'mobileBanking' => 'required',
+            'mobileaccountNumber'  => 'required',
+        ]);
+
+        $mobileBanking  = $validatedData['mobileBanking'];
+        $mobileAccNum   = $validatedData['mobileaccountNumber'];
+        $check          = UserPaymentAddress::where('mobileBanking', $mobileBanking)->where('mobileaccountNumber', $mobileAccNum)->first();
+        if (empty($check)) {
+            // Insert the data into the Deposit model
+            $resData = UserPaymentAddress::create([
+                'mobileBanking'        => $validatedData['mobileBanking'],
+                'mobileaccountNumber'  => $validatedData['mobileaccountNumber'],
+                'user_id'              => $this->userid,
+                'type'                 => 'mobile_banking',
+                'status'               => 1,
+            ]);
+
+            // Respond with a success message
+            return response()->json([
+                'message' => 'Wallet Address successfully created',
+                'data' => $resData
+            ], 200);
+        }
+    }
+
+
+
+
+
+    public function sendPaymentMethodRequestUsdt(Request $request)
+    {
         // Check if the incoming request is JSON
         $validatedData = $request->validate([
             'walletAddress' => 'required',
@@ -78,6 +125,7 @@ class PaymentController extends Controller
                 'wallet_address'        => $validatedData['walletAddress'],
                 'name'                  => $validatedData['currency'],
                 'user_id'               => $this->userid,
+                'type'                  => 'crypto',
                 'status'                => 1,
             ]);
 
@@ -89,7 +137,7 @@ class PaymentController extends Controller
         }
     }
 
-    
+
     public function checkwalletAddress(Request $request)
     {
         $responseData  = Setting::where('id', 1)->first();
@@ -98,7 +146,7 @@ class PaymentController extends Controller
         return response()->json($data, 200);
     }
 
-  public function checkwalletAddressAllHistory(Request $request)
+    public function checkwalletAddressAllHistory(Request $request)
     {
         $responseData  = Setting::where('id', 1)->first();
         $walletAddress = !empty($responseData->crypto_wallet_address) ? $responseData->crypto_wallet_address : "";
@@ -107,7 +155,7 @@ class PaymentController extends Controller
     }
 
 
-    
+
     public function walltAddressList(Request $request)
     {
         $responseData = UserPaymentAddress::where('status', 1)->get();

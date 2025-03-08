@@ -63,9 +63,9 @@ const Deposit = () => {
 
   // Data array containing deposit methods
   const depositOptions = [
-    { slug: "btc", name: "BTC", imgSrc: "/fasttrading/images/btc.png" },
+  //  { slug: "btc", name: "BTC", imgSrc: "/fasttrading/images/btc.png" },
     { slug: "usdt", name: "USDT", imgSrc: "/fasttrading/images/usdt.png" },
-    { slug: "eth", name: "Ethereum", imgSrc: "/fasttrading/images/eth.png" },
+    //{ slug: "eth", name: "Ethereum", imgSrc: "/fasttrading/images/eth.png" },
   ];
   const goBack = () => {
     console.log("/dashboard/wallet");

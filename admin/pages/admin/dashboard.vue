@@ -1,14 +1,14 @@
 <template>
   <title>Admin Dashboard</title>
-  <div class="content-wrapper mt-3" v-if="userRoleIsAdmin">
-    <section class="content" v-if="userStatusIsAdmin">
+  <div class="content-wrapper mt-3">
+    <section class="content">
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
               <div class="card card-secondary">
                 <div class="card-header">
-                  <h3 class="card-title">Welcome to {{user_name}}</h3>
+                  <h3 class="card-title">Welcome to {{email}}</h3>
                 </div>
                
                 <div class="card-body">
@@ -229,8 +229,9 @@ definePageMeta({
   middleware: "is-logged-out",
 });
 
-const userRoleIsAdmin = computed(() => userStore.role_id === 1);
-const userStatusIsAdmin = computed(() => userStore.status === 1);
+// const userRoleIsAdmin = computed(() => userStore.role_id === 1);
+// const userStatusIsAdmin = computed(() => userStore.status === 1);
+
 const fetchData = async () => {
   try {
     const response = await axios.get(`/product/dashboardCounting`);

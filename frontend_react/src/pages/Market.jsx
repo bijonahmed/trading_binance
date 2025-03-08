@@ -143,9 +143,9 @@ const Market = () => {
             <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Future</span>
           </div>
           <div className="text-center">
-            <Link to="/kyc" className="btn_primary">
+            <Link to="/dashboard/trade-history" className="btn_primary">
               <i className="fa-solid fa-shield-quartered"></i>
-              <span className="d-none d-lg-block">&nbsp;KYC Verify</span>
+              <span className="d-none d-lg-block">&nbsp;Trade History</span>
             </Link>
             <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Sequrity</span>
           </div>

@@ -357,7 +357,8 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             'prefix' => 'payment',
         ],
         function () {
-            Route::post('sendPaymentMethodRequest', [PaymentController::class, 'sendPaymentMethodRequest']);
+            Route::post('sendPaymentMethodRequestMobileBanking', [PaymentController::class, 'sendPaymentMethodRequestMobileBanking']);
+            Route::post('sendPaymentMethodRequestUsdt', [PaymentController::class, 'sendPaymentMethodRequestUsdt']);
             Route::post('getWalletAddress', [PaymentController::class, 'checkwalletAddressAllHistory']);
             Route::get('walltAddressList', [PaymentController::class, 'walltAddressList']);
             Route::post('liveRequest', [PaymentController::class, 'sendApiRequest']);

@@ -38,22 +38,27 @@
                                             class="col-sm-3 col-form-label">Role</label>
                                         <div class="col-sm-9">
 
-                                            <select name="role_id" v-model="insertdata.role_id" class="form-control role_id">
+                                            <select name="role_id" v-model="insertdata.role_id"
+                                                class="form-control role_id">
                                                 <option value="" selected>Select</option>
-                                                <option v-for='data in allrole' :value='data.id'>{{ data.name }}</option>
+                                                <option v-for='data in allrole' :value='data.id'>{{ data.name }}
+                                                </option>
                                             </select>
-                                            <span class="text-danger" v-if="errors.role_id">{{ errors.role_id[0] }}</span>
+                                            <span class="text-danger" v-if="errors.role_id">{{ errors.role_id[0]
+                                                }}</span>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control name" v-model="insertdata.name" id="name"
-                                                placeholder="Name">
+                                            <input type="text" class="form-control name" v-model="insertdata.name"
+                                                id="name" placeholder="Name">
                                             <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                                         </div>
                                     </div>
+
+
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Email</label>
@@ -65,14 +70,6 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Phone No</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control phone" v-model="insertdata.phone"
-                                                id="phone" placeholder="Phone No">
-                                            <span class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
                                         <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Address</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control addres" v-model="insertdata.addres"
@@ -80,17 +77,31 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="row mb-3" v-if="showUsername">
+                                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Username</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control name" v-model="insertdata.username"
+                                                id="username" placeholder="Username">
+                                            <span class="text-danger" v-if="errors.username">{{ errors.username[0]
+                                            }}</span>
+                                        </div>
+                                    </div>
+
+
                                     <div class="row mb-3">
                                         <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Password</label>
                                         <div class="col-sm-9">
                                             <input type="password" class="form-control password"
                                                 v-model="insertdata.password" id="password" placeholder="xxxxxxxxxxxxx">
-                                            <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
+                                            <span class="text-danger" v-if="errors.password">{{ errors.password[0]
+                                                }}</span>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Confirm Password</label>
+                                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Confirm
+                                            Password</label>
                                         <div class="col-sm-9">
                                             <input type="password" class="form-control password_confirmation"
                                                 v-model="insertdata.password_confirmation" id="password_confirmation"
@@ -108,10 +119,10 @@
                                             <!-- <input type="file" ref="file" @change="onFileSelected" class="form-control"
                                                 id="file" name="file" /> -->
 
-                                                <input type="file" value class="form-control" id="fileInput" accept="image/png,image/jpeg"
-                              ref="files" @change="onFileSelected" />
+                                            <input type="file" value class="form-control" id="fileInput"
+                                                accept="image/png,image/jpeg" ref="files" @change="onFileSelected" />
 
-                                                <img v-if="previewUrl" :src="previewUrl" alt="Preview" class="img-fluids" />
+                                            <img v-if="previewUrl" :src="previewUrl" alt="Preview" class="img-fluids" />
                                         </div>
                                     </div>
 
@@ -144,7 +155,7 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
@@ -161,6 +172,7 @@ const insertdata = reactive({
     phone: '',
     email: '',
     addres: '',
+    username: '',
     role_id: '',
     password: '',
     password_confirmation: '',
@@ -176,34 +188,35 @@ definePageMeta({
     title: 'Add Users' // Set your desired page title here
 
 })
-
+const showUsername = computed(() => insertdata.role_id == 2);
 
 const previewImage = (event) => {
-  const file = event.target.files[0];
-  previewUrl.value = URL.createObjectURL(file);
-  checkImageDimensionsThunbnail(file);
+    const file = event.target.files[0];
+    previewUrl.value = URL.createObjectURL(file);
+    checkImageDimensionsThunbnail(file);
 };
 
 
 
 const checkImageDimensionsThunbnail = (file) => {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const img = new Image();
-    img.src = e.target.result;
-    img.onload = () => {
-        previewUrl.value = e.target.result;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = () => {
+            previewUrl.value = e.target.result;
+        };
     };
-  };
-  reader.readAsDataURL(file);
-  //resetInput();
+    reader.readAsDataURL(file);
+    //resetInput();
 };
 
 
 const onFileSelected = (event) => {
-  previewImage(event)
-  file.value = event.target.files[0];
+    previewImage(event)
+    file.value = event.target.files[0];
 };
+
 
 
 
@@ -228,9 +241,18 @@ const saveData = () => {
     };
     axios.post('/user/saveUser', formData, { headers })
         .then((res) => {
-            document.getElementById('formrest').reset();
+            //document.getElementById('formrest').reset();
+            console.log("Selected role id: " + insertdata.role_id);
+
             success_noti();
-            router.push('/user/user-list');
+            if (insertdata.role_id == 1) {
+                console.log("this condition working.... supper admin"+ insertdata.role_id);
+                router.push('/usermanagement/superadmin-list');
+            } else if (insertdata.role_id == 3) {
+                console.log("this condition working.... admin"+ insertdata.role_id);
+                router.push('/usermanagement/admin-list');
+            }
+
         }).catch(error => {
             if (error.response && error.response.status === 422) {
                 errors.value = error.response.data.errors;
@@ -263,17 +285,16 @@ const success_noti = () => {
 
 //Find Product Row
 const getRuleList = () => {
-   axios.get(`/user/allrolelist`).then(response => {
-       //console.log("product row:" + response.data.data.id);
-       allrole.value = response.data;
-   });
+    axios.get(`/user/allrolelist`).then(response => {
+        //console.log("product row:" + response.data.data.id);
+        allrole.value = response.data;
+    });
 };
 
 // Call the loadeditor function when the component is mounted
 onMounted(async () => {
-   getRuleList();
+    getRuleList();
 
 });
 
 </script>
-   
