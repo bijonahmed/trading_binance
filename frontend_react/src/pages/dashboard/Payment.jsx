@@ -17,9 +17,17 @@ const Payment = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [currency, setCurrency] = useState("");
   const [mobileBanking, setMobileBanking] = useState("");
+  const [selected_bank, setselected_bank] = useState("");
   const [mobileaccountNumber, setMobileAccNumber] = useState("");
+  const [bankAccountNum, setBankAccNumber] = useState("");
+  const [bankAccountName, setBankAccName] = useState("");
   const [loading, setLoading] = useState(false);
   const [walletList, setWalletList] = useState([]);
+  const [activecountryList, setCountryList] = useState([]);
+  const [mbankingList, setMbankingList] = useState([]);
+  const [bankingList, setbankingList] = useState([]);
+  const [mobile_bank_country, setMobileBankCountry] = useState("");
+  const [bank_country, setBankCountry] = useState("");
   const [errors, setErrors] = useState({});
   const modalRef = useRef(null); // Reference for the modal
 
@@ -27,12 +35,85 @@ const Payment = () => {
     setCurrency(event.target.value); // Set the selected currency
   };
 
+  const selectBankingCountry = async (value) => {
+    setBankCountry(value); // Directly use the value
+    try {
+      setLoading(true);
+      const response = await axios.get(`/payment/countryWiseBank`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        params: { countryid: value }, // Pass `countryid` correctly as a query parameter
+      });
+
+      const cData = response.data.data;
+      console.log("Array Data:" + cData);
+      setbankingList(cData);
+    } catch (error) {
+      console.error("Error Data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const selectMobileBankingCountry = async (value) => {
+    setMobileBankCountry(value); // Directly use the value
+    try {
+      setLoading(true);
+      const response = await axios.get(`/payment/countryWiseMobileBank`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        params: { countryid: value }, // Pass `countryid` correctly as a query parameter
+      });
+
+      const cData = response.data.data;
+      console.log("Array Data:" + cData);
+      setMbankingList(cData);
+    } catch (error) {
+      console.error("Error Data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleMobileBankingChange = (event) => {
     setMobileBanking(event.target.value); // Set the selected currency
   };
 
+  const handleBankingChange = (event) => {
+    setselected_bank(event.target.value); // Set the selected currency
+  };
+
   const handleMobileAccountChange = (event) => {
     setMobileAccNumber(event.target.value); // Set the selected currency
+  };
+  const handleAccountNumberChange = (event) => {
+    setBankAccNumber(event.target.value); // Set the selected currency
+  };
+
+  const handleAccountNameChange = (event) => {
+    setBankAccName(event.target.value); // Set the selected currency
+  };
+
+  const getActiveCountry = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/payment/activeCountryList`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }, // Removed the extra comma here
+      });
+      const cData = response.data.data;
+      setCountryList(cData);
+    } catch (error) {
+      console.error("Error Data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getWalletData = async () => {
@@ -53,12 +134,66 @@ const Payment = () => {
     }
   };
 
+  const handleSubmitBanking = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("bank_country", bank_country);
+      formData.append("selected_bank", selected_bank);
+      formData.append("bankAccountName", bankAccountName);
+      formData.append("bankAccountNum", bankAccountNum);
+
+      const response = await axios.post(
+        `/payment/sendPaymentMethodRequestBanking`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Live request response:", response.data);
+      $.notify("Wallet Address successfully created!", "success");
+      getWalletData();
+      // Hide the Bootstrap Modal
+      if (modalRef.current) {
+        const modal = bootstrap.Modal.getInstance(modalRef.current);
+        modal.hide();
+      }
+      // Clear form fields
+      setWalletAddress("");
+      setErrors({});
+    } catch (error) {
+      console.error("Registration error:", error);
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        if (error.response.data.errors) {
+          setErrors(error.response.data.errors); // Set errors from API response
+        } else {
+          $.notify(
+            error.response.data.message || "Something went wrong!",
+            "error"
+          );
+        }
+      } else {
+        $.notify("Network error. Please try again.", "error");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmitMobileBanking = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const formData = new FormData();
+      formData.append("mobile_bank_country", mobile_bank_country);
       formData.append("mobileBanking", mobileBanking);
       formData.append("mobileaccountNumber", mobileaccountNumber);
 
@@ -156,6 +291,7 @@ const Payment = () => {
   };
 
   useEffect(() => {
+    getActiveCountry();
     getWalletData();
   }, []);
 
@@ -276,6 +412,15 @@ const Payment = () => {
                                   </>
                                 )}
 
+                                {wallet.type == "banking" && (
+                                  <>
+                                    <img
+                                      src="/fasttrading/images/newbank.jpg"
+                                      className="map-img"
+                                    />
+                                  </>
+                                )}
+
                                 <div className="rows card-no">
                                   {wallet.type == "crypto" && (
                                     <>
@@ -297,6 +442,21 @@ const Payment = () => {
                                       </p>
                                     </>
                                   )}
+
+                                  {wallet.type == "banking" && (
+                                    <>
+                                      <p
+                                        className="d-flex align-items-center"
+                                        style={{ color: "white" }}
+                                      >
+                                        {wallet.selected_bank}
+                                        <br />
+                                        {wallet.bankAccountName}
+                                        <br />
+                                        {wallet.bankAccountNum}
+                                      </p>
+                                    </>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -314,7 +474,6 @@ const Payment = () => {
           <div
             className="modal fade"
             id="paymentModal"
-            tabIndex={-1}
             aria-labelledby="boostModalLabel"
             aria-modal="true"
             role="dialog"
@@ -390,7 +549,6 @@ const Payment = () => {
                           id="home-tab-pane"
                           role="tabpanel"
                           aria-labelledby="home-tab"
-                          tabindex="0"
                         >
                           <form
                             onSubmit={handleSubmitUsdt}
@@ -407,11 +565,12 @@ const Payment = () => {
                                 value={currency}
                                 onChange={handleCurrencyChange}
                               >
-                                   <option value="">Select</option>
+                                <option value="">Select</option>
                                 <option>USDT-TRC20-TRX</option>
                                 <option>USDC-TRC20-TRX</option>
                               </select>
                             </div>
+
                             <div id="additionalFields2" style={{}}>
                               <div className="form_group mb-2">
                                 <p>
@@ -449,29 +608,54 @@ const Payment = () => {
                           id="profile-tab-pane"
                           role="tabpanel"
                           aria-labelledby="profile-tab"
-                          tabindex="0"
                         >
                           <form
                             className="withdraw_form"
                             onSubmit={handleSubmitMobileBanking}
                           >
-                            <div class="form_group">
+                            <div className="form_group">
+                              <p>
+                                Select Country
+                                <span className="text-danger d-inline">*</span>
+                              </p>
+
+                              <select
+                                id="mySelect2"
+                                className="form-control"
+                                value={mobile_bank_country || ""}
+                                onChange={(e) =>
+                                  selectMobileBankingCountry(e.target.value)
+                                }
+                              >
+                                <option value="">Select</option>
+                                {activecountryList.map((country) => (
+                                  <option
+                                    key={country.code || country.id}
+                                    value={country.value}
+                                  >
+                                    {country.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            <div className="form_group">
                               <p>
                                 Select Mobile Banking
                                 <span className="text-danger d-inline">*</span>
                               </p>
                               <select
-                                name=""
                                 id="mySelect2"
                                 className="form-control"
-                                value={mobileBanking}
+                                value={selected_bank}
                                 onChange={handleMobileBankingChange}
                               >
                                 <option value="">Select</option>
-                                <option>Bkash</option>
-                                <option>Nogot</option>
-                                <option>Rocket</option>
-                                <option>Upay</option>
+                                {mbankingList.map((bank, index) => (
+                                  <option key={index} value={bank.name}>
+                                    {bank.name}
+                                  </option>
+                                ))}
                               </select>
 
                               {errors.mobileBanking && (
@@ -516,32 +700,86 @@ const Payment = () => {
                           id="contact-tab-pane"
                           role="tabpanel"
                           aria-labelledby="contact-tab"
-                          tabindex="0"
                         >
-                          <form action="" className="withdraw_form">
+                          <form
+                            onSubmit={handleSubmitBanking}
+                            className="withdraw_form"
+                          >
+                            <div className="form_group">
+                              <p>
+                                Select Country
+                                <span className="text-danger d-inline">*</span>
+                              </p>
+
+                              <select
+                                id="mySelect2"
+                                className="form-control"
+                                value={bank_country || ""}
+                                onChange={(e) =>
+                                  selectBankingCountry(e.target.value)
+                                }
+                              >
+                                <option value="">Select</option>
+                                {activecountryList.map((country) => (
+                                  <option
+                                    key={country.code || country.id}
+                                    value={country.value}
+                                  >
+                                    {country.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
                             <div className="form_group">
                               <p>
                                 Select Bank
                                 <span className="text-danger d-inline">*</span>
                               </p>
-                              <select id="mySelect2" className="form-control">
-                                <option selected="" value="">
-                                  City Bank PLC
-                                </option>
-                                <option selected="" value="">
-                                  Sonali Bank PLC
-                                </option>
-                                <option selected="" value="">
-                                  Trust Bank PLC
-                                </option>
-                                <option selected="" value="">
-                                  Datch Bangla Bank PLC
-                                </option>
-                                <option selected="" value="">
-                                  Islami Bank PLC
-                                </option>
+                              <select
+                                id="mySelect2"
+                                className="form-control"
+                                value={selected_bank}
+                                onChange={handleBankingChange}
+                              >
+                                <option value="">Select</option>
+                                {bankingList.map((bank, index) => (
+                                  <option key={index} value={bank.name}>
+                                    {bank.name}
+                                  </option>
+                                ))}
                               </select>
+
+                              {errors.selected_bank && (
+                                <div className="error text-danger">
+                                  {errors.selected_bank}
+                                </div>
+                              )}
                             </div>
+
+                            <div>
+                              <div className="form_group mb-2">
+                                <p>
+                                  Account Name
+                                  <span className="text-danger d-inline">
+                                    *
+                                  </span>
+                                </p>
+                                <input
+                                  type="text"
+                                  value={bankAccountName}
+                                  onChange={handleAccountNameChange}
+                                  placeholder="Account Name"
+                                  className="form-control mb-0"
+                                />
+                                {errors.bankAccountName && (
+                                  <div className="error text-danger">
+                                    {errors.bankAccountName}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
                             <div>
                               <div className="form_group mb-2">
                                 <p>
@@ -553,8 +791,15 @@ const Payment = () => {
                                 <input
                                   type="text"
                                   placeholder="Account Number"
+                                  value={bankAccountNum}
+                                  onChange={handleAccountNumberChange}
                                   className="form-control mb-0"
                                 />
+                                {errors.bankAccountNum && (
+                                  <div className="error text-danger">
+                                    {errors.bankAccountNum}
+                                  </div>
+                                )}
                               </div>
                             </div>
 

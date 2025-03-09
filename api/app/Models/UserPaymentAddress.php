@@ -21,6 +21,11 @@ class UserPaymentAddress extends Authenticatable
     'wallet_address',
     'mobileBanking',
     'mobileaccountNumber',
+    'mobile_bank_country',
+    'bank_country',
+    'selected_bank',
+    'bankAccountName',
+    'bankAccountNum',
     'type',
     'status'
   ];

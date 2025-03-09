@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\AddCountry;
 use App\Models\BankList;
+use App\Models\BankSetting;
 use App\Models\Countrys;
 use App\Models\CountryWiseBank;
 use App\Models\Currency;
 use App\Models\Language;
+use App\Models\MobileBanking;
 use App\Models\Profile;
 use App\Models\Setting;
 use App\Models\Sliders;
@@ -102,6 +104,28 @@ class SettingController extends Controller
     }
 
 
+
+    public function getCountryBankSettingList()
+    {
+
+        $rows = BankSetting::leftJoin('country', 'bank_setting.country_id', '=', 'country.id')
+            ->select(
+                'bank_setting.id',
+                'bank_setting.name as bank_name',
+                'bank_setting.status',
+                'country.name as country_name'
+            )
+            ->orderBy('bank_setting.id', 'desc') // Sorting in descending order
+            ->get();
+
+        return response()->json([
+            'data' => $rows,
+            'message' => 'success'
+        ], 200);
+    }
+
+
+
     public function getCountryBankList()
     {
 
@@ -134,6 +158,24 @@ class SettingController extends Controller
     }
 
 
+
+    public function getMobileBankingList(Request $request)
+    {
+
+
+        $rows = MobileBanking::leftJoin('country', 'mobile_banking_setting.country_id', '=', 'country.id')
+            ->select(
+                'mobile_banking_setting.id',
+                'mobile_banking_setting.name',
+                'mobile_banking_setting.status',
+                'country.name as country_name'
+            )
+            ->get();
+        return response()->json([
+            'data' => $rows,
+            'message' => 'success'
+        ], 200);
+    }
 
     public function getCountryCurrencyList(Request $request)
     {
@@ -191,7 +233,16 @@ class SettingController extends Controller
     }
 
 
-
+    public function getBankRow(Request $request)
+    {
+        $id = (int) $request->id;
+        $data = BankSetting::where('id', $id)->first();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
     public function getCountryWiseBankRow(Request $request)
     {
         $id = (int) $request->id;
@@ -202,6 +253,18 @@ class SettingController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function getMobileBankRow(Request $request)
+    {
+        $id = (int) $request->id;
+        $data = MobileBanking::where('id', $id)->first();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
 
     public function getCountryRow(Request $request)
     {
@@ -367,6 +430,82 @@ class SettingController extends Controller
         }
         return response()->json($resdata);
     }
+
+
+
+    public function addBank(Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'country_id'  => 'required',
+            'name'        => 'required|unique:bank_setting,name,' . $request->id,
+            'status'      => 'required',
+        ], [
+            'country_id.required'  => 'The country is required.',
+            'name.required'        => 'The name is required.',
+            'status.required'      => 'The status is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $data = array(
+            'country_id'     => $request->country_id,
+            'name'           => $request->name,
+            'status'         => $request->status,
+        );
+
+        $id = !empty($request->id) ? $request->id : "";
+        if (empty($id)) {
+            $resdata['id']     = BankSetting::insertGetId($data);
+        } else {
+            $resdata['id']     = BankSetting::where('id', $id)->update($data);
+        }
+        return response()->json($resdata);
+    }
+
+
+    public function addMobileBanking(Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'country_id'  => 'required',
+            'name'        => 'required|unique:mobile_banking_setting,name,' . $request->id,
+            'status'      => 'required',
+        ], [
+            'country_id.required'  => 'The country is required.',
+            'currency_id.required' => 'The currency is required.',
+            'name.required'   => 'The name is required.',
+            'status.required'      => 'The status is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $data = array(
+            'country_id'     => $request->country_id,
+            'name'           => $request->name,
+            'status'         => $request->status,
+        );
+
+        $id = !empty($request->id) ? $request->id : "";
+        if (empty($id)) {
+            $resdata['id']     = MobileBanking::insertGetId($data);
+        } else {
+            $resdata['id']     = MobileBanking::where('id', $id)->update($data);
+        }
+        return response()->json($resdata);
+    }
+
+
+
+
+
+
 
     public function addCountryInfo(Request $request)
     {

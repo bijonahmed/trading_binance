@@ -506,6 +506,19 @@ class WithdrawalController extends Controller
                 2 => 'Reject',
             ];
 
+            $type= "";
+            if($item->type == 'banking'){
+                $type= "Banking";
+            }
+
+            if($item->type == 'mobile_banking'){
+                $type= "Mobile Banking";
+            }
+
+            if($item->type == 'crypto'){
+                $type= "Crypto";
+            }
+
 
             return [
                 'id'                    => $item->id,
@@ -514,6 +527,20 @@ class WithdrawalController extends Controller
                 'wallet_address'        => $item->wallet_address,
                 'status'                => $item->status,
                 'username'              => $item->username,
+                'type'                  => $type,
+                'pay_type'              => $item->type,
+                //For Bank
+                'bank_country'          => $item->bank_country,
+                'selected_bank'         => $item->selected_bank,
+                'bankAccountName'       => $item->bankAccountName,
+                'bankAccountNum'        => $item->bankAccountNum,
+                //For Mobile 
+                'mobile_bank_country'   => $item->mobile_bank_country,
+                'mobileBanking'         => $item->mobileBanking,
+                'mobileaccountNumber'   => $item->mobileaccountNumber,
+                //END
+
+
                 'email'                 => $item->email,
                 'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
             ];

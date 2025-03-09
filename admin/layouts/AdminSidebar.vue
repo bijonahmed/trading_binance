@@ -76,6 +76,7 @@ const menuItems = ref([
     route: null,
     children: [
       { label: "Pre-Setting", route: "/setting/presetting", hidden: false },
+      { label: "Payment Page Setting", route: "/walletmanagement/paymentsetting", hidden: false },
       { label: "Bank", route: "/setting/bank/list", hidden: false },
     ],
   },
@@ -87,6 +88,7 @@ const menuItems = ref([
       { label: "Deposit Request", route: "/walletmanagement/deposit-management", hidden: false },
       { label: "Withdrawal Request", route: "/walletmanagement/withdrawal-management", hidden: false },
       { label: "All Users withdrawal Address", route: "/walletmanagement/withdrawal-address", hidden: false },
+   
      // { label: "Manual Adjustment report", route: "/walletmanagement/manual-adjustment-report", hidden: false },
       //{ label: "Create Manual adjustment", route: "/walletmanagement/manual-adjustment", hidden: false },
     ],

@@ -333,12 +333,20 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
         function () {
             Route::get('countryWiseShowBank', [SettingController::class, 'countryWiseShowBank']);
             Route::get('getCountryRow', [SettingController::class, 'getCountryRow']);
+            Route::get('getMobileBankRow', [SettingController::class, 'getMobileBankRow']);
             Route::get('getCountryWiseBankRow', [SettingController::class, 'getCountryWiseBankRow']);
+            Route::get('getBankRow', [SettingController::class, 'getBankRow']);
+
             Route::get('getCountryCurrencyList', [SettingController::class, 'getCountryCurrencyList']);
+            Route::get('getMobileBankingList', [SettingController::class, 'getMobileBankingList']);
             Route::get('getCountryGroupList', [SettingController::class, 'getCountryGroupList']);
             Route::get('getCountryBankList', [SettingController::class, 'getCountryBankList']);
+            Route::get('getCountryBankSettingList', [SettingController::class, 'getCountryBankSettingList']);
             Route::post('addCountryInfo', [SettingController::class, 'addCountryInfo']);
+            Route::post('addMobileBanking', [SettingController::class, 'addMobileBanking']);
             Route::post('addCountryWiseBank', [SettingController::class, 'addCountryWiseBank']);
+
+            Route::post('addBank', [SettingController::class, 'addBank']);
             Route::get('getAllBankList', [SettingController::class, 'getAllBankList']);
             Route::get('getSelectedBank', [SettingController::class, 'getSelectedBank']);
             Route::post('upateSetting', [SettingController::class, 'upateSetting']);
@@ -358,9 +366,13 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
         ],
         function () {
             Route::post('sendPaymentMethodRequestMobileBanking', [PaymentController::class, 'sendPaymentMethodRequestMobileBanking']);
+            Route::post('sendPaymentMethodRequestBanking', [PaymentController::class, 'sendPaymentMethodRequestBanking']);
             Route::post('sendPaymentMethodRequestUsdt', [PaymentController::class, 'sendPaymentMethodRequestUsdt']);
             Route::post('getWalletAddress', [PaymentController::class, 'checkwalletAddressAllHistory']);
             Route::get('walltAddressList', [PaymentController::class, 'walltAddressList']);
+            Route::get('activeCountryList', [PaymentController::class, 'activeCountryList']);
+            Route::get('countryWiseMobileBank', [PaymentController::class, 'countryWiseMobileBank']);
+            Route::get('countryWiseBank', [PaymentController::class, 'countryWiseBank']);
             Route::post('liveRequest', [PaymentController::class, 'sendApiRequest']);
             Route::get('callbackStatus', [PaymentController::class, 'callbackStatus']);
         },
