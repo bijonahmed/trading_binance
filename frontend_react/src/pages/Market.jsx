@@ -87,7 +87,7 @@ const Market = () => {
   return (
     <>
       <Helmet>
-        <title>Market</title>
+      <title>Welcome to Liquid Coin</title>
       </Helmet>
       <Navbar />
 

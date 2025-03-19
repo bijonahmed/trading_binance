@@ -99,9 +99,9 @@ const DepositHistory = () => {
   };
   useEffect(() => {
     getDepositHistoryReport();
-    if (!user) {
-      navigate("/login"); // Redirect to the login page if `user` is null or undefined
-    }
+    // if (!user) {
+    //   navigate("/login"); // Redirect to the login page if `user` is null or undefined
+    // }
   }, [user, navigate]);
   return (
     <>

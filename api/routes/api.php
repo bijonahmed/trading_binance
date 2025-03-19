@@ -108,7 +108,7 @@ Route::group(
         'prefix' => 'public',
     ],
     function () {
-         Route::get('gamePltfmAll', [PublicController::class, 'gamePltfmAll']);
+        Route::get('gamePltfmAll', [PublicController::class, 'gamePltfmAll']);
         Route::post('callbackStatus', [PublicController::class, 'callbackStatus']); //payment getway callback
         Route::get('getShortVideos', [PublicController::class, 'getShortVideos']);
         Route::get('getonlyPltform', [PublicController::class, 'getonlyPltform']);
@@ -356,7 +356,6 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::get('getCuntryCurrencyList', [SettingController::class, 'getCuntryCurrencyList']);
             Route::get('languagerow/{id}', [SettingController::class, 'chkLanguagerow']);
             Route::get('updateTransationRow', [SettingController::class, 'updateTransationRow']);
-
         },
     );
 
@@ -400,9 +399,7 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::post('updateTrade', [TradingController::class, 'updateTrade']);
         },
     );
-
-
-
+ 
 
     Route::group(
         [

@@ -9,6 +9,12 @@ import axios from "/config/axiosConfig";
 import Navbar from "../components/Navbar";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
+import TradingViewWidgetBTCUSDT from "../components/TradingViewWidgetBTCUSDT";
+import TradingViewWidgetETHUSDT from "../components/TradingViewWidgetETHUSDT";
+import TradingViewWidgetXRPUSDT from "../components/TradingViewWidgetXRPUSDT";
+import TradingViewWidgetBNBUSDT from "../components/TradingViewWidgetBNBUSDT";
+import CryptoList from "../components/CryptoListMarket";
+import TradingViewWidget from "../components/TradingViewSlider";
 
 
 // import Chart from "chart.js/auto";
@@ -21,185 +27,215 @@ const cryptos = [
 ];
 
 const Index = () => {
-  const [cryptoData, setCryptoData] = useState({});
-  const getRandomStart = () => 212436053 + Math.floor(Math.random() * 1001) - 500;
-
-  const [userCount, setUserCount] = useState(getRandomStart()); // Initialize with random value
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setUserCount((prevCount) => prevCount + Math.floor(Math.random() * 5) + 1); // Increase by 1-5
-    }, 1000);
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
-
-  useEffect(() => {
-    const fetchCryptoData = async (symbol) => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/simple/price?ids=${symbol}&vs_currencies=usd&include_24hr_vol=true&include_24hr_change=true`
-        );
-        const data = await response.json();
-        
-        if (!data[symbol]) throw new Error("Invalid symbol or API issue");
-    
-        setCryptoData((prev) => ({
-          ...prev,
-          [symbol]: {
-            price: data[symbol].usd.toFixed(2),
-            volume: `Vol: ${data[symbol].usd_24h_vol.toFixed(2)}`,
-            change: `${data[symbol].usd_24h_change.toFixed(2)}%`,
-            isPositive: data[symbol].usd_24h_change >= 0,
-          },
-        }));
-      } catch (error) {
-        console.error(`Error fetching ${symbol} data:`, error);
-      }
+  const [cryptos, setCryptos] = useState([
+    { symbol: "BTC", name: "BTC/USDT", image: "/fasttrading/images/btc.png" },
+    { symbol: "ETH", name: "ETH/USDT", image: "/fasttrading/images/eth.png" },
+    { symbol: "BNB", name: "BNB/USDT", image: "/fasttrading/images/bnb.png" },
+    { symbol: "XRP", name: "XRP/USDT", image: "/fasttrading/images/xrp.png" },
+    { symbol: "ADA", name: "ADA/USDT", image: "/fasttrading/images/ada.png" },
+    { symbol: "SOL", name: "SOL/USDT", image: "/fasttrading/images/sol.png" },
+  ]);
+  const getRandomName = () => {
+    const names = [
+      // Bangladeshi Names
+      "Rahim Ahmed", "Karim Hossain", "Hasan Chowdhury", "Shamim Al Mamun", "Ayesha Akter",
+      "Fatima Khatun", "Nusrat Jahan", "Samiul Islam", "Tanvir Rahman", "Shafiq Mahmud",
+      "Mehedi Hasan", "Faisal Hossain", "Naimur Rahman", "Sadia Rahman", "Sumaiya Islam",
+      "Rafiq Sarker", "Jannatul Ferdous", "Tariqul Islam", "Mizanur Rahman", "Shakil Ahmed",
+  
+      // Indian Names
+      "Rajesh Sharma", "Amit Verma", "Pooja Patel", "Sunil Kumar", "Priya Mehta",
+      "Ravi Shankar", "Neha Kapoor", "Arjun Reddy", "Sanya Singh", "Deepak Malhotra",
+      "Sneha Nair", "Vikram Desai", "Anjali Iyer", "Suresh Ranganathan", "Manish Choudhury",
+      "Kiran Rao", "Rahul Bhardwaj", "Meera Joshi", "Nikhil Saxena", "Alok Mishra",
+  
+      // Pakistani Names
+      "Ali Khan", "Mohammad Asif", "Sadia Malik", "Bilal Ahmed", "Ayesha Siddiqui",
+      "Hassan Javed", "Fatima Tariq", "Shahid Hussain", "Farhan Sheikh", "Sana Riaz",
+      "Zainab Hassan", "Imran Qureshi", "Nadia Yousuf", "Tahir Mahmood", "Feroz Alam",
+      "Uzma Butt", "Hamza Saeed", "Adnan Khalid", "Shagufta Anwar", "Waqar Zaman",
+  
+      // More Mixed Names
+      "Nasir Uddin", "Tasnim Ahmed", "Rohan Gupta", "Anurag Sen", "Shivangi Thakur",
+      "Javed Iqbal", "Sara Noor", "Mohsin Raza", "Mahbub Alam", "Saima Yasmin",
+      "Yasir Hossain", "Nabila Sultana", "Tanzim Rahman", "Sakib Chowdhury", "Afzal Karim",
+      "Tanisha Farooqui", "Azhar Shah", "Rehman Khan", "Aarav Malhotra", "Nida Pervez",
+      "Zubair Ahmed", "Fahim Hossain", "Sadia Zaman", "Ashfaq Jamil", "Kamrul Hasan",
+      "Sohail Anwar", "Rubina Akhter", "Nashit Rehman", "Abdul Samad", "Tanzeel Haque"
+    ];
+  
+    return names[Math.floor(Math.random() * names.length)];
+  };
+  
+  const generateRandomData = () => {
+    const tradeAmount = Math.random() * 50000; // Max $50,000
+    const randomGain = Math.random() * 10; // Max 10%
+  
+    return {
+      name: getRandomName(),
+      tradeAmountNum: tradeAmount,
+      tradeAmount: `$${tradeAmount.toFixed(2)}`,
+      gainNum: randomGain,
+      gain: `+${randomGain.toFixed(2)}%`,
     };
-    
-
-    // Fetch data every second
-    const interval = setInterval(() => {
-      cryptos.forEach(({ symbol }) => fetchCryptoData(symbol));
-    }, 4000); // 1-second interval
-
-
-    cryptos.forEach(({ symbol }) => fetchCryptoData(symbol));
+  };
+  
+  const [tableData, setTableData] = useState([]);
+  
+  useEffect(() => {
+    const data = [];
+    for (let i = 0; i < 10; i++) {
+      data.push(generateRandomData());
+    }
+  
+    // Sort by trade amount first, then by gain percentage if trade amounts are equal
+    data.sort((a, b) => {
+      if (b.tradeAmountNum !== a.tradeAmountNum) {
+        return b.tradeAmountNum - a.tradeAmountNum; // Sort by trade amount (high to low)
+      }
+      return b.gainNum - a.gainNum; // If trade amount is same, sort by gain percentage (high to low)
+    });
+  
+    setTableData(data);
   }, []);
-
+  
 
   return (
-    <div>
+    <>
       <Helmet>
-        <title>Welcome to Liquid Coin</title>
+      <title>Welcome to Country Coin BD</title>
       </Helmet>
+      <Navbar />
 
-      {/* Start */}
-
-      <div>
-        <Navbar />
-        {/* header part end here  */}
-        {/* hero part start herer  */}
-        <section className="hero_part">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6">
-                <div className="hero_content">
-                  <h1>
-                    <span>{userCount.toLocaleString()}</span> {/* Format number */}
-                    <strong>Trade with </strong>
-                    <strong>Confidence</strong>
-                  </h1>
-                  <div className="row">
-                    <div className="col-xl-8 me-auto">
-                      <div className="form_group_register">
-                        <input
-                          type="text"
-                          className="form-control d-none d-md-block"
-                          placeholder="Email"
-                        />
-                        <Link to="/register" className="btn_primary">
-                          Sign up
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="row">
-                  <div className="col-12">
-                    <div className="coin_table">
-
-                      <ul className="coin_list" id="crypto-table">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <h6 className="m-0">Popular</h6>
-                        </div>
-                        {cryptos.map(({ symbol, name, image }) => (
-                          <li key={symbol}>
-                            <a className="coin_link">
-                              <span className="coin_icon">
-                                <img src={image} alt={name} className="img-fluid" />
-                                <strong>{name}</strong>
-                                {/* <span>{name}</span> */}
-                              </span>
-                              <span>
-                                {cryptoData[symbol]?.price ? `$${cryptoData[symbol]?.price}` : "Loading..."}
-                              </span>
-                              <span className={cryptoData[symbol]?.change < 0 ? "negative" : "positive"}>
-                                {cryptoData[symbol]?.change || "N/A"}%
-                              </span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="coin_table">
-                      {/* TradingView Widget BEGIN */}
-                      <TradingViewNews />
-                      {/* TradingView Widget END */}
-                    </div>
-                  </div>
-                </div>
-              </div>
+      {/* TopRatedCryptocurrencies component */}
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-6 col-md-3">
+            <div className="top_rated">
+              <TradingViewWidgetBTCUSDT symbol="BINANCE:BTCUSDT" />
             </div>
           </div>
-        </section>
-        {/* hero part end here  */}
-        {/* mobile view image section start here  */}
-        <section className="mobile_img">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <div className="img_section">
-                  <img
-                    src="/fasttrading/images/mobile_view.png"
-                    alt="img"
-                    className="img"
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="img_sec_title">
-                  <h2>Trade on the go. Anywhere, anytime.</h2>
-                  <img
-                    src="/fasttrading/images/desktop_view.png"
-                    alt="img"
-                    className="img-fluid"
-                  />
-                </div>
-              </div>
+
+          <div className="col-6 col-md-3">
+            <div className="top_rated">
+              <TradingViewWidgetETHUSDT symbol="BINANCE:ETHUSDT" />
             </div>
           </div>
-        </section>
-        {/* mobile view image section end herer  */}
-        {/* faq section start here  */}
-        <Faq />
-        {/* faq section end here  */}
-        {/* sign up section  */}
-        <div className="newslatter_sec">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="signUp_sectin">
-                  <h4>Start earning today</h4>
-                  <Link to="/register" className="btn_primary">
-                    Sign up now
-                  </Link>
-                </div>
-              </div>
+
+          <div className="col-6 col-md-3">
+            <div className="top_rated">
+              <TradingViewWidgetXRPUSDT symbol="BINANCE:XRPUSDT" />
+            </div>
+          </div>
+
+          <div className="col-6 col-md-3">
+            <div className="top_rated">
+              <TradingViewWidgetBNBUSDT />
             </div>
           </div>
         </div>
-        {/* footer part start here  */}
-        <Footer />
+        <div className="bt_container_home">
+
+          <div className="text-center">
+            <Link to="/dashboard/deposit" className="btn_primary">
+              <i className="fa-solid fa-download me-md-2"></i>
+              <span className="d-none d-lg-block">Deposit</span>
+            </Link>
+            <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Deposit</span>
+          </div>
+          <div className="text-center ">
+
+            <Link to="/dashboard/withdraw" className="btn_primary">
+              <i className="fa-solid fa-upload me-md-2"></i>
+              <span className="d-none d-lg-block">Withdraw</span>
+            </Link>
+            <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Withdraw</span>
+          </div>
+          <div className="text-center ">
+            <Link to="/future/btc" className="btn_primary">
+              <i className="fa-solid fa-chart-candlestick me-md-2"></i>
+              <span className="d-none d-lg-block">Future</span>
+            </Link>
+            <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Future</span>
+          </div>
+          <div className="text-center">
+            <Link to="/dashboard/trade-history" className="btn_primary">
+              <i className="fa-solid fa-shield-quartered"></i>
+              <span className="d-none d-lg-block">&nbsp;Trade History</span>
+            </Link>
+            <span className="text-center text-white d-md-none" style={{ fontSize: "12px" }}>Sequrity</span>
+          </div>
+        </div>
+
+        {/* tape widget */}
+        <div className="row mt-3">
+          <div className="col-md-12">
+            <div className="tape_widget">
+              <TradingViewWidget />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* END */}
-    </div>
+      {/* Coin Price Table */}
+      <div className="col-md-12">
+        <div className="title">
+          <h3>Top Rated Cryptocurrencies</h3>
+        </div>
+      </div>
+      <div className="col-md-12">
+        <div className="crypto_table">
+          <table className="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th className="text-center pc_view">Rank</th>
+                <th>Name</th>
+                <th className="pc_view text-center">24 Hour Volume</th>
+                <th className="pc_view text-center">Price</th>
+                {/* <th>30 Day</th> */}
+                <th>Change(30 Day)</th>
+              </tr>
+            </thead>
+
+            <CryptoList />
+           
+          </table>
+        </div>
+      </div>
+
+      {/* Top Traders */}
+      <div className="col-md-12">
+        <div className="title">
+          <h3>Top Traders</h3>
+        </div>
+      </div>
+      <div className="col-md-12">
+        <div className="top_gainer">
+          <table className="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th className="text-center">User</th>
+                <th className="text-center">Trade Amount</th>
+                <th className="text-center">Today's Gain</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((data, index) => (
+                <tr key={index}>
+                  <td className="text-center"><h2>{getRandomName()}</h2></td>
+                  <td className="text-center"><h2 className="td_amt">{data.tradeAmount}</h2></td>
+                  <td className={`text-center ${data.gain.startsWith("+") ? "text-success" : "text-danger"}`}>
+                    <h2 className="td_amt">{data.gain}</h2>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <Footer />
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 //Frontend
-import Index from "../pages/Index.jsx";
+import Index from "../pages/Market.jsx";
 import Market from "../pages/Market.jsx";
 import Deposit from "../pages/dashboard/Deposit.jsx";
 import Future from "../pages/Future.jsx";
@@ -28,7 +28,7 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Index />} />
-      <Route path="/market" element={<Market />} />
+      <Route path="/market" element={<Index />} />
       <Route path="/dashboard/deposit" element={<Deposit />} />
       <Route path="/withdraw" element={<Withdraw />} />
       <Route path="/future/:slug" element={<Future />} />

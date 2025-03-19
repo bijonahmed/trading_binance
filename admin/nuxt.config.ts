@@ -14,8 +14,8 @@ export default defineNuxtConfig({
   
   runtimeConfig: {
     public: {
-      baseURL: process.env.NODE_ENV === 'production' ? 'https://api.liquidcointrading.com/api/' : 'http://127.0.0.1:8000/api/',
-    //baseURL: 'https://apifangame.futuregenit.com/api/' //"http://127.0.0.1:8000/api/", 
+      baseURL: process.env.NODE_ENV === 'production' ? 'https://api.countrycoinbd.com/api/' : 'http://127.0.0.1:8000/api/',
+    //baseURL: 'https://apifangame.futuregenit.com/api/' //"http://127.0.0.1:8000/api/",  
     },
   },
   pages: true,

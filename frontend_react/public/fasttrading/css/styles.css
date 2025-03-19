@@ -4,7 +4,7 @@
 }
 
 :root {
-    --color_primary: #f9c708;
+    --color_primary: #0866fe;
     --color_white: #eaefec;
     --color_secondary: #181a20;
     --color_secondary_light: #1e2329;
@@ -15,6 +15,7 @@ body {
     background-color: var(--color_secondary);
     scrollbar-width: 0px;
     /* overflow: unset !important; */
+    color: #fff;
 }
 
 body::-webkit-scrollbar {
@@ -983,7 +984,7 @@ table tbody {
     font-size: 14px;
     /* background: #f9c708; */
     background: var(--color_primary);
-    color: #000 !important;
+    color: #fff !important;
     border-radius: 5px;
 }
 
@@ -1019,7 +1020,7 @@ table tbody {
     justify-content: center;
     align-items: center;
     font-weight: 600;
-    color: #1f2630;
+    color: #fff;
     border-radius: 10px;
     border: none;
     text-decoration: none;
@@ -1444,17 +1445,12 @@ table tbody {
 
 .sidebar_item.active {
     background-color: var(--color_primary);
+    color: #fff;
 }
 
-.sidebar_item.active a i {
+.sidebar_item.active a i {color: var(--color_white);}
 
-    color: #000;
-}
-
-.sidebar_item.active a span {
-
-    color: var(--color_secondary);
-}
+.sidebar_item.active a span {color: var(--color_white);}
 
 .sidebar_top {
 
@@ -1685,7 +1681,7 @@ table tbody {
     border-radius: 5px;
     box-shadow: 0 0 10px #0000006b;
     margin: 0px 3px;
-    color: #000;
+    color: var(--color_white);
     font-weight: 400;
     text-decoration: none;
 }
@@ -3141,8 +3137,8 @@ canvas {
 
 .bt_container_home .btn_primary {
     border: 1px solid var(--color_primary);
-    color: var(--color_primary);
-    background-color: transparent;
+    color: #fff;
+    background-color: var(--color_primary);
 }
 
 @media(max-width: 576px) {

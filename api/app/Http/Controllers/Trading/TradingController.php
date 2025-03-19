@@ -174,6 +174,7 @@ class TradingController extends Controller
        
         $data['status']      = 1;
         $data['close_price'] = $close_price;
+        $data['market_price']= $market_price;
         //dd($data);
 
         $trade = Trade::find($id);

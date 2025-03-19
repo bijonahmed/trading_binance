@@ -14,7 +14,7 @@ const Future = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { token, logout } = AuthUser();
-  const durations = [30, 60, 120, 300];
+  const durations = [60, 120, 180, 300];
   const percentages = [25, 50, 75, 100];
 
   const { slug } = useParams();
@@ -22,7 +22,7 @@ const Future = () => {
   const marketSymbol = `BINANCE:${upperCaseCurrency}USDT`;
   //console.log(marketSymbol);
   const [currentBalance, setCurrentBalance] = useState("");
-  const [marketpriceAmount, setMarketPriceAmount] = useState("");
+  const [marketpriceAmount, setMarketPriceAmount] = useState(0);
   const [tradeAmount, setTradeAmount] = useState("");
   const [selectedDuration, setSelectedDuration] = useState(null);
   const [selectedPercentage, setSelectedPercentage] = useState(null);
@@ -282,7 +282,7 @@ const Future = () => {
                       <div className="btns_part">
                         <form onSubmit={handleSubmit}>
                           {/* Start Market Price */}
-                          <div className="btns">
+                          <div className="btns d-none">
                             <div>
                               <button
                                 type="button"
@@ -443,7 +443,7 @@ const Future = () => {
                       <div className="btns_part">
                         <form action="">
                           {/* Start Market Price */}
-                          <div className="btns">
+                          <div className="btns d-none">
                             <div>
                               <button type="button">
                                 <i className="fa-solid fa-minus" />

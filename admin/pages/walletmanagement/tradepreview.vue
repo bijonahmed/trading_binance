@@ -144,6 +144,19 @@
                                                         role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                                                         <!-- General  {{ request.deposit_amount }}-->
 
+                                                        <div class="row mb-3 required">
+                                                            <label for="input-name-1"
+                                                                class="col-sm-2 col-form-label required-label">Market Price</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" v-model="request.market_price"
+                                                                    autofocus class="form-control" />
+                                                                <span class="text-danger" v-if="errors.market_price">{{
+                                                                    errors.market_price[0] }}</span>
+                                                            </div>
+                                                        </div>
+
+
+
 
                                                         <div class="row mb-3 required">
                                                             <label for="input-name-1"
