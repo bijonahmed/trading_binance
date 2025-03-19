@@ -399,7 +399,7 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::post('updateTrade', [TradingController::class, 'updateTrade']);
         },
     );
- 
+
 
     Route::group(
         [

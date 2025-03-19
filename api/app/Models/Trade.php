@@ -26,6 +26,7 @@ class Trade extends Authenticatable
     'closingPNL',
     'action',
     'selected_duration',
+    'percentage_result',
     'selected_percentage',
     'action_type',
     'selectedCurrency',

@@ -129,7 +129,8 @@ const Future = () => {
   };
   const onlyTradeAmount = (e) => {
     const value = e.target.value;
-    if (/^\d*$/.test(value)) {
+    // Allow digits and a single optional decimal point
+    if (/^\d*\.?\d*$/.test(value)) {
       setTradeAmount(value);
     }
   };

@@ -38,7 +38,8 @@ class TradingController extends Controller
         $this->name = $user->name;
     }
 
-    public function traderow($id){
+    public function traderow($id)
+    {
 
         try {
             $user = Trade::where('trade.id', $id)
@@ -51,7 +52,6 @@ class TradingController extends Controller
             $error = $e->getMessage();
             return response()->json($error);
         }
-
     }
 
 
@@ -133,9 +133,10 @@ class TradingController extends Controller
     }
 
 
-    public function updateTrade(Request $request){
+    public function updateTrade(Request $request)
+    {
 
-      // dd($request->all());
+        // dd($request->all());
         $request->validate([
             'id'                    => 'required',
             'action_type'           => 'required',
@@ -146,8 +147,8 @@ class TradingController extends Controller
 
         ]);
 
-        $id                  = $request->id; 
-        $action_type         = $request->action_type ?? ""; 
+        $id                  = $request->id;
+        $action_type         = $request->action_type ?? "";
         $market_price        = $request->market_price ?? "";
         $close_price         = $request->close_price ?? "";
         $tradeAmt            = $request->trade_amount ?? "";
@@ -156,34 +157,47 @@ class TradingController extends Controller
         //exit; 
         $tradeeFee    =  0;
         $actionStatus = "";
+
+
         if ($action_type == "LONG" && $market_price > $close_price) {
-            $data['action'] =  "LOSS";
-        } else {
-            $data['action'] =  "WIN";
-            $tradeeFee    =  0;
+            $actionStatus =  "LOSS";
+        } else if ($action_type == "LONG" && $market_price < $close_price) {
+            $actionStatus =  "WIN";
         }
 
+
+        if ($action_type == "SHORT" && $market_price < $close_price) {
+            $actionStatus =  "LOSS";
+        } else if ($action_type == "SHORT" && $market_price > $close_price) {
+            $actionStatus =  "WIN";
+            $tradeeFee    =  0;
+        }
+        $data['action'] =  $actionStatus;
+       // echo $actionStatus;
+       // exit;
+
+       
         if ($data['action'] == "LOSS") {
             $data['closingPNL'] = "-$tradeAmt";
+            $profitPercentage=0;
         } else {
             $tradeAmt = (float) $tradeAmt; // Ensure it's a number
             $selected_percentage = (float) $percentage; // Ensure it's a number
             $profitPercentage = ($tradeAmt * $selected_percentage) / 100;
             $data['closingPNL'] = $tradeAmt + $profitPercentage - $tradeeFee;
         }
-       
+
         $data['status']      = 1;
         $data['close_price'] = $close_price;
-        $data['market_price']= $market_price;
-        //dd($data);
+        $data['market_price'] = $market_price;
+        $data['percentage_result'] = $profitPercentage;
+        // dd($data);
 
         $trade = Trade::find($id);
         if ($trade) {
             $trade->update($data);
             return response()->json(['message' => 'Trade updated successfully'], 200);
         }
-
-
     }
 
 
@@ -237,7 +251,7 @@ class TradingController extends Controller
         if ($startDate !== null && $endDate !== null) {
             $query->whereBetween('trade.created_at', [$startDate, $endDate]);
         }
-  
+
         $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
         $modifiedCollection = $paginator->getCollection()->map(function ($item) {
 
@@ -269,7 +283,7 @@ class TradingController extends Controller
             // }
             //END
 
-           
+
 
             return [
                 'id'                    => $item->id,
@@ -304,7 +318,6 @@ class TradingController extends Controller
             'total_records'     => $paginator->total(),
             'countPendingTrade' => $countPendingTrade,
         ], 200);
- 
     }
 
 
