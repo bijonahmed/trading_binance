@@ -524,7 +524,7 @@ const Wallet = () => {
                                     {deposit.deposit_date}
                                   </td>
                                   <td className="text-center">
-                                    ${deposit.deposit_amount}
+                                    ${deposit.receivable_amount}
                                   </td>
                                   <td className="text-center">
                                     <span

@@ -364,7 +364,7 @@ const productDetails = () => {
         request.value.name = data.name;
         request.value.depositID = data.depositID;
         request.value.deposit_amount = data.deposit_amount;
-        request.value.receivable_amount = data.deposit_amount;
+        request.value.receivable_amount = data.receivable_amount;
         request.value.deposit_image = response.data.depositimage;
         request.value.payment_method = data.payment_method;
         request.value.approved_by = data.approved_by;

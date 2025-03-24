@@ -218,7 +218,7 @@ const DepositBankjsx = () => {
                             <h3>
                               {" "}
                               Deposite Amount&nbsp;
-                              <span style={{ color: "var(--color_primary)" }}>
+                              <span className="d-none" style={{ color: "var(--color_primary)" }}>
                                 (USD = {deposit_amount})
                               </span>
                             </h3>
