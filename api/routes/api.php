@@ -368,6 +368,7 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::post('sendPaymentMethodRequestBanking', [PaymentController::class, 'sendPaymentMethodRequestBanking']);
             Route::post('sendPaymentMethodRequestUsdt', [PaymentController::class, 'sendPaymentMethodRequestUsdt']);
             Route::post('getWalletAddress', [PaymentController::class, 'checkwalletAddressAllHistory']);
+            Route::get('walltAddressCryptoList', [PaymentController::class, 'walltAddressCryptoList']);
             Route::get('walltAddressList', [PaymentController::class, 'walltAddressList']);
             Route::get('activeCountryList', [PaymentController::class, 'activeCountryList']);
             Route::get('countryWiseMobileBank', [PaymentController::class, 'countryWiseMobileBank']);

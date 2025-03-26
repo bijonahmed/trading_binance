@@ -141,15 +141,16 @@ class WithdrawalController extends Controller
         // dd($request->all());
         // try {
         $validator = Validator::make(
-
             $request->all(),
             [
-                'withdrawal_amount' => 'required',
+                'withdrawal_amount' => 'required|min:1',
                 'wallet_address'    => 'required',
             ],
             [
-                'withdrawal_amount.required'        => 'The amount field is required. Please enter a valid amount.',
-                'wallet_address.required'     => 'Please select a wallet_address.',
+                'withdrawal_amount.required' => 'The amount field is required. Please enter a valid amount.',
+                'withdrawal_amount.numeric'  => 'The amount must be a valid number.',
+                'withdrawal_amount.min'      => 'Sorry, 0 amount is not allowed. Please enter a value greater than 0.',
+                'wallet_address.required'    => 'Please select a wallet address.',
             ]
         );
 
@@ -160,10 +161,11 @@ class WithdrawalController extends Controller
         $apiBalanceController = app('App\Http\Controllers\Balance\BalanceController')->getCurrentBalance();
         $responseArray        = $apiBalanceController->getData(true);
         $currentBalance       = !empty($responseArray['balance']) ? $responseArray['balance'] : 0;
-        //dd($currentBalance);
+        $balance              = explode('.', str_replace(',', '', $currentBalance))[0];
+       // dd($balance);
         // Check if balance exists in the response
 
-        if ($request->withdrawal_amount > $currentBalance) {
+        if ($request->withdrawal_amount >= $balance) {
             return response()->json(['errors' => ['withdrawal_amount' => ["Invalid Request. Your available balance is: {$currentBalance} USDT"]]], 422);
         }
 

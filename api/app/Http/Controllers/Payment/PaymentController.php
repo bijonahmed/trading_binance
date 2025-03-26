@@ -218,7 +218,14 @@ class PaymentController extends Controller
 
     public function walltAddressList(Request $request)
     {
-        $responseData = UserPaymentAddress::where('status', 1)->get();
+        $responseData = UserPaymentAddress::where('status', 1)->where('user_id',$this->userid)->get();
+        $data['data']     =  $responseData;
+        return response()->json($data, 200);
+    }
+
+     public function walltAddressCryptoList(Request $request)
+    {
+        $responseData = UserPaymentAddress::where('status', 1)->where('user_id',$this->userid)->where('type','crypto')->get();
         $data['data']     =  $responseData;
         return response()->json($data, 200);
     }

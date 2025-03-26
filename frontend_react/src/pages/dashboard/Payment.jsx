@@ -80,7 +80,7 @@ const Payment = () => {
   };
 
   const handleMobileBankingChange = (event) => {
-    setMobileBanking(event.target.value); // Set the selected currency
+    setMobileBanking(event); // Set the selected currency
   };
 
   const handleBankingChange = (event) => {
@@ -644,19 +644,15 @@ const Payment = () => {
                                 Select Mobile Banking
                                 <span className="text-danger d-inline">*</span>
                               </p>
-                              <select
-                                id="mySelect2"
-                                className="form-control"
-                                value={selected_bank}
-                                onChange={handleMobileBankingChange}
-                              >
-                                <option value="">Select</option>
-                                {mbankingList.map((bank, index) => (
-                                  <option key={index} value={bank.name}>
-                                    {bank.name}
-                                  </option>
-                                ))}
-                              </select>
+                           <select id="mySelect2" className="form-control" value={mobileBanking || ""} onChange={(e) => handleMobileBankingChange(e.target.value)}>
+                            <option value="">Select</option>
+                            {mbankingList.map((bank, index) => (
+                              <option key={index} value={bank.name}>
+                                {bank.name}
+                              </option>
+                            ))}
+                          </select>
+
 
                               {errors.mobileBanking && (
                                 <div className="error text-danger">

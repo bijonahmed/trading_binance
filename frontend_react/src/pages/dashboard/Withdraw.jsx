@@ -48,7 +48,7 @@ const Withdraw = () => {
   const getWalletData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/payment/walltAddressList`, {
+      const response = await axios.get(`/payment/walltAddressCryptoList`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -82,13 +82,17 @@ const Withdraw = () => {
     setLoading(true);
 
     try {
+
+      if(withdrawal_amount <= 0){
+        $.notify("Sorry 0 amount not allowed", "error");
+        return false; 
+      }
+
       const formData = new FormData();
       formData.append("withdrawal_amount", withdrawal_amount);
       formData.append("wallet_address", selectedWallet);
 
-      const response = await axios.post(
-        `/withdrawal/sendWithdrawalRequest`,
-        formData,
+      const response = await axios.post(`/withdrawal/sendWithdrawalRequest`,formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -101,6 +105,11 @@ const Withdraw = () => {
       $.notify("Withdrawal request has been successfully send", "success");
       getWalletData();
       getCurrentBalance();
+
+
+      setTimeout(() => navigate("/dashboard/wallet"), 1000);
+
+
       // Hide the Bootstrap Modal
       // Clear form fields
     } catch (error) {
