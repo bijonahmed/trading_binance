@@ -88,10 +88,19 @@
 
                                             <div class="row mb-3">
                                                 <label for="inputEnterYourName"
-                                                    class="col-sm-3 col-form-label">WhatsApp</label>
+                                                    class="col-sm-3 col-form-label">Deposit WhatsApp</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control whatsApp"
-                                                        v-model="insertdata.whatsApp" placeholder="WhatsApp" />
+                                                        v-model="insertdata.deposit_whatsApp" placeholder="WhatsApp" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputEnterYourName"
+                                                    class="col-sm-3 col-form-label">Withdraw WhatsApp</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control whatsApp"
+                                                        v-model="insertdata.withdraw_whatsApp" placeholder="WhatsApp" />
                                                 </div>
                                             </div>
 
@@ -551,7 +560,8 @@ const insertdata = reactive({
     name: "",
     email: "",
     address: "",
-    whatsApp: "",
+    deposit_whatsApp: "",
+    withdraw_whatsApp: "",
     telegram: "",
     deposit_service_charge: "",
     withdraw_service_charge: "",
@@ -646,7 +656,8 @@ const saveData = () => {
     formData.append("name", insertdata.name);
     formData.append("email", insertdata.email);
     formData.append("address", insertdata.address);
-    formData.append("whatsApp", insertdata.whatsApp);
+    formData.append("deposit_whatsApp", insertdata.deposit_whatsApp);
+    formData.append("withdraw_whatsApp", insertdata.withdraw_whatsApp);
     formData.append("description", insertdata.description);
     formData.append("copyright", insertdata.copyright);
     formData.append("currency", insertdata.currency);
@@ -734,7 +745,8 @@ const loadingRow = () => {
         insertdata.name = response.data.data.name;
         insertdata.email = response.data.data.email;
         insertdata.address = response.data.data.address;
-        insertdata.whatsApp = response.data.data.whatsApp;
+        insertdata.deposit_whatsApp = response.data.data.deposit_whatsApp;
+        insertdata.withdraw_whatsApp = response.data.data.withdraw_whatsApp;
         insertdata.description = response.data.data.description;
         insertdata.copyright = response.data.data.copyright;
         insertdata.currency = response.data.data.currency;

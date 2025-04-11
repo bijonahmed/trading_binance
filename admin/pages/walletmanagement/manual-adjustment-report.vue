@@ -83,10 +83,11 @@
                   <tr>
                     <th class="text-left">SL</th>
                     <th class="text-left">User Info</th>
-                    <th class="text-center">Adjustment Amount($)</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Date</th>
                     <th class="text-left">Remarks</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Adjustment Amount</th>
+                 
                     <th class="text-left">Action</th>
                   </tr>
                 </thead>
@@ -101,16 +102,34 @@
                       <small>Email: {{ pro.email }}</small
                       ><br />
                     </td>
-                    <td class="text-center">{{ pro.adjustment_amount }}</td>
-                    <span v-if="pro.adjustment_type == 1">
-                      <div class="badge rounded-pill" style="font-size: 15px;">Loan</div>
+                  
+
+                    <td class="text-left">{{ pro.detailed_remarks }}</td>
+
+
+
+                    <span v-if="pro.adjustment_type == 1" style="color:green">
+                      <div class="badge rounded-pill" style="font-size: 15px;">Debit (+)</div>
                     </span>
 
-                    <span v-if="pro.adjustment_type == 2">
-                      <div class="badge rounded-pill" style="font-size: 15px;"> Reward </div>
+                    <span v-if="pro.adjustment_type == 2" style="color:red">
+                      <div class="badge rounded-pill" style="font-size: 15px;"> Credit (-) </div>
                     </span>
                     <td class="text-center">{{ pro.created_at }}</td>
-                    <td class="text-left">{{ pro.detailed_remarks }}</td>
+               
+
+
+                    <td class="text-center">
+                      
+                      <span v-if="pro.adjustment_type == 1" style="color:green">
+                          {{ pro.adjustment_amount }}
+                      </span>
+                       
+                      <span v-if="pro.adjustment_type == 2" style="color:red">
+                          {{ pro.adjustment_amount }}
+                      </span>
+                      
+                      </td>
                     <td class="text-left">
                      
                         <!-- <span @click="edit(pro.id)"
@@ -128,10 +147,10 @@
                   <tr>
                     <th class="text-left">SL</th>
                     <th class="text-left">User Info</th>
-                    <th class="text-center">Adjustment Amount($)</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Date</th>
                     <th class="text-left">Remarks</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Adjustment Amount</th>
                     <th class="text-left">Action</th>
                   </tr>
                 </tfoot>
@@ -235,7 +254,7 @@ const edit = (id) => {
 const fetchData = async (page) => {
   try {
     loading.value = true;
-    const response = await axios.get(`/trading/getManualAdjustmentReport`, {
+    const response = await axios.get(`/user/getManualAdjustmentReport`, {
       params: {
         page: page,
         pageSize: pageSize,

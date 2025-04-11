@@ -40,10 +40,10 @@
                 class="forms-sample"
                 enctype="multipart/form-data"
               >
-                <div class="row d-none">
+                <div class="row ">
                   <div class="col-md-6">
                     <h4 v-if="currentBalance">
-                      Current Balance : ${{ currentBalance }}
+                      Current Balance : {{ currentBalance }}
                     </h4>
                   </div>
                   <div class="col-md-6 text-right" v-if="calculateBalance">
@@ -82,16 +82,13 @@
 
                     <div class="form-group mb-2">
                       <label for="status">Adjustment type</label>
-                      <select
-                        name=""
-                        v-model="manualAdjment.adjustment_type"
-                        id=""
-                        class="form-control"
-                        @change="emptyAmunt"
-                      >
-                        <option value="1">Debit</option>
-                        <option value="2">Credit</option>
-                      </select>
+                      <select name="adjustment_type" v-model="manualAdjment.adjustment_type"
+                          id="adjustment_type" class="form-control" @change="emptyAmount">
+                          <option disabled value="">Select Type</option>
+                          <option value="1">Debit (+)</option>
+                          <option value="2">Credit (-)</option>
+                        </select>
+
                       <span class="text-danger" v-if="errors.adjustment_type">{{
                         errors.adjustment_type[0]
                       }}</span>

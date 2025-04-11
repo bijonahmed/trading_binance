@@ -90,7 +90,7 @@ const menuItems = ref([
       { label: "All Users withdrawal Address", route: "/walletmanagement/withdrawal-address", hidden: false },
    
      // { label: "Manual Adjustment report", route: "/walletmanagement/manual-adjustment-report", hidden: false },
-      //{ label: "Create Manual adjustment", route: "/walletmanagement/manual-adjustment", hidden: false },
+      { label: "Create Manual adjustment", route: "/walletmanagement/manual-adjustment", hidden: false },
     ],
   },
 ]);

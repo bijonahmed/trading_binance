@@ -144,6 +144,7 @@ class TradingController extends Controller
             'close_price'           => 'required',
             'trade_amount'          => 'required',
             'selected_percentage'   => 'required',
+            'closingPNL'            => 'required',
 
         ]);
 
@@ -153,6 +154,7 @@ class TradingController extends Controller
         $close_price         = $request->close_price ?? "";
         $tradeAmt            = $request->trade_amount ?? "";
         $percentage          = $request->selected_percentage ?? "";
+        $closingPNL          = $request->closingPNL ?? "";
         //echo "id: $id---action_type: $action_type---market_price: $market_price--close_price:$close_price--trade_amount:$tradeAmt---percentage:$percentage";
         //exit; 
         $tradeeFee    =  0;
@@ -187,9 +189,10 @@ class TradingController extends Controller
             $data['closingPNL'] = $tradeAmt + $profitPercentage - $tradeeFee;
         }
 
-        $data['status']      = 1;
-        $data['close_price'] = $close_price;
-        $data['market_price'] = $market_price;
+        $data['status']            = 1;
+        $data['close_price']       = $close_price;
+        $data['market_price']      = $market_price;
+        $data['closingPNL']        = $closingPNL;
         $data['percentage_result'] = $profitPercentage;
         // dd($data);
 

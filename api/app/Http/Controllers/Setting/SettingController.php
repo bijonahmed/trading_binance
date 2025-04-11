@@ -316,18 +316,9 @@ class SettingController extends Controller
             'name'        => 'required',
             'email'       => 'required',
             'currency'    => 'required',
-
-            'register_bonus'    => 'required',
-            'maximum_supply'    => 'required',
-            'total_supply'      => 'required',
-
-            'level_1_bonus'      => 'required',
-            'level_2_bonus'      => 'required',
-            'level_3_bonus'      => 'required',
-
-            'liquidity_total_supply'      => 'required',
-            'circlation'                  => 'required',
-            'beganing_price'              => 'required',
+            'deposit_whatsApp'      => 'required',
+            'withdraw_whatsApp'     => 'required',
+            
 
         ]);
         if ($validator->fails()) {
@@ -337,7 +328,8 @@ class SettingController extends Controller
             'name'              => !empty($request->name) ? $request->name : "",
             'email'             => !empty($request->email) ? $request->email : "",
             'address'           => !empty($request->address) ? $request->address : "",
-            'whatsApp'          => !empty($request->whatsApp) ? $request->whatsApp : "",
+            'deposit_whatsApp'  => !empty($request->deposit_whatsApp) ? $request->deposit_whatsApp : "",
+            'withdraw_whatsApp' => !empty($request->withdraw_whatsApp) ? $request->withdraw_whatsApp : "",
             'description'       => !empty($request->description) ? $request->description : "",
             'copyright'         => !empty($request->copyright) ? $request->copyright : "",
             'currency'          => !empty($request->currency) ? $request->currency : "",

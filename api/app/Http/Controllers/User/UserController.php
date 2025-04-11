@@ -326,8 +326,8 @@ class UserController extends Controller
     public function getUserWiseCurrentBalance(Request $request)
     {
         $userid = $request->userid;
-        $response       = app('App\Http\Controllers\Dropshipping\DropUserController')->getCurrentBalanceCheckAdminIndivUser($userid);
-        $currentBalance = $response instanceof JsonResponse ? $response->getData(true)['current_balance'] : 0;
+        $response          = app('App\Http\Controllers\Balance\BalanceController')->getCurrentBalanceAdmin($userid);
+        $currentBalance    = $response instanceof JsonResponse ? $response->getData(true)['balance'] : 0;
         return response()->json($currentBalance);
     }
 
@@ -639,11 +639,11 @@ class UserController extends Controller
         // dd($selectedFilter);
         $query = User::orderBy('users.id', 'desc')
             ->join('rule', 'users.role_id', '=', 'rule.id')
-            ->select('users.username', 'users.created_at', 'users.updated_at', 'lastlogin_country', 'register_ip', 'lastlogin_ip', 'users.ref_id', 'users.telegram', 'users.whtsapp', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
+            ->select('users.id','users.username', 'users.created_at', 'users.updated_at', 'lastlogin_country', 'register_ip', 'lastlogin_ip', 'users.ref_id', 'users.telegram', 'users.whtsapp', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
 
         if ($searchQuery !== null) {
-            //$query->where('users.email', 'like', '%' . $searchQuery . '%');
-            $query->where('users.username', $searchQuery);
+            $query->where('users.email', 'like', '%' . $searchQuery . '%');
+            //$query->where('users.username', $searchQuery);
         }
 
         if ($selectedFilter !== null) {
@@ -654,6 +654,14 @@ class UserController extends Controller
         $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
 
         $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+
+
+
+            $userid = $item->id;
+            $response          = app('App\Http\Controllers\Balance\BalanceController')->getCurrentBalanceAdmin($userid);
+            $currentBalance    = $response instanceof JsonResponse ? $response->getData(true)['balance'] : 0;
+
 
             $telegram       = !empty($item->telegram) ? $item->telegram : "None";
             $phone          = !empty($item->phone_number) ? $item->phone_number : "";
@@ -682,7 +690,7 @@ class UserController extends Controller
                 'email'         => $item->email,
                 'register_ip'   => $item->register_ip,
                 'lastlogin_ip'  => $item->lastlogin_ip,
-
+                'currentBalance'  => $currentBalance,
                 'register_country'   => !empty($ipdat->geoplugin_countryName) ? $ipdat->geoplugin_countryName : "",
                 'lastlogin_country'  => !empty($item->lastlogin_country) ?: "",
 
@@ -1366,4 +1374,168 @@ class UserController extends Controller
 
         return response()->json($dataList, 200);
     }
+
+    public function editsendUserManualAdjst(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'userId'             => 'required',
+            'adjustment_type'   => 'required',
+            'adjustment_amount' => 'required',
+            'detailed_remarks'  => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'user_id'           => !empty($request->userId) ? $request->userId : "",
+            'adjustment_type'   => !empty($request->adjustment_type) ? $request->adjustment_type : "",
+            'adjustment_amount' => !empty($request->adjustment_amount) ? $request->adjustment_amount : "",
+            'detailed_remarks'  => !empty($request->detailed_remarks) ? $request->detailed_remarks : "",
+            // 'status'        => $request->status,
+            'entry_by'      => $this->userid,
+        );
+
+        $manualAdjustment = ManualAdjustment::find($request->id);
+        if ($manualAdjustment) {
+            $manualAdjustment->update($data);
+        }
+        $response = [
+            'message' => 'Adjustment update done:',
+        ];
+        return response()->json($response);
+    }
+    public function sendUserManualAdjst(Request $request)
+    {
+
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'userId'            => 'required',
+            'adjustment_type'   => 'required',
+            'adjustment_amount' => 'required',
+            //'detailed_remarks'  => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'user_id'           => !empty($request->userId) ? $request->userId : "",
+            'adjustment_type'   => !empty($request->adjustment_type) ? $request->adjustment_type : "",
+            'adjustment_amount' => !empty($request->adjustment_amount) ? $request->adjustment_amount : "",
+            'detailed_remarks'  => !empty($request->detailed_remarks) ? $request->detailed_remarks : "",
+            // 'status'        => $request->status,
+            'entry_by'      => $this->userid,
+        );
+
+        $last_id = ManualAdjustment::insertGetId($data);
+
+        if ($request->adjustment_type == 1) {
+            $expData['operation_type']      =  "Debited";
+            $expData['charge_description']  =  "$request->detailed_remarks [ID: $last_id] ";
+        }
+
+        if ($request->adjustment_type == 2) {
+            $expData['operation_type']      =  "Credited";
+            $expData['charge_description']  =  "$request->detailed_remarks [ID: $last_id] ";
+        }
+
+        $expData['user_id']             =  $request->userId;
+        $expData['operation_amount']    =  $request->adjustment_amount;
+        $expData['operation_date']      =  date("Y-m-d");
+        //dd($expData);
+        ExpenseHistory::insertGetId($expData);
+
+        $response = [
+            'message' => 'Adjustment Done:' . $last_id
+        ];
+        return response()->json($response);
+    }
+    public function getManualAdjustmentReport(Request $request)
+    {
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+        // Get search query from the request
+        $searchQuery    = $request->searchQuery;
+        $selectedFilter = (int)$request->selectedFilter;
+        // dd($selectedFilter);
+        $query = ManualAdjustment::orderBy('manual_adjustment.id', 'desc') // Base query
+            ->join('users', 'manual_adjustment.user_id', '=', 'users.id') // Join on user_id
+            ->select( // Select the relevant columns
+                'manual_adjustment.*', // Select all columns from ManualAdjustment
+                'users.name', // Additional user data
+                'users.email',
+                'users.id  as userid'
+            );
+
+        if (!empty($searchQuery)) {
+            // $query->where('depositID', 'like', '%' . $searchQuery . '%');
+            $query->where('users.email', $searchQuery);
+        }
+
+        if ($selectedFilter == 5) {
+            $query->whereIn('manual_adjustment.adjustment_type', [1, 2]);
+        } else {
+            $query->where('manual_adjustment.adjustment_type', $selectedFilter);
+        }
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+            if ($item->adjustment_type == 1) {
+                $status = "Debited";
+            } else if ($item->adjustment_type == 2) {
+                $status = "Credited";
+            }
+            $userrow = User::find($item->user_id);
+            return [
+                'id'                  => $item->id,
+                'name'                => !empty($userrow->name) ?  $userrow->name : "N/A",
+                'email'               => !empty($userrow->email) ?  $userrow->email : "N/A",
+                'phone'               => !empty($userrow->phone_number) ?  $userrow->phone_number : "N/A",
+                'adjustment_amount'   => $item->adjustment_amount,
+                'detailed_remarks'    => $item->detailed_remarks,
+                'created_at'          => date("Y-m-d", strtotime($item->created_at)),
+                'status'              => $status,
+                'adjustment_type'     => $item->adjustment_type,
+            ];
+        });
+
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
+    }
+    public function deleteManualAdjusment(Request $request)
+    {
+
+        $row =  ManualAdjustment::where('id', $request->id)->first();
+        $data = array(
+            'delete_adj_id'     => $row->id,
+            'user_id'           => $row->user_id,
+            'adjustment_type'   => $row->adjustment_type,
+            'adjustment_amount' => $row->adjustment_amount,
+            'detailed_remarks'  => $row->detailed_remarks,
+            'entry_by'          => $row->entry_by,
+            'delete_by'         => $this->userid,
+        );
+        // ManualAdjustmentDelete::insertGetId($data);
+
+        $manualAdjustment = ManualAdjustment::find($request->id);
+        if ($manualAdjustment) {
+            // Delete the record
+            $manualAdjustment->delete();
+        }
+        $response = [
+            'message' => 'Successfully delete.',
+        ];
+        return response()->json($response);
+    }
+
+    
 }

@@ -413,7 +413,7 @@ const Future = () => {
                               <div className="d-flex justify-content-start align-items-center">
                                 <div>Available Balance: &nbsp;</div>
                                 <div className="mt-1">
-                                  {currentBalance}<span>&nbsp;USDT</span>
+                                  {currentBalance}<span>&nbsp;</span>
                                 </div>
                               </div>
                             </h6>

@@ -204,7 +204,7 @@ const Wallet = () => {
                   <div className="balance_box">
                     <h5>Estimated Balance</h5>
                     <h4>
-                      {currentBalance}&nbsp;<span>USDT</span>{" "}
+                      {currentBalance}&nbsp;<span></span>{" "}
                     </h4>
                     {/* <h6>$0.00</h6> */}
                   </div>
@@ -387,7 +387,7 @@ const Wallet = () => {
                                     {withdraw.withdrawa_date}
                                   </td>
                                   <td className="text-center">
-                                    ${withdraw.withdrawal_amount}
+                                    {withdraw.withdrawal_amount}
                                   </td>
                                   <td className="text-center">0.00</td>
                                   <td className="text-center">
@@ -524,7 +524,7 @@ const Wallet = () => {
                                     {deposit.deposit_date}
                                   </td>
                                   <td className="text-center">
-                                    ${deposit.receivable_amount}
+                                    {deposit.deposit_amount || '0.00'}
                                   </td>
                                   <td className="text-center">
                                     <span

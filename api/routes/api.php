@@ -195,6 +195,10 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
             Route::post('updateUserProfileImg', [UserController::class, 'updateUserProfileImg']);
             Route::post('assignToUser', [UserController::class, 'assignToUser']);
             Route::post('saveRole', [UserController::class, 'saveRole']);
+            Route::post('sendUserManualAdjst', [UserController::class, 'sendUserManualAdjst']);
+            Route::post('editsendUserManualAdjst', [UserController::class, 'editsendUserManualAdjst']);
+            Route::get('deleteManualAdjusment', [UserController::class, 'deleteManualAdjusment']);
+            Route::get('getManualAdjustmentReport', [UserController::class, 'getManualAdjustmentReport']);
         },
     );
 

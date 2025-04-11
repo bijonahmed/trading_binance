@@ -17,6 +17,7 @@ const Deposit = () => {
   const [allCountry, setCountryName] = useState([]);
   const { token, logout } = AuthUser();
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [settingData, setSettingData] = useState("");
   const [bankList, setBankList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -57,13 +58,28 @@ const Deposit = () => {
     }
   };
 
+  const getSetting = async () => {
+    try {
+      const response = await axios.get(`/setting/settingrowSystem`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }, // Removed the extra comma here
+      });
+      setSettingData(response.data.data);
+    } catch (error) {
+      console.error("Error Data:", error);
+    }
+  };
+
   useEffect(() => {
     getAddCountry();
+    getSetting();
   }, []);
 
   // Data array containing deposit methods
   const depositOptions = [
-  //  { slug: "btc", name: "BTC", imgSrc: "/fasttrading/images/btc.png" },
+    //  { slug: "btc", name: "BTC", imgSrc: "/fasttrading/images/btc.png" },
     { slug: "usdt", name: "USDT", imgSrc: "/fasttrading/images/usdt.png" },
     //{ slug: "eth", name: "Ethereum", imgSrc: "/fasttrading/images/eth.png" },
   ];
@@ -101,10 +117,21 @@ const Deposit = () => {
                     <h4>Deposit</h4>
                   </div>
                 </div>
-                <div className="details_card">
-                  <h4>Crypto</h4>
+                <div className="detailscard">
+                  {/* <h4 className="d-none">Crypto</h4> */}
+                  {settingData.deposit_whatsApp && (
+                    <a
+                      href={`https://wa.me/${settingData.deposit_whatsApp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-primary"
+                    >
+                      {/* <i className="fab fa-whatsapp me-2"></i> */}
+                      Contact for Deposit
+                    </a>
+                  )}
 
-                  <div className="deposit_method">
+                  <div className="deposit_method d-none">
                     {depositOptions.map((option) => (
                       <div className="deposit_option" key={option.slug}>
                         <Link to={`/deposit-crypto/${option.slug}`}>
@@ -134,7 +161,7 @@ const Deposit = () => {
                     </div>
                   )}
                 </center>
-                <div>
+                <div className="d-none">
                   <div className="details_card">
                     <h4>Deposit to Bank</h4>
                     <div className="row">

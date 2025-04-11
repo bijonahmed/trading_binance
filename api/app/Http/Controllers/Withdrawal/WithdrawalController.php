@@ -144,13 +144,13 @@ class WithdrawalController extends Controller
             $request->all(),
             [
                 'withdrawal_amount' => 'required|min:1',
-                'wallet_address'    => 'required',
+                //'wallet_address'    => 'required',
             ],
             [
                 'withdrawal_amount.required' => 'The amount field is required. Please enter a valid amount.',
                 'withdrawal_amount.numeric'  => 'The amount must be a valid number.',
                 'withdrawal_amount.min'      => 'Sorry, 0 amount is not allowed. Please enter a value greater than 0.',
-                'wallet_address.required'    => 'Please select a wallet address.',
+                //'wallet_address.required'    => 'Please select a wallet address.',
             ]
         );
 
@@ -165,7 +165,7 @@ class WithdrawalController extends Controller
        // dd($balance);
         // Check if balance exists in the response
 
-        if ($request->withdrawal_amount >= $balance) {
+        if ($request->withdrawal_amount > $balance) {
             return response()->json(['errors' => ['withdrawal_amount' => ["Invalid Request. Your available balance is: {$currentBalance} USDT"]]], 422);
         }
 
@@ -178,7 +178,7 @@ class WithdrawalController extends Controller
             'depscription'      => $uniqueID,
             'withdrawal_amount' => $request->withdrawal_amount,
             'payment_method'    => "TRC20",
-            'wallet_address'    => $request->wallet_address,
+            'wallet_address'    => !empty($request->wallet_address) ? $request->wallet_address : "",
             'status'            => 0,
             'user_id'           => $this->userid
         );

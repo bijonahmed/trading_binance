@@ -126,7 +126,7 @@ const TradeHistory = () => {
                     <h5>Estimated Balance</h5>
                     <h4>
                       {currentBalance}
-                      <span>&nbsp;USDT</span>{" "}
+                      <span>&nbsp;</span>{" "}
                     </h4>
                     {/* <h6>$0.00</h6> */}
                   </div>
@@ -249,7 +249,7 @@ const TradeHistory = () => {
                                 </p>
                                 <p>
                                   <strong>Perp Cross:</strong>{" "}
-                                  {trade.selectedCurrency}USDT
+                                  {trade.selectedCurrency}
                                 </p>
                                 <p>
                                   <strong>Type:</strong>{" "}
@@ -264,7 +264,7 @@ const TradeHistory = () => {
                                   </span>
                                 </p>
                                 <p>
-                                  <strong>Amount (USDT):</strong>{" "}
+                                  <strong>Amount ():</strong>{" "}
                                   {trade.trade_amount}
                                 </p>
                                 <p>
@@ -304,7 +304,7 @@ const TradeHistory = () => {
                               <th className="col">OrderID</th>
                               <th>Perp Cross</th>
                               <th>Type</th>
-                              <th>Amount(USDT)</th>
+                              <th>Amount</th>
                               <th>Entry Price</th>
                               <th>Open Time</th>
                               <th>Close Price</th>
@@ -317,7 +317,7 @@ const TradeHistory = () => {
                             {tradeData.map((trade, index) => (
                               <tr key={index}>
                                 <td>{trade.tradeID}</td>
-                                <td>{trade.selectedCurrency}USDT</td>
+                                <td>{trade.selectedCurrency}</td>
                                 <td>
                                   <span
                                     className={

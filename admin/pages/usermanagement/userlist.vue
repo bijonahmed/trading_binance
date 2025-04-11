@@ -38,7 +38,7 @@
                             type="text"
                             class="form-control"
                             v-model="searchQuery"
-                            placeholder="Search by username "
+                            placeholder="Search by email "
                           />
                         </th>
                         <th
@@ -98,6 +98,7 @@
                     <th class="text-start">User Info</th>
                     <th>Status</th>
                     <th class="text-start">Invite users</th>
+                    <th style="text-align: left;">Balance</th>
                     <th style="text-align: left;">Register IP</th>
                     <th style="text-align: left;">Reg/Update time</th>
                     <th>Action</th>
@@ -128,6 +129,10 @@
                       <small>{{ item.invite_user_3 }}</small
                       ><br />
                     </td>
+                    <td style="text-align: center;">
+                      <p><b>{{ item.currentBalance }}</b></p>
+                    </td>
+                   
                     <td style="text-align: center;">
                       <p>{{ item.register_ip }}</p>
                       <p>{{ item.register_country }}</p>

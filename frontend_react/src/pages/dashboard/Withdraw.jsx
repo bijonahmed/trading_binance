@@ -192,7 +192,7 @@ const Withdraw = () => {
                     >
                       <p className="badge_">
                         <i className="fa-solid fa-circle-exclamation" /> &nbsp;
-                        Minimum withdraw 20 USDT
+                        Minimum withdraw 1
                       </p>
                       {loading ? (
                         <div>
@@ -208,7 +208,7 @@ const Withdraw = () => {
                         </div>
                       )}
                       <div className="form_group">
-                        <p>Withdrawal Amount (Max-withdraw: 3690.00 USDT)</p>
+                        <p>Withdrawal Amount</p>
                         <div className="input_group">
                           <input
                             type="text"
@@ -232,9 +232,9 @@ const Withdraw = () => {
                             </div>
                           )}
                         </div>
-                        <span>Current amount : {currentBalance} USDT</span>
+                        <span>Current amount : {currentBalance}</span>
                       </div>
-                      <div className="form_group">
+                      <div className="form_group d-none">
                         <p>Withdrawal address</p>
                         <div className="input_group">
                           <select

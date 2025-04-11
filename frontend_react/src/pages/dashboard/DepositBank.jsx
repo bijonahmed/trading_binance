@@ -202,7 +202,7 @@ const DepositBankjsx = () => {
                         className="img-fluid"
                       />
                     </div>
-                    <div className="box_text">
+                    <div className="box_text d-none">
                       <p>
                         Send only USD to this account. This account does not
                         support deposit of other currency.

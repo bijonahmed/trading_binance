@@ -66,9 +66,9 @@
                                                     <tr>
                                                         <td>Amount(USDT)</td>
                                                         <td><strong>:</strong></td>
-                                                        <td>$ {{ request.trade_amount }}</td>
+                                                        <td>{{ request.trade_amount }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr style="display: none;">
                                                         <td>Entry Price</td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.market_price }}</td>
@@ -80,25 +80,23 @@
                                                         <!-- <td>{{ formatDate(request.created_at) }}</td> -->
                                                     </tr>
 
-                                                    <tr>
+                                                    <tr style="display: none;">
                                                         <td>Close Price</td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.close_price || '0.00' }}</td>
                                                     </tr>
-
                                                     <tr>
                                                         <td>Close</td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.end_datetime }}</td>
                                                     </tr>
-
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td>Fee</td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.fee }}</td>
-                                                    </tr>
+                                                    </tr> -->
 
-                                                    <tr>
+                                                    <tr style="display: none;">
                                                         <td>Closing PNL</td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.closingPNL }}</td>
@@ -167,6 +165,18 @@
                                                                     autofocus class="form-control" />
                                                                 <span class="text-danger" v-if="errors.close_price">{{
                                                                     errors.close_price[0] }}</span>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row mb-3 required">
+                                                            <label for="input-name-1"
+                                                                class="col-sm-2 col-form-label required-label">Closing PNL</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" v-model="request.closingPNL"
+                                                                    autofocus class="form-control" />
+                                                                <span class="text-danger" v-if="errors.closingPNL">{{
+                                                                    errors.closingPNL[0] }}</span>
                                                             </div>
                                                         </div>
 
@@ -271,6 +281,7 @@ const saveData = () => {
     formData.append('action_type', request.value.action_type);
     formData.append('market_price', request.value.market_price);
     formData.append('close_price', request.value.close_price);
+    formData.append('closingPNL', request.value.closingPNL);
     formData.append('trade_amount', request.value.trade_amount);
     formData.append('selected_percentage', request.value.selected_percentage);
 

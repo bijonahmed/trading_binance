@@ -72,7 +72,7 @@ const SidebarAuth = () => {
                 <span>Withdraw</span>
               </Link>
             </li>
-            <li className={`sidebar_item ${location.pathname === "/dashboard/payment" ? "active" : ""}`}>
+            <li className={`sidebar_item ${location.pathname === "/dashboard/payment" ? "active" : ""}`} style={{ display: 'none'}}>
               <Link to="/dashboard/payment" className="sidebar_link">
                 <i className="fa-regular fa-credit-card" />
                 <span>Payment Method</span>
