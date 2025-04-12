@@ -28,26 +28,7 @@ const Wallet = () => {
   const [de_dateTo, setDateToDeposit] = useState("");
   const [depositData, setDepositData] = useState([]);
   const [bankInfo, setBankDetails] = useState("");
-
-  const getMoneyReceipt = async (depositId) => {
-    const params = {
-      depositId: depositId,
-    };
-    const response = await axios.post(
-      "/deposit/checkDepositrow",
-      {}, // Empty request body since params are sent in headers
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        params: params,
-      }
-    );
-    console.log("Deposit Data:", response.data);
-    setBankDetails(response.data);
-    setDepositImages(response.data.depsoit_images);
-  };
+  const [transactionData, setTransData] = useState([]);
 
   // ============================= get balance =======================
   const getCurrentBalance = async () => {
@@ -74,6 +55,43 @@ const Wallet = () => {
   };
   const handleDateChangeTo_deposit = (event) => {
     setDateToDeposit(event.target.value);
+  };
+
+  const getTransactionHistory = async () => {
+    setLoading(true);
+    try {
+      // Get the current date
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 2); // Add 2 days
+      const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
+      // Get the date 30 days ago
+      const pastDate = new Date();
+      pastDate.setDate(currentDate.getDate() - 30);
+      const startDate = pastDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
+
+      const params = {
+        filterFrmDate: dateForm || startDate,
+        filterToDate: dateTo || EnDate,
+        searchtxt: witdrawTxt,
+      };
+      const response = await axios.post(
+        "/deposit/getTransactionHistory",
+        {}, // Empty request body since params are sent in headers
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          params: params,
+        }
+      );
+      //console.log("Response received:", response.data.data);
+      setTransData(response.data.data);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
   const getDepositList = async () => {
     setLoading(true);
@@ -122,47 +140,48 @@ const Wallet = () => {
   const handleDateChangeTo = (event) => {
     setDateTo(event.target.value);
   };
-  const getWithdrawList = async () => {
-    setLoading(true);
-    try {
-      // Get the current date
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() + 2); // Add 2 days
-      const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
-      // Get the date 30 days ago
-      const pastDate = new Date();
-      pastDate.setDate(currentDate.getDate() - 30);
-      const startDate = pastDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
+  // const getWithdrawList = async () => {
+  //   setLoading(true);
+  //   try {
+  //     // Get the current date
+  //     const currentDate = new Date();
+  //     currentDate.setDate(currentDate.getDate() + 2); // Add 2 days
+  //     const EnDate = currentDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
+  //     // Get the date 30 days ago
+  //     const pastDate = new Date();
+  //     pastDate.setDate(currentDate.getDate() - 30);
+  //     const startDate = pastDate.toISOString().split("T")[0]; // Format to yyyy-mm-dd
 
-      const params = {
-        filterFrmDate: dateForm || startDate,
-        filterToDate: dateTo || EnDate,
-        searchtxt: witdrawTxt,
-      };
-      const response = await axios.post(
-        "/withdrawal/userWithdrawalHistoryList",
-        {}, // Empty request body since params are sent in headers
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          params: params,
-        }
-      );
-      //console.log("Response received:", response.data.data);
-      setWithdrawData(response.data.data);
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const params = {
+  //       filterFrmDate: dateForm || startDate,
+  //       filterToDate: dateTo || EnDate,
+  //       searchtxt: witdrawTxt,
+  //     };
+  //     const response = await axios.post(
+  //       "/withdrawal/userWithdrawalHistoryList",
+  //       {}, // Empty request body since params are sent in headers
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         params: params,
+  //       }
+  //     );
+  //     //console.log("Response received:", response.data.data);
+  //     setWithdrawData(response.data.data);
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
+    getTransactionHistory();
     getCurrentBalance();
-    getWithdrawList();
-    getDepositList();
+    // getWithdrawList();
+    //getDepositList();
   }, []);
 
   return (
@@ -248,21 +267,7 @@ const Wallet = () => {
                         aria-controls="pills-home"
                         aria-selected="true"
                       >
-                        Withdraw
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        id="deposittab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#deposit"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-profile"
-                        aria-selected="false"
-                      >
-                        Deposit
+                      
                       </button>
                     </li>
                   </ul>
@@ -294,76 +299,103 @@ const Wallet = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="search_div">
-                        <div className="row">
-  <div className="col-12 col-md-6 mb-2">
-    <div className="input_form m-0">
-      <input
-        type="text"
-        placeholder="Search Order ID"
-        className="form-control"
-        value={witdrawTxt}
-        onChange={handleWithdrawTxt} // ✅ Required to update state
-        onKeyUp={(e) =>
-          console.log("Key Up:", e.target.value)
-        } // ✅ Works when a key is released
-      />
-    </div>
-  </div>
+                          <div className="row">
+                            <div className="col-12 col-md-6 mb-2">
+                              <div className="input_form m-0">
+                                <input
+                                  type="text"
+                                  placeholder="Search Order ID"
+                                  className="form-control"
+                                  value={witdrawTxt}
+                                  onChange={handleWithdrawTxt} // ✅ Required to update state
+                                  onKeyUp={(e) =>
+                                    console.log("Key Up:", e.target.value)
+                                  } // ✅ Works when a key is released
+                                />
+                              </div>
+                            </div>
 
-  <div className="col-12 col-md-6 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start">
-    <div className="input_form date_ mb-2 mb-md-0">
-      <input
-        type="date"
-        className="form-control"
-        value={dateForm}
-        onChange={handleDateChangeFrm}
-      />
-    </div>
-    <p className="mx-2 mb-2 mb-md-0">TO</p>
-    <div className="input_form date_ mb-2 mb-md-0">
-      <input
-        type="date"
-        className="form-control"
-        value={dateTo}
-        onChange={handleDateChangeTo}
-      />
-    </div>
-    <button
-      type="button"
-      onClick={getWithdrawList}
-      className="btn_primary mt-2 mt-md-0"
-    >
-      Search
-    </button>
-  </div>
-</div>
-
+                            <div className="col-12 col-md-6 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start">
+                              <div className="input_form date_ mb-2 mb-md-0">
+                                <input
+                                  type="date"
+                                  className="form-control"
+                                  value={dateForm}
+                                  onChange={handleDateChangeFrm}
+                                />
+                              </div>
+                              <p className="mx-2 mb-2 mb-md-0">TO</p>
+                              <div className="input_form date_ mb-2 mb-md-0">
+                                <input
+                                  type="date"
+                                  className="form-control"
+                                  value={dateTo}
+                                  onChange={handleDateChangeTo}
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                onClick={getTransactionHistory}
+                                className="btn_primary mt-2 mt-md-0"
+                              >
+                                Search
+                              </button>
+                            </div>
+                          </div>
                         </div>
                         <div className="transection_table table-responsive">
                           {/* withdrawData */}
                           <ul className="transec_tb_mobile mobile_view">
-                            {withdrawData.map((withdraw) => (
-                              <li key={withdraw.withdrawID}>
-                                <p>ID: {withdraw.withdrawID}</p>
-                                <p>Amt: ${withdraw.withdrawal_amount}</p>
-                                <p>DATE: {withdraw.withdrawa_date}</p>
+                            {transactionData.map((data) => (
+                              <li key={data.id}>
+                                <p>ID: {data.id}</p>
                                 <p>
-                                  Fee: $0.00
+                                  <span
+                                    style={{
+                                      color: "#fff",
+                                      backgroundColor:
+                                        data.adjustment_type === 1
+                                          ? "green"
+                                          : data.adjustment_type === 2
+                                          ? "red"
+                                          : "transparent",
+                                      fontSize: "15px",
+                                      padding: "5px 10px",
+                                      borderRadius: "10px",
+                                      display: "inline-block",
+                                    }}
+                                  >
+                                    {data.adjustment_type === 1 ||
+                                    data.adjustment_type === 2
+                                      ? `Amt: ${data.adjustment_amount}`
+                                      : ""}
+                                  </span>
+                                </p>
+
+                                <p>DATE: {data.created_at}</p>
+                                <p>
                                   <br />
                                   <span
-                                    className={`badge ${
-                                      withdraw.status == 0
-                                        ? "bg-warning text-dark"
-                                        : withdraw.status == 1
-                                        ? "bg-success"
-                                        : "bg-danger"
-                                    }`}
+                                    className="d-none"
+                                    style={{
+                                      color: "#fff",
+                                      backgroundColor:
+                                        data.adjustment_type === 1
+                                          ? "green"
+                                          : data.adjustment_type === 2
+                                          ? "red"
+                                          : "transparent",
+                                      fontSize: "15px",
+                                      padding: "5px 10px",
+                                      borderRadius: "10px",
+                                      display: "inline-block",
+                                    }}
                                   >
-                                    {withdraw.status == 0
-                                      ? "Pending"
-                                      : withdraw.status == 1
-                                      ? "Approve"
-                                      : "Rejected"}
+                                    {data.adjustment_type === 1
+                                      ? "Debit (+)"
+                                      : data.adjustment_type === 2
+                                      ? "Debit (-)"
+                                      : ""}
                                   </span>
                                 </p>
                               </li>
@@ -375,191 +407,50 @@ const Wallet = () => {
                                 <th>ID</th>
                                 <th className="text-center">Date</th>
                                 <th className="text-center">Amount</th>
-                                <th className="text-center">Fee</th>
-                                <th className="text-center">Status</th>
+                                <th className="text-center">Reason</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {withdrawData.map((withdraw) => (
-                                <tr key={withdraw.withdrawID}>
-                                  <td>{withdraw.withdrawID}</td>
+                              {transactionData.map((data) => (
+                                <tr key={data.id}>
+                                  <td>{data.id}</td>
                                   <td className="text-center">
-                                    {withdraw.withdrawa_date}
+                                    {data.created_at}
                                   </td>
-                                  <td className="text-center">
-                                    {withdraw.withdrawal_amount}
-                                  </td>
-                                  <td className="text-center">0.00</td>
-                                  <td className="text-center">
-                                    <span
-                                      className={`badge ${
-                                        withdraw.status == 0
-                                          ? "bg-warning text-dark"
-                                          : withdraw.status == 1
-                                          ? "bg-success"
-                                          : "bg-danger"
-                                      }`}
-                                    >
-                                      {withdraw.status == 0
-                                        ? "Pending"
-                                        : withdraw.status == 1
-                                        ? "Approve"
-                                        : "Rejected"}
-                                    </span>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="deposit"
-                    role="tabpanel"
-                    aria-labelledby="pills-profile-tab"
-                    tabIndex={0}
-                  >
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="search_div">
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="input_form mb-2 m-0">
-                                <input
-                                  type="text"
-                                  placeholder="Search Order ID"
-                                  className="form-control"
-                                  value={de_depositTxt}
-                                  onChange={handleWithdrawTxt_deposit} // ✅ Required to update state
-                                  onKeyUp={(e) =>
-                                    console.log("Key Up:", e.target.value)
-                                  } // ✅ Works
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="d-flex flex-column flex-md-row align-items-center justify-content-md-start justify-content-center">
-                                <div className="input_form date_ mb-2 mb-md-0">
-                                  <input
-                                    type="date"
-                                    className="form-control  w-100"
-                                    value={de_dateForm}
-                                    onChange={handleDateChangeFrm_deposit}
-                                  />
-                                </div>
 
-                                <p className="text-white my-0 mx-2">TO</p>
-
-                                <div className="input_form date_ mb-2 mb-md-0">
-                                  <input
-                                    type="date"
-                                    className="form-control w-100"
-                                    value={de_dateTo}
-                                    onChange={handleDateChangeTo_deposit}
-                                  />
-                                </div>
-
-                                <p className="mx-2 mb-2 mb-md-0"></p>
-
-                                <button
-                                  type="button"
-                                  onClick={getDepositList}
-                                  className="btn_primary"
-                                  style={{ marginTop: "-7px" }}
-                                >
-                                  Search
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="transection_table table-responsive">
-                          <ul className="transec_tb_mobile mobile_view">
-                            {depositData.map((deposit) => (
-                              <li key={deposit.id}>
-                                <p>ID:&nbsp;{deposit.depositID}</p>
-                                <p>Amt: ${deposit.deposit_amount}</p>
-                                <p>DATE: {deposit.deposit_date}</p>
-                                <p>
-                                  <span
-                                    className={`badge ${
-                                      deposit.status == 0
-                                        ? "bg-warning text-dark"
-                                        : deposit.status == 1
-                                        ? "bg-success"
-                                        : "bg-danger"
-                                    }`}
-                                  >
-                                    {deposit.status == 0
-                                      ? "Pending"
-                                      : deposit.status == 1
-                                      ? "Approve"
-                                      : "Rejected"}
-                                  </span>
-                                </p>
-                              </li>
-                            ))}
-                          </ul>
-                          <table className="table table-striped table-dark pc_view">
-                            <thead>
-                              <tr>
-                                <th>Trx id</th>
-                                <th className="text-center">Date</th>
-                                <th className="text-center">Amount</th>
-                                <th className="text-center">Status</th>
-                                <th className="text-center">Type</th>
-                                <th className="text-center">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {/* depositData */}
-
-                              {depositData.map((deposit) => (
-                                <tr key={deposit.id}>
-                                  <td>{deposit.depositID}</td>
                                   <td className="text-center">
-                                    {deposit.deposit_date}
+                                    {data.detailed_remarks}
                                   </td>
                                   <td className="text-center">
-                                    {deposit.deposit_amount || '0.00'}
-                                  </td>
-                                  <td className="text-center">
-                                    <span
-                                      className={`badge ${
-                                        deposit.status == 0
-                                          ? "bg-warning text-dark"
-                                          : deposit.status == 1
-                                          ? "bg-success"
-                                          : "bg-danger"
-                                      }`}
-                                    >
-                                      {deposit.status == 0
-                                        ? "Pending"
-                                        : deposit.status == 1
-                                        ? "Approve"
-                                        : "Rejected"}
-                                    </span>
-                                  </td>
-                                  <td className="text-center">
-                                    {deposit.payment_method}
-                                  </td>
-                                  <td>
-                                    <center>
-                                      <button
-                                        className="btn_primary text-center"
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#paymentModal"
-                                        onClick={() =>
-                                          getMoneyReceipt(deposit.id)
-                                        }
+                                    {data.adjustment_type === 1 && (
+                                      <div
+                                        style={{
+                                          color: "#fff",
+                                          backgroundColor: "green",
+                                          fontSize: "15px",
+                                          padding: "5px 10px",
+                                          borderRadius: "10px",
+                                          display: "inline-block",
+                                        }}
                                       >
-                                        Details
-                                      </button>
-                                    </center>
+                                        {data.adjustment_amount}
+                                      </div>
+                                    )}
+
+                                    {data.adjustment_type === 2 && (
+                                      <div
+                                        style={{
+                                          color: "#fff",
+                                          backgroundColor: "red",
+                                          fontSize: "15px",
+                                          padding: "5px 10px",
+                                          borderRadius: "10px",
+                                          display: "inline-block",
+                                        }}
+                                      >
+                                        {data.adjustment_amount}
+                                      </div>
+                                    )}
                                   </td>
                                 </tr>
                               ))}

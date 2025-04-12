@@ -30,6 +30,7 @@ use App\Models\Currency;
 use App\Models\GamePlatform;
 use App\Models\GamePlatformOnly;
 use App\Models\LoanPayHistory;
+use App\Models\ManualAdjustment;
 use App\Models\SendReceived;
 use App\Models\UserPaymentAddress;
 use App\Models\WithdrawMethod;
@@ -1306,6 +1307,61 @@ class DepositController extends Controller
         return $logData;
     }
 
+
+
+     public function getTransactionHistory(Request $request)
+    {
+        $sDate              = $request->filterFrmDate;
+        $eDate              = $request->filterToDate;
+        $searchTranId       = $request->searchtxt;
+        $selectedStatus     = $request->selectedFilter;
+        $startDate          = Carbon::parse($sDate)->startOfDay();
+        $endDate            = Carbon::parse($eDate)->endOfDay();
+
+       //  echo "Start Date: $sDate----- End Date: $eDate";exit;
+        $query = ManualAdjustment::orderBy('manual_adjustment.id', 'desc')
+            ->join('users', 'manual_adjustment.user_id', '=', 'users.id')
+            ->select(
+                'manual_adjustment.*',
+                'users.name',
+                'users.username',
+                'users.telegram',
+                'users.phone_number',
+                'users.whtsapp',
+                'users.email'
+            );
+       
+
+            if ($searchTranId !== null) {
+                $query->where('manual_adjustment.id', 'like', '%' . $searchTranId . '%');
+                //$query->where('users.email', $searchOrderId);
+            }
+
+
+        // Apply date range filtering if start and end dates are provided
+        if ($startDate !== null && $endDate !== null) {
+            $query->whereBetween('manual_adjustment.created_at', [$startDate, $endDate]);
+        }
+        // $query->where('users.role_id', 2);
+        $results = $query->get();
+        $modifiedCollection = $results->map(function ($item) {
+
+            return [
+                'id'                    => $item->id,
+                'user_id'               => $item->user_id,
+                'created_at'            => date("Y-M-d", strtotime($item->created_at)),
+                'adjustment_amount'     => number_format($item->adjustment_amount, 2),
+                'detailed_remarks'      => $item->detailed_remarks,
+                'adjustment_type'       => $item->adjustment_type,
+                //'statusName'            => $statusLabels[$item->status] ?? 'Unknown'
+            ];
+        });
+
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+        ], 200);
+    }
 
     public function userDepositHistory(Request $request)
     {

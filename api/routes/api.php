@@ -427,6 +427,7 @@ Route::middleware(['auth:api', CheckUserStatus::class])->group(function () {
         ],
         function () {
             Route::post('userDepositHistoryList', [DepositController::class, 'userDepositHistory']);
+            Route::post('getTransactionHistory', [DepositController::class, 'getTransactionHistory']);
             Route::get('depositrow/{id}', [DepositController::class, 'depositrow']);
             Route::post('checkDepositrow', [DepositController::class, 'checkDepositrow']); //check depsoti image
             Route::get('depositCancel/{id}', [DepositController::class, 'depositCancel']);
