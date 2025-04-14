@@ -18,11 +18,18 @@ const Futuretrading = () => {
   const { token, logout } = AuthUser();
   const [timeLeft, setTimeLeft] = useState(0);
   const [currency, setCurrency] = useState(null); // To track if Long or Short is selected
- 
- 
-
-
+  const [tradeSettings, setTradeSettings] = useState(null); // To track if Long or Short is selected
   useEffect(() => {
+    const savedSettings = JSON.parse(localStorage.getItem("tradeSettings"));
+    if (savedSettings) {
+      setTradeSettings({
+        marketSymbol: savedSettings.marketSymbol || "",
+        actionType: savedSettings.actionType || "",
+        tradeAmount: savedSettings.tradeAmount || "",
+        selectedDuration: savedSettings.selectedDuration || "",
+      });
+    }
+
     const crr = localStorage.getItem("currency_");
     setCurrency(crr);
 
@@ -167,6 +174,36 @@ const Futuretrading = () => {
                                   <LoaderMultiSquare />
                                 </center>
                               </h1>
+
+                              <div className="container mt-4">
+                             
+                              <div className="container mt-4" style={{ backgroundColor: '#181a20', color: 'white', padding: '20px' }}>
+
+  <ul style={{ listStyleType: 'none', padding: 0 }}>
+    <li style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+      <strong>CROSS </strong>
+      <span>{tradeSettings.marketSymbol?.replace("BINANCE:", "").toUpperCase()}</span>
+    </li>
+    <li style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+      <strong>CYCLE </strong>
+      <span>{tradeSettings.selectedDuration}s</span>
+    </li>
+    
+    <li style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+      <strong>DIRECTION </strong>
+      <span>{tradeSettings.actionType}</span>
+    </li>
+    <li style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+      <strong>QUANTITY </strong>
+      <span>{tradeSettings.tradeAmount}</span>
+    </li>
+   
+  </ul>
+</div>
+
+                           
+
+                              </div>
                               {timeLeft === 0 && (
                                 <p className="time-up-text">Time's up!</p>
                               )}

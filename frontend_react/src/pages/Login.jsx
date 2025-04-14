@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import "../components/css/Login.css"; // Import your CSS file
 const Login = () => {
   const navigate = useNavigate();
+  const [modalMessage, setModalMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -27,34 +28,46 @@ const Login = () => {
     e.preventDefault();
     if (!validate()) return;
 
-    setIsLoading(true); // Set loading to true when request starts
+    setIsLoading(true);
 
     try {
       const response = await http.post("/auth/userLogin", {
         username,
         password,
       });
+
       setToken(response.data.user, response.data.access_token);
-
       $.notify("Login successfully!", "success");
-
-
       setTimeout(() => navigate("/dashboard/profile"), 1000);
     } catch (error) {
+      const status = error.response?.status;
       const fieldErrors = error.response?.data.errors || {};
-      setErrors({
-        general: fieldErrors.account
-          ? fieldErrors.account[0]
-          : "Invalid username or password.",
-        ...fieldErrors,
-      });
 
-      toast.error("Invalid username or password!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      if (status === 403) {
+        // Show inactive user modal
+        const inactiveMessage = fieldErrors.account
+          ? fieldErrors.account[0]
+          : "Your account is inactive.";
+        setModalMessage(inactiveMessage); // custom state to hold modal message
+        const modal = new window.bootstrap.Modal(
+          document.getElementById("inactiveModal")
+        );
+        modal.show();
+      } else {
+        // Handle other login errors
+        setErrors({
+          general: fieldErrors.account
+            ? fieldErrors.account[0]
+            : "Invalid username or password.",
+          ...fieldErrors,
+        });
+        toast.error("Invalid username or password!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
     } finally {
-      setIsLoading(false); // Set loading to false after request completes
+      setIsLoading(false);
     }
   };
 
@@ -63,6 +76,40 @@ const Login = () => {
       <Helmet>
         <title>Login</title>
       </Helmet>
+      <div
+        className="modal fade"
+        id="inactiveModal"
+        tabIndex="-1"
+        aria-labelledby="inactiveModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="inactiveModalLabel">
+               Notify
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">{modalMessage}</div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <section className="login_registration">
         <div className="container">
           <div className="row">
@@ -120,12 +167,13 @@ const Login = () => {
                     </div>
                   )}
 
-                  <button 
-                    type="submit" 
-                    className="btn_primary" 
+                  <button
+                    type="submit"
+                    className="btn_primary"
                     disabled={isLoading} // Disable button when loading
                   >
-                    {isLoading ? "Loading..." : "Login"} {/* Show loading text */}
+                    {isLoading ? "Loading..." : "Login"}{" "}
+                    {/* Show loading text */}
                   </button>
                 </form>
               </div>

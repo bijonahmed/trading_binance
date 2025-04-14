@@ -15,20 +15,40 @@ const Future = () => {
   const navigate = useNavigate();
   const { token, logout } = AuthUser();
   const durations = [60, 120, 180, 300];
-  const percentages = [25, 50, 75, 100];
+  const percentages = [30, 40, 60, 75];
 
   const { slug } = useParams();
   const upperCaseCurrency = slug.toUpperCase();
-  const marketSymbol = `BINANCE:${upperCaseCurrency}USDT`;
-  //console.log(marketSymbol);
-  const [currentBalance, setCurrentBalance] = useState("");
-  const [marketpriceAmount, setMarketPriceAmount] = useState(0);
-  const [tradeAmount, setTradeAmount] = useState("");
-  const [selectedDuration, setSelectedDuration] = useState(null);
-  const [selectedPercentage, setSelectedPercentage] = useState(null);
-  const [marketPrice, setMarketPrice] = useState("");
-  const [amount, setAmount] = useState("");
-  const [actionType, setActionType] = useState(null); // To track if Long or Short is selected
+  console.log("=====" + upperCaseCurrency);
+  //BITSHARES(BTS) SHIB
+    //console.log(marketSymbol);
+    const [currentBalance, setCurrentBalance] = useState("");
+    const [marketpriceAmount, setMarketPriceAmount] = useState(0);
+    const [tradeAmount, setTradeAmount] = useState("");
+    const [selectedDuration, setSelectedDuration] = useState(null);
+    const [selectedPercentage, setSelectedPercentage] = useState(null);
+    const [marketPrice, setMarketPrice] = useState("");
+    const [amount, setAmount] = useState("");
+    const [actionType, setActionType] = useState(null); // To track if Long or Short is selected
+
+
+    let marketSymbol;
+
+    if (upperCaseCurrency === "BITSHARES(BTS)") {
+      marketSymbol = `BINANCE:SHIBUSDT`;
+    } else {
+      marketSymbol = `BINANCE:${upperCaseCurrency}USDT`;
+    }
+
+    const settings = {
+      marketSymbol,
+      tradeAmount,
+      actionType,
+      selectedDuration
+    };
+    // Save as a single JSON string
+    localStorage.setItem('tradeSettings', JSON.stringify(settings));
+
   //
   const getCurrentBalance = async () => {
     try {
@@ -424,14 +444,14 @@ const Future = () => {
                               onClick={() => setActionType("long")}
                               className="btn btn-success btn_show w-50 m-1"
                             >
-                              Open Long{" "}
+                              Buy Up{" "}
                             </button>
                             <button
                               type="submit"
                               onClick={() => setActionType("short")}
                               className="btn btn_show btn-danger w-50 m-1"
                             >
-                              Open Short{" "}
+                              Buy Down{" "}
                             </button>
                           </div>
                         </form>
@@ -558,13 +578,13 @@ const Future = () => {
                               type="button"
                               className="btn btn-success btn_show w-50 m-1"
                             >
-                              Open Long{" "}
+                              Buy Up{" "}
                             </button>
                             <button
                               type="button"
                               className="btn btn_show btn-danger w-50 m-1"
                             >
-                              Open Short{" "}
+                              Buy Down{" "}
                             </button>
                           </div>
                         </form>

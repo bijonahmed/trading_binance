@@ -1,54 +1,29 @@
 import { useEffect, useState, useRef } from "react";
 
 const cryptos = [
-  {
-    symbol: "bitcoin",
-    name: "BTC/USDT",
-    image: "/fasttrading/images/bitcoin.png",
-  },
-  {
-    symbol: "ethereum",
-    name: "ETH/USDT",
-    image: "/fasttrading/images/eth.png",
-  },
-  // { symbol: "binancecoin", name: "BNB/USDT", image: "/fasttrading/images/bnb.png" },
+  { symbol: "bitcoin", name: "BTC/USDT", image: "/fasttrading/images/bitcoin.png" },
+  { symbol: "ethereum", name: "ETH/USDT", image: "/fasttrading/images/eth.png" },
   { symbol: "ripple", name: "XRP/USDT", image: "/fasttrading/images/xrp.png" },
   { symbol: "cardano", name: "ADA/USDT", image: "/fasttrading/images/ada.png" },
   { symbol: "solana", name: "SOL/USDT", image: "/fasttrading/images/sol.png" },
-  {
-    symbol: "polkadot",
-    name: "DOT/USDT",
-    image: "/fasttrading/images/dot.png",
-  },
-  {
-    symbol: "dogecoin",
-    name: "DOGE/USDT",
-    image: "/fasttrading/images/doge.png",
-  },
-  {
-    symbol: "shiba-inu",
-    name: "SHIB/USDT",
-    image: "/fasttrading/images/shib.png",
-  },
-  {
-    symbol: "litecoin",
-    name: "LTC/USDT",
-    image: "/fasttrading/images/ltc.png",
-  },
-  {
-    symbol: "chainlink",
-    name: "LINK/USDT",
-    image: "/fasttrading/images/link.png",
-  },
-  {
-    symbol: "avalanche-2",
-    name: "AVAX/USDT",
-    image: "/fasttrading/images/avax.png",
-  },
+  { symbol: "polkadot", name: "DOT/USDT", image: "/fasttrading/images/dot.png" },
+  { symbol: "dogecoin", name: "DOGE/USDT", image: "/fasttrading/images/doge.png" },
+  { symbol: "shiba-inu", name: "SHIB/USDT", image: "/fasttrading/images/shib.png" },
+  { symbol: "litecoin", name: "LTC/USDT", image: "/fasttrading/images/ltc.png" },
+  { symbol: "chainlink", name: "LINK/USDT", image: "/fasttrading/images/link.png" },
+  { symbol: "avalanche-2", name: "AVAX/USDT", image: "/fasttrading/images/avax.png" },
   { symbol: "uniswap", name: "UNI/USDT", image: "/fasttrading/images/uni.png" },
   { symbol: "stellar", name: "XLM/USDT", image: "/fasttrading/images/xlm.png" },
   { symbol: "vechain", name: "VET/USDT", image: "/fasttrading/images/vet.png" },
   { symbol: "tron", name: "TRX/USDT", image: "/fasttrading/images/trx.png" },
+  // { symbol: "ICP", name: "ICP/USDT", image: "/fasttrading/images/ICP.webp" },
+  // { symbol: "NEAR", name: "NEAR/USDT", image: "/fasttrading/images/near.png" },
+  // { symbol: "FIL", name: "FIL/USDT", image: "/fasttrading/images/filecoin.webp" },
+  // { symbol: "BCH", name: "BCH/USDT", image: "/fasttrading/images/bitcoin-cash-circle.webp" },
+  // { symbol: "BTS", name: "BTS/USDT", image: "/fasttrading/images/bts.png" },
+  // { symbol: "ALGO", name: "ALGO/USDT", image: "/fasttrading/images/algo.webp" },
+  // { symbol: "EOS", name: "EOS/USDT", image: "/fasttrading/images/eos.png" },
+  // { symbol: "APE", name: "APE/USDT", image: "/fasttrading/images/apecoin.jpg" },
 ];
 
 const CryptoList = () => {
@@ -60,27 +35,25 @@ const CryptoList = () => {
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
-        // Fetch Current Price, 24h Change, and Volume
-        const symbols = cryptos.map((crypto) => crypto.symbol);
-        const ids = symbols.join(",");
-        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`;
-
+        const symbols = cryptos.map((crypto) => crypto.symbol).join(",");
+        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${symbols}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`;
+  
         const response = await fetch(url);
         const data = await response.json();
-
+  
         const newPrices = {};
         const newVolumes = {};
         const newChanges = {};
-
+  
         cryptos.forEach((crypto) => {
-          const id = crypto.symbol; // Use the symbol directly from the cryptos array
+          const id = crypto.symbol;
           if (data[id]) {
-            newPrices[id] = data[id].usd.toFixed(2);
-            newVolumes[id] = data[id].usd_24h_vol.toFixed(2);
-            newChanges[id] = data[id].usd_24h_change.toFixed(2);
+            newPrices[id] = data[id].usd?.toFixed(2) || "0.00";
+            newVolumes[id] = data[id].usd_24h_vol?.toFixed(2) || "0.00";
+            newChanges[id] = data[id].usd_24h_change?.toFixed(2) || "0.00";
           }
         });
-
+  
         setPrices(newPrices);
         setVolumes(newVolumes);
         setChanges(newChanges);

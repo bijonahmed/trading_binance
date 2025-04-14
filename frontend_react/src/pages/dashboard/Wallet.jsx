@@ -406,8 +406,8 @@ const Wallet = () => {
                               <tr>
                                 <th>ID</th>
                                 <th className="text-center">Date</th>
+                                <th className="text-center">Description</th>
                                 <th className="text-center">Amount</th>
-                                <th className="text-center">Reason</th>
                               </tr>
                             </thead>
                             <tbody>
